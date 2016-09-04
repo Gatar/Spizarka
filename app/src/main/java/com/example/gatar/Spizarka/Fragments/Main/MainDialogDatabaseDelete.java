@@ -15,7 +15,6 @@ import com.example.gatar.Spizarka.Database.ManagerDAO;
  */
 public class MainDialogDatabaseDelete extends DialogFragment {
 
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -24,7 +23,7 @@ public class MainDialogDatabaseDelete extends DialogFragment {
         builder.setMessage("Operacja nieodwracalna!\n\nCzy na pewno chcesz usunąć bazę danych?")
                 .setPositiveButton("TAK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        ManagerDAO managerDAO = new ManagerDAO(getView().getContext());
+                        ManagerDAO managerDAO = new ManagerDAO(getActivity().getApplicationContext());
                         managerDAO.deleteDatabase();
                     }
                 })
