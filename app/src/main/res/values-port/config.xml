@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="hasLogged" type="bool">true</item>
+    <item name="preferencesKey" type="string">com.example.gatar.spizarka.Preferences</item>
+    <item name="isLandscape" type="bool">false</item>
+</resources>

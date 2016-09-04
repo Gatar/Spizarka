@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="@string/ogranicz"
+                android:id="@+id/buttonDepotLimit"
+                android:layout_weight="1"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="15dp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="@string/sortuj"
+                android:id="@+id/buttonDepotSort"
+                android:layout_weight="1"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="15dp" />
+
+        </TableRow>
+
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/depot_1_description"
+            android:id="@+id/textDepotDescriptionType"
+            android:layout_marginTop="35dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:textAlignment="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/depot_2_description"
+            android:id="@+id/textDepotDescriptionName"
+            android:layout_marginTop="35dp"
+            android:layout_weight="5"
+            android:background="#ffffff"
+            android:textAlignment="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/depot_3_description"
+            android:id="@+id/textDepotDescriptionQuantity"
+            android:layout_marginTop="35dp"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:textAlignment="center" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
+
+        <ListView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/listDepot"
+            android:layout_marginTop="50dp"
+            android:background="#ffffff"
+            android:choiceMode="singleChoice" />
+    </TableRow>
+
+
+</RelativeLayout>

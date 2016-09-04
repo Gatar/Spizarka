@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".Activities.ChangeActivity">
+
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp">
+
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/kody_kreskowe"
+            android:id="@+id/textChangeBarcodeDescription"
+            android:layout_column="0"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/textChangeBarcode"
+            android:layout_column="1"
+            android:layout_marginTop="30dp"
+            android:textSize="10sp"
+            android:layout_weight="15" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp">
+
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/nazwa"
+            android:id="@+id/textChangeTitleDescription"
+            android:layout_column="0"
+            android:layout_marginBottom="10dp"
+            android:textSize="20sp"
+            android:textColor="#e00000" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textChangeTitle"
+            android:layout_column="1"
+            android:inputType="textCapSentences|text"
+            android:textAlignment="center"
+            android:hint="podaj nazwę produktu" />
+
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:textAlignment="center">
+
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/kategoria"
+            android:id="@+id/textChangeCategoryDescription"
+            android:layout_column="0"
+            android:layout_marginBottom="10dp"
+            android:textSize="20sp"
+            android:textColor="#e00000" />
+
+        <Spinner
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textChangeCategory"
+            android:layout_column="1" />
+
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp">
+
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/ilo"
+            android:id="@+id/textChangeQuantityDescription"
+            android:layout_column="0"
+            android:layout_marginBottom="10dp"
+            android:textSize="20sp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/textChangeQuantity"
+            android:layout_column="1"
+            android:enabled="false"
+            android:text="0"
+            android:textAlignment="center"
+            android:inputType="number" />
+
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp">
+
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/dodaj_usu"
+            android:id="@+id/textChangeQuantityModificationDescription"
+            android:layout_column="0"
+            android:layout_marginBottom="10dp"
+            android:textSize="20sp"
+            android:textColor="#e00000" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/textChangeQuantityModification"
+            android:layout_column="1"
+            android:hint="    podaj ilość"
+            android:textColor="@color/abc_input_method_navigation_guard"
+            android:textAlignment="center" />
+
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp">
+
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/stan_min"
+            android:id="@+id/textChangeQuantityMinimumDescription"
+            android:layout_column="0"
+            android:layout_marginLeft="0dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="20sp"
+            android:textColor="#e00000" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/textChangeQuantityMinimum"
+            android:layout_column="1"
+            android:textAlignment="center"
+            android:hint="    podaj ilość" />
+
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp">
+
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Opis:"
+            android:id="@+id/textChangeDescriptionDescription"
+            android:layout_column="0"
+            android:textSize="20sp"
+            android:textColor="#e00000" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/textChangeDescription"
+            android:layout_column="1"
+            android:inputType="textCapSentences|textMultiLine"
+            android:textAlignment="center"
+            android:hint="dodaj opis" />
+
+
+    </TableRow>
+
+
+</TableLayout>

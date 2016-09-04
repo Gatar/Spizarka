@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/dodaj"
+        android:id="@+id/buttonMainAdd"
+        android:layout_marginTop="30dp"
+        android:textSize="25sp"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="bold|italic"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/zu_yj"
+        android:id="@+id/buttonMainRemove"
+        android:textSize="25sp"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="bold|italic"
+        android:layout_below="@+id/buttonMainAdd"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="20dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/co_mam_w_spi_arce"
+        android:id="@+id/buttonMainDepot"
+        android:textSize="25sp"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="bold|italic"
+        android:layout_below="@+id/buttonMainRemove"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lista_zakupow"
+        android:id="@+id/buttonMainShoppingList"
+        android:layout_below="@+id/buttonMainDepot"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textSize="25sp"
+        android:layout_marginLeft="40dp"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="bold|italic"
+        android:layout_marginRight="40dp"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ustawienia"
+        android:id="@+id/buttonMainSettings"
+        android:layout_below="@+id/buttonMainShoppingList"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textSize="25sp"
+        android:layout_marginLeft="40dp"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="bold|italic"
+        android:layout_marginRight="40dp"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:src="@drawable/main_logo2"
+        android:layout_below="@+id/buttonMainSettings"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+</RelativeLayout>

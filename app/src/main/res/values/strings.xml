@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">Spiżarka</string>
+    <string name="lista_zakupow">Lista Zakupow</string>
+    <string name="co_mam_w_spi_arce">Co mam w spiżarce?</string>
+    <string name="dodaj_zu_yj">Dodaj/Zużyj</string>
+
+
+    <!-- TODO: DecreaseQuantity or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="ustawienia">Usuń bazę</string>
+    <string name="sortuj">Sortuj</string>
+    <string name="ogranicz">Ogranicz</string>
+    <string name="depot_1_description">Typ</string>
+    <string name="depot_2_description">Nazwa</string>
+    <string name="depot_3_description">Ilość</string>
+    <string name="kody_kreskowe">Kody kreskowe:</string>
+    <string name="nazwa">Nazwa:</string>
+    <string name="kategoria">Kategoria:</string>
+    <string name="ilo">Ilość:</string>
+    <string name="zatwierd">Zatwierdź</string>
+    <string name="aktualizuj">Aktualizuj</string>
+    <string name="dodaj_usu">Dodaj/usuń:</string>
+    <string name="dodaj_produkt">Dodaj produkt</string>
+    <string name="dodaj_i_zako_cz">Dodaj i zakończ</string>
+    <string name="aktualizuj_i_zako_cz">Aktualizuj i zakończ</string>
+    <string name="aktualizuj_produkt">Aktualizuj produkt</string>
+    <string name="usu_produkt">Usuń produkt</string>
+    <string name="usu_i_zako_cz">Usuń i zakończ</string>
+    <string name="stan_min">Stan min:</string>
+    <string name="odejmij">Odejmij</string>
+
+
+    <string name="Pasta">Makaron</string>
+    <string name="Can">Produkty puszkowane</string>
+    <string name="Dairy">Produkty mleczne</string>
+    <string name="Drinks">Napoje, kawa, herbata</string>
+    <string name="Medicine">Lekarstwa</string>
+    <string name="Caryopsis">Ryż, kasza, etc.</string>
+    <string name="Frozens">Mrożonki</string>
+    <string name="Sauces">Sosy</string>
+    <string name="Sweets">Słodycze</string>
+    <string name="Chemistry">Srodki czystości</string>
+    <string name="Hygiene">Art. higieniczne</string>
+    <string name="Other">Pozostałe</string>
+    <string name="zu_yj">Zużyj</string>
+    <string name="dodaj">Dodaj</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="database_delete">Usuń bazę danych</string>
+
+
+</resources>
