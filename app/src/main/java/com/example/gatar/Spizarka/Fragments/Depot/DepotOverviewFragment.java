@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import com.example.gatar.Spizarka.Activities.ChangeActivity;
 import com.example.gatar.Spizarka.Activities.ChangeOptions;
@@ -208,7 +209,7 @@ public class DepotOverviewFragment extends Fragment  {
 
                 final PopupMenu popup = new PopupMenu(view.getContext(),buttonCategory);
                 Categories [] categories = Categories.values();
-                popup.getMenu().add("Wszystkie kategorie");
+                popup.getMenu().add(R.string.category_all);
                 for (Categories cat: categories) {
                     popup.getMenu().add(cat.toString());
                 }
@@ -216,7 +217,7 @@ public class DepotOverviewFragment extends Fragment  {
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        if(item.getTitle().toString().equals("Wszystkie kategorie")){
+                        if(item.getTitle().toString().equals(getResources().getString(R.string.category_all))){
                             depotCategoryLimit.getAllItems();
                         }else {
                             Categories chosenCategory = Categories.getEnumByCategoryName(item.getTitle().toString());

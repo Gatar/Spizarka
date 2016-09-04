@@ -11,25 +11,16 @@
         android:background="#ffffff">
 
         <TextView
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/kody_kreskowe"
-            android:id="@+id/textDepotBarcodeDescription"
-            android:layout_column="0"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:textSize="15sp" />
-
-        <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/txtDepotBarcode"
+            android:id="@+id/textDepotHead"
             android:layout_column="1"
-            android:layout_marginTop="30dp"
-            android:textSize="10sp"
-            android:layout_weight="15" />
+            android:layout_marginTop="10dp"
+            android:textSize="20dp"
+            android:layout_weight="1"
+            android:text="@string/product_details"
+            android:layout_marginBottom="10dp" />
     </TableRow>
 
     <TableRow
@@ -40,22 +31,34 @@
 
         <TextView
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/nazwa"
+            android:text="@string/name"
             android:id="@+id/textDepotTitleDescription"
             android:layout_column="0"
             android:layout_marginBottom="10dp"
             android:textSize="20sp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:layout_width="wrap_content" />
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/textDepotTitle"
             android:layout_column="1"
             android:textSize="15sp"
-            android:layout_weight="15"
+            android:layout_weight="2"
             android:editable="true" />
+
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/textView8"
+            android:layout_column="2"
+            android:layout_marginLeft="0dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="20sp"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </TableRow>
 
     <TableRow
@@ -66,21 +69,33 @@
 
         <TextView
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/kategoria"
+            android:text="@string/category"
             android:id="@+id/textDepotCategoryDescription"
             android:layout_column="0"
             android:layout_marginBottom="10dp"
             android:textSize="20sp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:layout_width="wrap_content" />
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/textDepotCategory"
             android:layout_column="1"
             android:textSize="15sp"
-            android:layout_weight="15" />
+            android:layout_weight="2" />
+
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/textView9"
+            android:layout_column="2"
+            android:layout_marginLeft="0dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="20sp"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </TableRow>
 
     <TableRow
@@ -91,22 +106,35 @@
 
         <TextView
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/ilo"
+            android:text="@string/quantity"
             android:id="@+id/textDepotQuantityDescription"
             android:layout_column="0"
             android:layout_marginBottom="10dp"
             android:textSize="20sp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:layout_width="wrap_content" />
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/textDepotQuantity"
             android:layout_column="1"
             android:textSize="15sp"
-            android:layout_weight="15"
+            android:layout_weight="2"
             android:editable="true" />
+
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/pcs"
+            android:id="@+id/textView7"
+            android:layout_column="2"
+            android:layout_marginLeft="0dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="20sp"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </TableRow>
 
     <TableRow
@@ -123,18 +151,31 @@
             android:layout_marginLeft="0dp"
             android:layout_marginBottom="10dp"
             android:textSize="20sp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:layout_width="wrap_content" />
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="0"
             android:id="@+id/textDepotMin"
             android:layout_column="1"
             android:textSize="15sp"
-            android:layout_weight="15"
+            android:layout_weight="2"
             android:editable="true" />
+
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/pcs"
+            android:id="@+id/textView6"
+            android:layout_column="2"
+            android:layout_marginLeft="0dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="20sp"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </TableRow>
 
@@ -142,7 +183,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:background="#ffffff">
+        android:background="#ffffff"
+        android:baselineAligned="false">
 
         <TextView
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -150,17 +192,18 @@
             android:id="@+id/textDepotOpisDescription"
             android:layout_column="0"
             android:textSize="20sp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:layout_width="0dp" />
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/textDepotFullDescription"
             android:layout_column="1"
             android:textSize="15sp"
-            android:layout_weight="15"
-            android:editable="true" />
+            android:layout_weight="2" />
+
     </TableRow>
 
     <TableRow
@@ -169,15 +212,15 @@
         android:background="#ffffff">
 
         <Button
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="60dp"
-            android:text="@string/aktualizuj"
+            android:text="@string/actualize"
             android:id="@+id/buttonDepotDetailActualize"
             android:layout_column="1"
             android:textSize="15sp"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="15dp"
-            android:layout_marginRight="45dp"
-            android:layout_weight="15" />
+            android:layout_marginRight="40dp"
+            android:layout_weight="1" />
     </TableRow>
 </TableLayout>

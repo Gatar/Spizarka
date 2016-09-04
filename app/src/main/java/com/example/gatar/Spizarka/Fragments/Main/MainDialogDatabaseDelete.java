@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 
 import com.example.gatar.Spizarka.Database.ManagerDAO;
+import com.example.gatar.Spizarka.R;
 
 
 /**
@@ -20,14 +21,14 @@ public class MainDialogDatabaseDelete extends DialogFragment {
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("Operacja nieodwracalna!\n\nCzy na pewno chcesz usunąć bazę danych?")
-                .setPositiveButton("TAK", new DialogInterface.OnClickListener() {
+        builder.setMessage(R.string.ask_before_database_delete)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         ManagerDAO managerDAO = new ManagerDAO(getActivity().getApplicationContext());
                         managerDAO.deleteDatabase();
                     }
                 })
-                .setNegativeButton("NIE", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
                     }

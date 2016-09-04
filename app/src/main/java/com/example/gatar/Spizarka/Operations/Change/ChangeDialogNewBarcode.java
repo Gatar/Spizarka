@@ -34,15 +34,15 @@ public class ChangeDialogNewBarcode extends DialogFragment{
         setPreferences();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("Nowy kod! \n\n Dodać kod do istniejącego produktu?\n")
-                .setPositiveButton("Dodaj \ndo istniejącego", new DialogInterface.OnClickListener() {
+        builder.setMessage(R.string.new_barcode_info)
+                .setPositiveButton(R.string.add_barcode_to_item, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         preferencesEditor.putString(CHANGE_ACTIVITY_OPTION, ChangeOptions.AddBarcodeToProduct.toString());
                         preferencesEditor.commit();
                         listener.proceedChosenOption();
                     }
                 })
-                .setNegativeButton("Utwórz nowy produkt", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.add_new_item, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         preferencesEditor.putString(CHANGE_ACTIVITY_OPTION, ChangeOptions.AddProduct.toString());
                         preferencesEditor.commit();

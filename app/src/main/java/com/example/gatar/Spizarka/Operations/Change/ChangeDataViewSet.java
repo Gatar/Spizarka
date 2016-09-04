@@ -1,7 +1,6 @@
 package com.example.gatar.Spizarka.Operations.Change;
 
 import android.graphics.Color;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
@@ -76,7 +75,7 @@ public class ChangeDataViewSet extends ChangeDataView {
         quantityMinimumText.setEnabled(true);
         descriptionText.setEnabled(true);
 
-        quantityModificationDescription.setText(R.string.dodaj);
+        quantityModificationDescription.setText(R.string.add);
 
         ArrayAdapter<Categories> adapter = new ArrayAdapter<>(view.getContext(),android.R.layout.simple_spinner_dropdown_item,Categories.values());
         categoryText.setAdapter(adapter);
@@ -98,7 +97,7 @@ public class ChangeDataViewSet extends ChangeDataView {
         quantityMinimumText.setEnabled(true);
         descriptionText.setEnabled(true);
 
-        quantityModificationDescription.setText(R.string.dodaj);
+        quantityModificationDescription.setText(R.string.add);
 
         ArrayAdapter<Categories> adapter = new ArrayAdapter<>(view.getContext(),android.R.layout.simple_spinner_dropdown_item,Categories.values());
         categoryText.setAdapter(adapter);
@@ -121,10 +120,13 @@ public class ChangeDataViewSet extends ChangeDataView {
         descriptionText.setEnabled(false);
 
         if(option == ChangeOptions.IncreaseQuantity){
-            quantityModificationDescription.setText(R.string.dodaj);
+            quantityModificationDescription.setText(R.string.add);
         } else {
-            quantityModificationDescription.setText(R.string.odejmij);
+            quantityModificationDescription.setText(R.string.subtract);
         }
+
+        ArrayAdapter<Categories> adapter = new ArrayAdapter<>(view.getContext(),android.R.layout.simple_spinner_dropdown_item,Categories.values());
+        categoryText.setAdapter(adapter);
     }
 
     private void setItemData(Item item) {

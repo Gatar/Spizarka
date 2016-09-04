@@ -6,6 +6,7 @@ import android.widget.Toast;
 import com.example.gatar.Spizarka.Activities.ChangeOptions;
 import com.example.gatar.Spizarka.Database.Item;
 import com.example.gatar.Spizarka.Database.Categories;
+import com.example.gatar.Spizarka.R;
 
 /**
  * Providing access to get data from fields in {@link com.example.gatar.Spizarka.Fragments.Change.ChangeDataViewFragment} layout.
@@ -73,13 +74,13 @@ public class ChangeDataViewGet extends ChangeDataView {
     private boolean isEditTextNotEmpty(){
 
         if (titleText.getText().toString().matches("")){
-            Toast.makeText(view.getContext(),"Podaj nazwę produktu",Toast.LENGTH_SHORT).show();
+            Toast.makeText(view.getContext(), R.string.missing_item_title,Toast.LENGTH_SHORT).show();
         }else if(quantityModificationText.getText().toString().matches("")) {
-            Toast.makeText(view.getContext(), "Podaj zmianę ilości produktów", Toast.LENGTH_SHORT).show();
+            Toast.makeText(view.getContext(), R.string.missing_quantity_change, Toast.LENGTH_SHORT).show();
         }else if(quantityMinimumText.getText().toString().matches("")){
-            Toast.makeText(view.getContext(),"Podaj stan minimalny",Toast.LENGTH_SHORT).show();
+            Toast.makeText(view.getContext(), R.string.missing_minimum_quantity,Toast.LENGTH_SHORT).show();
         }else if(quantityText.getText().toString().matches("")){
-            Toast.makeText(view.getContext(),"Podaj ilość produktów",Toast.LENGTH_SHORT).show();
+            Toast.makeText(view.getContext(), R.string.missing_quantity,Toast.LENGTH_SHORT).show();
         }else{
             return true;
         }
@@ -88,7 +89,7 @@ public class ChangeDataViewGet extends ChangeDataView {
 
     private boolean isQuantityNegativeValue(int quantity){
         if(quantity < 0){
-            Toast.makeText(view.getContext(),"Podana ilość spowoduje spadek \n stanu towaru poniżej 0!",Toast.LENGTH_LONG).show();
+            Toast.makeText(view.getContext(), R.string.quantity_under_zero,Toast.LENGTH_LONG).show();
             return true;
         } else return false;
     }

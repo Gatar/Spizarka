@@ -243,7 +243,7 @@ public class ChangeActivity extends AppCompatActivity implements
      */
     private void checkIsOptionCorrect(){
         if(managerDAO.isContainBarcode(barcode) && option == ChangeOptions.AddProduct){
-            Toast.makeText(this,"Znaleziono produkt!",Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.product_found,Toast.LENGTH_LONG).show();
             preferencesEditor.putString(CHANGE_ACTIVITY_OPTION, ChangeOptions.IncreaseQuantity.toString());
             preferencesEditor.commit();
             option = ChangeOptions.IncreaseQuantity;

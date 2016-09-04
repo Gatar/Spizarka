@@ -8,7 +8,7 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/aktualizuj_produkt"
+        android:text="@string/actualize_item"
         android:id="@+id/buttonChangeActualize"
         android:layout_weight="1"
         android:layout_marginLeft="15dp"

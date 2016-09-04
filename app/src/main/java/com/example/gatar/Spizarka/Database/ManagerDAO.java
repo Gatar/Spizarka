@@ -266,7 +266,6 @@ public class ManagerDAO extends SQLiteOpenHelper implements DAO {
     @Override
     public void deleteDatabase() {
         context.deleteDatabase(DATABASE_NAME);
-        Log.d(DATABASE_NAME," database deleted");
     }
 
     private void fillItemWithValues(Cursor cursor, Item item){

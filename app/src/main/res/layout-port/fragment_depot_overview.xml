@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="#ffffff">
 
-    <!-- TODO: Update blank fragment layout -->
+
 
 
         <TableRow
@@ -14,14 +14,14 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ogranicz"
+                android:text="@string/limit"
                 android:id="@+id/buttonDepotLimit"
                 android:layout_weight="1" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/sortuj"
+                android:text="@string/sort"
                 android:id="@+id/buttonDepotSort"
                 android:layout_weight="1" />
 
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/depot_1_description"
+            android:text="@string/depot_category"
             android:id="@+id/textDepotDescriptionType"
             android:layout_marginTop="45dp"
             android:gravity="center"
@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/depot_2_description"
+            android:text="@string/depot_title"
             android:id="@+id/textDepotDescriptionName"
             android:layout_marginTop="45dp"
             android:layout_weight="5"
@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/depot_3_description"
+            android:text="@string/depot_quantity"
             android:id="@+id/textDepotDescriptionQuantity"
             android:layout_marginTop="45dp"
             android:layout_weight="1"
