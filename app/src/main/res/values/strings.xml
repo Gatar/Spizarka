@@ -74,6 +74,9 @@
     <string name="add_new_item">Utwórz nowy produkt</string>
     <string name="pcs">szt.</string>
     <string name="product_details">Detale produktu</string>
+    <string name="give_quantity">podaj ilość</string>
+    <string name="add_description">dodaj opis</string>
+    <string name="give_item_title">podaj nazwę produktu</string>
 
 
 </resources>

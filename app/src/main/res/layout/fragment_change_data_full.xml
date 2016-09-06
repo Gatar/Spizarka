@@ -1,43 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     tools:context=".Activities.ChangeActivity">
 
 
     <TableRow
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="10dp">
-
-        <TextView
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/barcodes"
-            android:id="@+id/textChangeBarcodeDescription"
-            android:layout_column="0"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:textSize="15sp" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/textChangeBarcode"
-            android:layout_column="1"
-            android:layout_marginTop="30dp"
-            android:textSize="10sp"
-            android:layout_weight="15" />
-
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="10dp">
+        android:layout_marginLeft="10dp"
+        android:paddingEnd="0dp"
+        android:paddingStart="0dp">
 
         <TextView
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -49,22 +23,24 @@
             android:textColor="#e00000" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textChangeTitle"
             android:layout_column="1"
             android:inputType="textCapSentences|text"
             android:textAlignment="center"
-            android:hint="podaj nazwę produktu" />
+            android:hint="@string/give_item_title" />
 
 
     </TableRow>
 
     <TableRow
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
-        android:textAlignment="center">
+        android:textAlignment="center"
+        android:paddingEnd="0dp"
+        android:paddingStart="0dp">
 
         <TextView
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -85,9 +61,11 @@
     </TableRow>
 
     <TableRow
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="10dp">
+        android:layout_marginLeft="10dp"
+        android:paddingEnd="0dp"
+        android:paddingStart="0dp">
 
         <TextView
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -98,7 +76,7 @@
             android:textSize="20sp" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:id="@+id/textChangeQuantity"
@@ -112,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="szt."
+            android:text="@string/pcs"
             android:id="@+id/textView3"
             android:layout_column="2" />
 
@@ -120,9 +98,11 @@
     </TableRow>
 
     <TableRow
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="10dp">
+        android:layout_marginLeft="10dp"
+        android:paddingEnd="0dp"
+        android:paddingStart="0dp">
 
         <TextView
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -134,13 +114,13 @@
             android:textColor="#e00000" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
             android:ems="10"
             android:id="@+id/textChangeQuantityModification"
             android:layout_column="1"
-            android:hint="    podaj ilość"
+            android:hint="@string/give_quantity"
             android:textColor="@color/abc_input_method_navigation_guard"
             android:textAlignment="center" />
 
@@ -148,7 +128,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="szt."
+            android:text="@string/pcs"
             android:id="@+id/textView"
             android:layout_column="2" />
 
@@ -156,9 +136,11 @@
     </TableRow>
 
     <TableRow
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="10dp">
+        android:layout_marginLeft="10dp"
+        android:paddingEnd="0dp"
+        android:paddingStart="0dp">
 
         <TextView
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -171,20 +153,20 @@
             android:textColor="#e00000" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
             android:ems="10"
             android:id="@+id/textChangeQuantityMinimum"
             android:layout_column="1"
-            android:textAlignment="center"
-            android:hint="    podaj ilość" />
+            android:hint="@string/give_quantity"
+            android:textAlignment="center" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="szt."
+            android:text="@string/pcs"
             android:id="@+id/textView2"
             android:layout_column="2" />
 
@@ -192,9 +174,11 @@
     </TableRow>
 
     <TableRow
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp">
+        android:layout_marginLeft="10dp"
+        android:paddingEnd="0dp"
+        android:paddingStart="0dp">
 
         <TextView
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -205,14 +189,14 @@
             android:textColor="#e00000" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:id="@+id/textChangeDescription"
             android:layout_column="1"
             android:inputType="textCapSentences|textMultiLine"
             android:textAlignment="center"
-            android:hint="dodaj opis" />
+            android:hint="@string/add_description" />
 
 
     </TableRow>

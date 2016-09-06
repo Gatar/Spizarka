@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 
 import com.example.gatar.Spizarka.Activities.ChangeOptions;
 import com.example.gatar.Spizarka.Operations.Change.ChangeDataViewSet;
+import com.example.gatar.Spizarka.Operations.Change.ChangeHideKeyboard;
 import com.example.gatar.Spizarka.R;
 
 /**
@@ -42,6 +44,7 @@ public class ChangeDataViewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_change_data_full, container, false);
 
         setPreferences();
+        closeUnusedKeyboard(view);
 
         viewOperations = new ChangeDataViewSet(view,options);
         viewOperations.setDataView();
@@ -70,6 +73,10 @@ public class ChangeDataViewFragment extends Fragment {
     private void setPreferences(){
         preferences = this.getActivity().getSharedPreferences(getResources().getString(R.string.preferencesKey), Context.MODE_PRIVATE);
         options = ChangeOptions.valueOf(preferences.getString(CHANGE_ACTIVITY_OPTION,"Error"));
+    }
+
+    private void closeUnusedKeyboard(View view){
+        view.setOnClickListener( new ChangeHideKeyboard(getActivity()) );
     }
 
     public interface ChangeDataViewFragmentListener {

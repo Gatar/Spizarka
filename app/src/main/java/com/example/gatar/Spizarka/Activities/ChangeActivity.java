@@ -20,6 +20,7 @@ import com.example.gatar.Spizarka.Fragments.Change.ChangeButtonIncreaseQuantityF
 import com.example.gatar.Spizarka.Fragments.Change.ChangeDataViewFragment;
 import com.example.gatar.Spizarka.Operations.Change.ChangeDataViewGet;
 import com.example.gatar.Spizarka.Operations.Change.ChangeDialogNewBarcode;
+import com.example.gatar.Spizarka.Operations.Change.ChangeHideKeyboard;
 import com.example.gatar.Spizarka.R;
 
 /**
@@ -274,4 +275,5 @@ public class ChangeActivity extends AppCompatActivity implements
         ChangeDialogNewBarcode checkAddType = new ChangeDialogNewBarcode();
         checkAddType.show(fragmentManager,"addType");
     }
+
 }
