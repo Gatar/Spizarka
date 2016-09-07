@@ -60,6 +60,8 @@
     <string name="category_hygiene">Art. higieniczne</string>
     <string name="category_chemistry">Srodki czystosci</string>
     <string name="category_other">Pozostałe</string>
+    <string name="category_powders">Mąka, cukier, sól</string>
+    <string name="category_fats">Olej, masło, tłuszcze</string>
     <string name="category_all">Wszystkie kategorie</string>
     <string name="ask_before_database_delete">Operacja nieodwracalna!\n\nCzy na pewno chcesz usunąć bazę danych?</string>
     <string name="yes">TAK</string>
@@ -77,6 +79,7 @@
     <string name="give_quantity">podaj ilość</string>
     <string name="add_description">dodaj opis</string>
     <string name="give_item_title">podaj nazwę produktu</string>
+
 
 
 </resources>

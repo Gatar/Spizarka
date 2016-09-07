@@ -23,7 +23,7 @@ public class ChangeHideKeyboard implements View.OnClickListener {
             }
         }
 
-    public void hideSoftKeyboard(Activity activity) {
+    private void hideSoftKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
