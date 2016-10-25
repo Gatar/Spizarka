@@ -15,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupMenu;
-import android.widget.Toast;
 
 import com.example.gatar.Spizarka.Activities.ChangeActivity;
 import com.example.gatar.Spizarka.Activities.ChangeOptions;

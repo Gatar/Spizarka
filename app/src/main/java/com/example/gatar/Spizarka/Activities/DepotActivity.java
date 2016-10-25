@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 
-import com.example.gatar.Spizarka.Database.Item;
 import com.example.gatar.Spizarka.Fragments.Depot.DepotDetailFragment;
 import com.example.gatar.Spizarka.Fragments.Depot.DepotOverviewFragment;
 import com.example.gatar.Spizarka.R;

@@ -4,17 +4,11 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.util.Log;
 import android.content.Intent;
 
-import com.example.gatar.Spizarka.Database.ManagerDAO;
 import com.example.gatar.Spizarka.R;
 import com.google.zxing.Result;
-
-import java.util.prefs.Preferences;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 

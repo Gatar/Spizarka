@@ -3,34 +3,10 @@ package com.example.gatar.Spizarka.Database;
 import java.util.ArrayList;
 
 /**
- * Created by Gatar on 2016-08-14.
+ * Interface for DataAccessObject
  */
-public interface DAO {
-    public final String DATABASE_NAME="database.db";
-    public final int DATABASE_VERSION = 1;
+public interface MethodsDAO {
 
-    public final String TABLE_NAME_ITEMS = "itemsTable";
-    public final String COLUMN_NAME_TITLE = "title";
-    public final String COLUMN_NAME_CATEGORY = "category";
-    public final String COLUMN_NAME_QUANTITY = "quantity";
-    public final String COLUMN_NAME_MINIMUM_QUANTITY = "minimum";
-    public final String COLUMN_NAME_DESCRIPTION = "description";
-
-    public final String TABLE_NAME_BARCODES = "barcodes";
-    public final String COLUMN_NAME_BARCODE = "barcode";
-
-    public final String SQL_CREATE_TABLE_ITEMS=
-            "CREATE TABLE " + TABLE_NAME_ITEMS + " (" +
-                    COLUMN_NAME_TITLE + " TEXT PRIMARY KEY NOT NULL, " +
-                    COLUMN_NAME_CATEGORY + " TEXT NOT NULL, " +
-                    COLUMN_NAME_QUANTITY + " INTEGER NOT NULL, " +
-                    COLUMN_NAME_MINIMUM_QUANTITY + " INTEGER NOT NULL, " +
-                    COLUMN_NAME_DESCRIPTION + " TEXT );";
-
-    public final String SQL_CREATE_TABLE_BARCODES=
-            "CREATE TABLE " + TABLE_NAME_BARCODES + "(" +
-                    COLUMN_NAME_BARCODE +" TEXT PRIMARY KEY NOT NULL, " +
-                    COLUMN_NAME_TITLE + " TEXT NOT NULL );";
 
     //METHODS OF BARCODES TABLE
     /**
