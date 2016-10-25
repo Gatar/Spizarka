@@ -8,18 +8,10 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/remove_item"
-        android:id="@+id/buttonChangeRemove"
+        android:text="@string/actualize_item"
+        android:id="@+id/buttonChangeActualize"
         android:layout_weight="1"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp" />
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/remove_item_end"
-        android:id="@+id/buttonChangeRemoveEnd"
-        android:layout_weight="1"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp" />
 </LinearLayout>

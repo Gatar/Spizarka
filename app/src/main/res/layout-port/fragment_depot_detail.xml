@@ -215,7 +215,7 @@
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:text="@string/actualize"
-            android:id="@+id/buttonDepotDetailActualize"
+            android:id="@+id/buttonDepotDetailUpdate"
             android:layout_column="1"
             android:textSize="15sp"
             android:layout_marginLeft="0dp"
