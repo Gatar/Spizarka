@@ -1,46 +1,57 @@
-package com.gatar.Spizarka.Fragments.Main;
+package com.gatar.Spizarka.Main.View;
 
-import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.gatar.Spizarka.Activities.BarcodeScannerActivity;
 import com.gatar.Spizarka.Activities.DepotActivity;
 import com.example.gatar.Spizarka.R;
+import com.gatar.Spizarka.Main.MainMVP;
+import com.gatar.Spizarka.Main.MainPresenterImpl;
 
 /**
  * Main Menu Fragment. Contains buttons which starts each type of activities in program.
  */
-public class MainMenuFragment extends Fragment {
+public class MainMenuFragment extends Fragment implements MainMVP.RequiredViewOperations {
 
-    MenuFragmentActivityListener listener;
+    private MainMVP.PresenterOperations mPresenter;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        mPresenter = new MainPresenterImpl(this);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
         final View view = inflater.inflate(R.layout.fragment_main_menu,container,false);
+
 
         View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()){
                     case R.id.buttonMainAdd:
-                        listener.toAdd();
+                        mPresenter.toAdd();
                         break;
                     case R.id.buttonMainRemove:
-                        listener.toDecreaseQuantity();
+                        mPresenter.toDecreaseQuantity();
                         break;
                     case R.id.buttonMainDepot:
-                        listener.toDepot();
+                        mPresenter.toDepot();
                         break;
                     case R.id.buttonMainShoppingList:
-                        listener.toShoppingList();
+                        mPresenter.toShoppingList();
                         break;
                     case R.id.buttonMainSettings:
-                        listener.toDatabaseDelete();
+                        mPresenter.toDatabaseDeleteDialog();
                         break;
                     default:
                         break;
@@ -63,48 +74,28 @@ public class MainMenuFragment extends Fragment {
         return view;
     }
 
-    public void onAttach(Activity activity){
-        super.onAttach(activity);
-
-        if( activity instanceof MenuFragmentActivityListener){
-            listener = (MenuFragmentActivityListener) activity;
-        } else {
-            throw new ClassCastException( activity.toString() + " musi implementować interfejs:MainMenuFragment.MenuFragmentActivityListener");
-        }
+    @Override
+    public void toDatabaseDeleteView() {
+        MainDialogDatabaseDelete databaseDeleteDialog = new MainDialogDatabaseDelete();
+        databaseDeleteDialog.setmPresenter(mPresenter);
+        databaseDeleteDialog.show(getFragmentManager(),"databaseDelete");
 
     }
 
-    public interface MenuFragmentActivityListener{
+    @Override
+    public void toBarcodeScannerView() {
+        Intent intent = new Intent(getActivity(),BarcodeScannerActivity.class);
+        startActivity(intent);
+    }
 
-        /**
-         * TEMPORARY: Set dialog box about database delete, finally -> settings.
-         * {@link MainDialogDatabaseDelete}
-         */
-        void toDatabaseDelete();
+    @Override
+    public void toDepotView() {
+        Intent intent = new Intent(getActivity(),DepotActivity.class);
+        startActivity(intent);
+    }
 
-        /**
-         * Set BarcodeScannerActivity to scan barcode of add product.
-         * {@link BarcodeScannerActivity}
-         */
-        void toAdd();
-
-        /**
-         * Set BarcodeScannerActivity to scan barcode of product, which quantity will be decreased.
-         * {@link BarcodeScannerActivity}
-         * If removed quantity are lower than on stock quantity it will be set at 0.
-         */
-        void toDecreaseQuantity();
-
-        /**
-         * Set DepotActivity with view what are on stock.
-         * {@link DepotActivity}
-         */
-        void toDepot();
-
-        /**
-         * Set DepotActivity with view what products are under minimum level of quantity.
-         * {@link DepotActivity}
-         */
-        void toShoppingList();
+    @Override
+    public void showToast(String message) {
+        Toast.makeText(getView().getContext(),message,Toast.LENGTH_SHORT).show();
     }
 }

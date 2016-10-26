@@ -18,6 +18,7 @@ import com.gatar.Spizarka.Fragments.Change.ChangeButtonAddNewItemFragment;
 import com.gatar.Spizarka.Fragments.Change.ChangeButtonDecreaseQuantityFragment;
 import com.gatar.Spizarka.Fragments.Change.ChangeButtonIncreaseQuantityFragment;
 import com.gatar.Spizarka.Fragments.Change.ChangeDataViewFragment;
+import com.gatar.Spizarka.Main.View.MainActivity;
 import com.gatar.Spizarka.Operations.Change.ChangeDataViewGet;
 import com.gatar.Spizarka.Operations.Change.ChangeDialogNewBarcode;
 import com.example.gatar.Spizarka.R;
