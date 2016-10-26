@@ -22,14 +22,6 @@ public class DepotSort {
     private boolean ascending = true;
 
     /**
-     *
-     * @param depotItems default ArrayList to sort.
-     */
-    public DepotSort(ArrayList<Item> depotItems){
-        this.depotItems = depotItems;
-    }
-
-    /**
      * Set new ArrayList of Item to sort.
      * @param depotItems change reference to sorting ArrayList
      */
@@ -37,7 +29,7 @@ public class DepotSort {
         this.depotItems = depotItems;
     }
 
-    public void sort(DepotSortTypes sortType){
+    public ArrayList<Item> sort(DepotSortTypes sortType){
         switch (sortType){
             case ByName:
                 Collections.sort(depotItems,sortByName);
@@ -50,6 +42,7 @@ public class DepotSort {
         if(ascending)ascending = false;
         else ascending = true;
 
+        return depotItems;
     }
 
     private class SortByCategory implements Comparator<Item>{

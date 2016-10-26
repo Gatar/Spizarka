@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.gatar.Spizarka.Database.Item;
 import com.gatar.Spizarka.Database.ManagerDAO;
+import com.gatar.Spizarka.Depot.DepotOptions;
+import com.gatar.Spizarka.Depot.View.DepotActivity;
 import com.gatar.Spizarka.Fragments.Change.ChangeButtonUpdateItemFragment;
 import com.gatar.Spizarka.Fragments.Change.ChangeButtonAddNewItemFragment;
 import com.gatar.Spizarka.Fragments.Change.ChangeButtonDecreaseQuantityFragment;
@@ -97,7 +99,7 @@ public class ChangeActivityUpdate extends AppCompatActivity implements
                 break;
 
             case AddBarcodeToProduct:
-                preferencesEditor.putString(DEPOT_ACTIVITY_OPTION,DepotOptions.AddBarcodeToExistingItemView.toString());
+                preferencesEditor.putString(DEPOT_ACTIVITY_OPTION, DepotOptions.AddBarcodeToExistingItemView.toString());
                 preferencesEditor.commit();
                 toDepotActivity();
                 break;

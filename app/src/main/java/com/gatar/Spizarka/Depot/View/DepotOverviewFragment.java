@@ -1,10 +1,8 @@
-package com.gatar.Spizarka.Fragments.Depot;
+package com.gatar.Spizarka.Depot.View;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -15,18 +13,17 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import com.gatar.Spizarka.Activities.ChangeActivityUpdate;
-import com.gatar.Spizarka.Activities.ChangeOptions;
-import com.gatar.Spizarka.Activities.DepotOptions;
+import com.gatar.Spizarka.Depot.DepotMVP;
 import com.gatar.Spizarka.Database.Categories;
 import com.gatar.Spizarka.Database.Item;
-import com.gatar.Spizarka.Database.ManagerDAO;
+import com.gatar.Spizarka.Depot.Presenter.DepotOverviewPresenter;
 import com.gatar.Spizarka.Operations.Depot.DepotCategoryLimit;
 import com.gatar.Spizarka.Operations.Depot.DepotOverviewAdapter;
 import com.gatar.Spizarka.Operations.Depot.DepotSort;
 import com.gatar.Spizarka.Operations.Depot.DepotSortTypes;
-import com.gatar.Spizarka.Operations.Depot.DepotShoppingListAdapter;
 import com.example.gatar.Spizarka.R;
 
 import java.util.ArrayList;
@@ -46,33 +43,29 @@ import java.util.ArrayList;
  * </ol>
  */
 
-public class DepotOverviewFragment extends Fragment  {
+public class DepotOverviewFragment extends Fragment implements DepotMVP.RequiredViewOperations.Overview {
 
-    public DepotOverviewFragmentActivityListener listener;
+    private DepotMVP.PresenterOperationsOverview mPresenter;
+
+    public DepotOverviewFragmentActivityListener activityListener;
     private ArrayList<Item> depotItems;
-    private SharedPreferences preferences;
-    private SharedPreferences.Editor preferencesEditor;
     private ArrayAdapter<Item> adapter;
-    private DepotOptions options;
-    private ManagerDAO managerDAO;
-    private DepotSort depotSort;
     private ListView listView;
+    private View view;
 
-    private final String DEPOT_ACTIVITY_OPTION = "com.example.spizarka.depotActivityOption";
-    private final String EXTRA_TITLE = "com.example.spizarka.TITLE";
-    private final static String CHANGE_ACTIVITY_OPTION = "com.example.spizarka.changeActivityOption";
-    private final static String EXTRA_BARCODE = "com.example.gatar.spizarkainterfejs.BARCODE";
+
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        mPresenter = new DepotOverviewPresenter(this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_depot_overview, container,false);
+        view = inflater.inflate(R.layout.fragment_depot_overview, container,false);
 
-        managerDAO = new ManagerDAO(view.getContext());
-
-        setPreferences();
-        setChosenView(view);
-        loadListAdaptor(view);
+        mPresenter.setListView();
 
         setCategoryLimitButton(view);
         setSortButton(view);
@@ -85,7 +78,7 @@ public class DepotOverviewFragment extends Fragment  {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         if (activity instanceof DepotOverviewFragmentActivityListener) {
-            listener = (DepotOverviewFragmentActivityListener) activity;
+            activityListener = (DepotOverviewFragmentActivityListener) activity;
         } else {
             throw new RuntimeException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -96,35 +89,33 @@ public class DepotOverviewFragment extends Fragment  {
     @Override
     public void onDetach() {
         super.onDetach();
-        listener = null;
+        activityListener = null;
     }
 
 
-    public interface DepotOverviewFragmentActivityListener{
-        /**
-         * Set fragment with detailed view fragment {@link DepotDetailFragment} of item clicked.
-         */
-        void setDepotDetail();
+    @Override
+    public void toChangeActivity(){
+        Intent intent = new Intent(getActivity(), ChangeActivityUpdate.class);
+        startActivity(intent);
     }
 
-    private void setChosenView(View view){
-        switch(options){
-            case DepotView:
-                depotItems = managerDAO.getAllItems(true);
-                setOverviewListAdaptor(view);
-                break;
-
-            case ShoppingListView:
-                depotItems = managerDAO.getShoppingList();
-                adapter = new DepotShoppingListAdapter(view.getContext(), R.layout.depot_row,depotItems);
-                break;
-
-            case AddBarcodeToExistingItemView:
-                depotItems = managerDAO.getAllItems(false);
-                setOverviewListAdaptor(view);
-                break;
-        }
+    @Override
+    public void showToast(String message) {
+        Toast.makeText(view.getContext(),message,Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void fillListByItems(ArrayList<Item> depotItems) {
+        this.depotItems = depotItems;
+        setOverviewListAdaptor(view);
+        loadListAdaptor(view);
+    }
+
+    @Override
+    public void setDetailFragment() {
+        activityListener.setDepotDetail();
+    }
+
 
     private void loadListAdaptor(View view){
         listView = (ListView) view.findViewById(R.id.listDepot);
@@ -136,36 +127,18 @@ public class DepotOverviewFragment extends Fragment  {
     }
 
     private void setListViewItemListener(){
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                Object o = listView.getItemAtPosition(position);
-                Item item = (Item) o;
-
-                if(options == DepotOptions.AddBarcodeToExistingItemView){
-                    String barcode = preferences.getString(EXTRA_BARCODE,null);
-                    String title = item.getTitle();
-
-                    preferencesEditor.putString(EXTRA_TITLE,item.getTitle());
-                    preferencesEditor.putString(CHANGE_ACTIVITY_OPTION,ChangeOptions.IncreaseQuantity.toString());
-                    preferencesEditor.commit();
-                    managerDAO.addNewBarcode(barcode,title);
-
-                    toChangeActivity();
-
-                }else {
-                    preferencesEditor.putString(EXTRA_TITLE,item.getTitle());
-                    preferencesEditor.commit();
-                    listener.setDepotDetail();
-                }
+                Item item = (Item) listView.getItemAtPosition(position);
+                mPresenter.setItemForDetailFragment(item);
             }
         });
     }
+
     private void setSortButton(View receivedView) {
         final View view = receivedView;
-        depotSort = new DepotSort(depotItems);
 
         final Button buttonSort = (Button)view.findViewById(R.id.buttonDepotSort);
         buttonSort.setOnClickListener(new View.OnClickListener() {
@@ -177,17 +150,15 @@ public class DepotOverviewFragment extends Fragment  {
 
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
-                        depotSort.setDepotItems(depotItems);
                         switch(item.getItemId()){
                             case R.id.sortByName:
-                                depotSort.sort(DepotSortTypes.ByName);
+                                mPresenter.sortListView(depotItems,DepotSortTypes.ByName);
                                 break;
 
                             case R.id.sortByCategory:
-                                depotSort.sort(DepotSortTypes.ByCategory);
+                                mPresenter.sortListView(depotItems,DepotSortTypes.ByCategory);
                                 break;
                         }
-                        loadListAdaptor(view);
                         return true;
                     }
                 });
@@ -197,15 +168,16 @@ public class DepotOverviewFragment extends Fragment  {
 
     }
 
+
     private void setCategoryLimitButton(View receivedView){
         final View view = receivedView;
-        final DepotCategoryLimit depotCategoryLimit = new DepotCategoryLimit(depotItems);
 
         final Button buttonCategory = (Button)view.findViewById(R.id.buttonDepotLimit);
         buttonCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                //Fill popup menu with Categories values
                 final PopupMenu popup = new PopupMenu(view.getContext(),buttonCategory);
                 Categories [] categories = Categories.values();
                 popup.getMenu().add(R.string.category_all);
@@ -217,13 +189,11 @@ public class DepotOverviewFragment extends Fragment  {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         if(item.getTitle().toString().equals(getResources().getString(R.string.category_all))){
-                            depotCategoryLimit.getAllItems();
+                            mPresenter.setListView();
                         }else {
                             Categories chosenCategory = Categories.getEnumByCategoryName(item.getTitle().toString());
-                            depotCategoryLimit.limitByCategory(chosenCategory);
+                            mPresenter.limitByCategoryListView(depotItems,chosenCategory);
                         }
-                        setOverviewListAdaptor(view);
-                        loadListAdaptor(view);
                         return true;
                     }
                 });
@@ -233,14 +203,11 @@ public class DepotOverviewFragment extends Fragment  {
         });
     }
 
-    private void setPreferences(){
-        preferences = getActivity().getSharedPreferences(getResources().getString(R.string.preferencesKey), Context.MODE_PRIVATE);
-        preferencesEditor = preferences.edit();
-        options = DepotOptions.valueOf(preferences.getString(DEPOT_ACTIVITY_OPTION, DepotOptions.DepotView.name()));
-    }
 
-    private void toChangeActivity(){
-        Intent intent = new Intent(getView().getContext(), ChangeActivityUpdate.class);
-        startActivity(intent);
+    public interface DepotOverviewFragmentActivityListener{
+        /**
+         * Set fragment with detailed view fragment {@link DepotDetailFragment} of item clicked.
+         */
+        void setDepotDetail();
     }
 }

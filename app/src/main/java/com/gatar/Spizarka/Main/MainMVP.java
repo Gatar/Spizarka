@@ -1,7 +1,7 @@
 package com.gatar.Spizarka.Main;
 
 import com.gatar.Spizarka.Activities.BarcodeScannerActivity;
-import com.gatar.Spizarka.Activities.DepotActivity;
+import com.gatar.Spizarka.Depot.View.DepotActivity;
 import com.gatar.Spizarka.Main.View.MainDialogDatabaseDelete;
 
 /**

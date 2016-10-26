@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.gatar.Spizarka.Database.Item;
 import com.example.gatar.Spizarka.R;
-import com.gatar.Spizarka.Fragments.Depot.DepotOverviewFragment;
+import com.gatar.Spizarka.Depot.View.DepotOverviewFragment;
 
 import java.util.ArrayList;
 

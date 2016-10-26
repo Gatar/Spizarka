@@ -20,7 +20,7 @@ import com.gatar.Spizarka.Activities.ChangeActivityUpdate;
  *     <li> Add barcode to existing product: set {@link ChangeOptions} to AddBarcodeToProduct</li>
  *     <li> Create completely new product: set {@link ChangeOptions} to AddProduct</li>
  * </ol>
- * Finally dialog box start method proceeding chosen option via listener in {@link ChangeActivityUpdate}
+ * Finally dialog box start method proceeding chosen option via activityListener in {@link ChangeActivityUpdate}
  */
 public class ChangeDialogNewBarcode extends DialogFragment{
     private SharedPreferences preferences;

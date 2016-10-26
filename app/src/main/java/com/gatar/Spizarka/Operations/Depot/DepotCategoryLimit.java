@@ -25,11 +25,12 @@ public class DepotCategoryLimit {
      * Create empty Item array in place of original and fill it with items from limited category only.
      * @param category Chosen limiting Category
      */
-    public void limitByCategory(Categories category){
+    public ArrayList<Item> limitByCategory(Categories category){
         depotItems.clear();
         for(Item item: depotItemsCopy){
             if(item.getCategory().equals(category)) depotItems.add(item);
         }
+        return depotItems;
     }
 
     /**

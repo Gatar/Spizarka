@@ -1,4 +1,4 @@
-package com.gatar.Spizarka.Activities;
+package com.gatar.Spizarka.Depot.View;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -10,8 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 
-import com.gatar.Spizarka.Fragments.Depot.DepotDetailFragment;
-import com.gatar.Spizarka.Fragments.Depot.DepotOverviewFragment;
+import com.gatar.Spizarka.Activities.ChangeActivityUpdate;
+import com.gatar.Spizarka.Activities.ChangeOptions;
 import com.example.gatar.Spizarka.R;
 
 /**
@@ -25,23 +25,20 @@ import com.example.gatar.Spizarka.R;
  */
 
 public class DepotActivity extends AppCompatActivity implements
-        DepotOverviewFragment.DepotOverviewFragmentActivityListener,
-        DepotDetailFragment.DepotDetailFragmentActivityListener {
+        DepotOverviewFragment.DepotOverviewFragmentActivityListener{
 
     private boolean isLand = false;
     private final FragmentManager fragmentManager = getFragmentManager();
     private Fragment currentFragment = null;
 
     private SharedPreferences preferences;
-    private SharedPreferences.Editor preferencesEditor;
-    private final String CHANGE_ACTIVITY_OPTION = "com.example.spizarka.changeActivityOption";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_depot);
 
-        setPreferences();
         isLand = getResources().getBoolean(R.bool.isLandscape);
     }
 
@@ -51,22 +48,10 @@ public class DepotActivity extends AppCompatActivity implements
         if(isLand==true) {
             DepotDetailFragment detailFragment = (DepotDetailFragment) getFragmentManager().findFragmentById(R.id.detailFragment);
             this.fragmentManager.executePendingTransactions();
-            detailFragment.setDataOnView();
         } else {
             setDepotDetailFragment();
             this.fragmentManager.executePendingTransactions();
-            ((DepotDetailFragment)this.currentFragment).setDataOnView();
         }
-    }
-
-
-    @Override
-    public void updateItemData(){
-        preferencesEditor.putString(CHANGE_ACTIVITY_OPTION, ChangeOptions.UpdateItem.toString());
-        preferencesEditor.commit();
-
-        Intent intent = new Intent(this,ChangeActivityUpdate.class);
-        startActivity(intent);
     }
 
 
@@ -76,11 +61,5 @@ public class DepotActivity extends AppCompatActivity implements
         fragmentTransaction.replace(R.id.depot_container,this.currentFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-    }
-
-
-    private void setPreferences(){
-        preferences = getSharedPreferences(getResources().getString(R.string.preferencesKey), Context.MODE_PRIVATE);
-        preferencesEditor = preferences.edit();
     }
 }

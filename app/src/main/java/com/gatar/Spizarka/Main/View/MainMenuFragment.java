@@ -10,10 +10,10 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.gatar.Spizarka.Activities.BarcodeScannerActivity;
-import com.gatar.Spizarka.Activities.DepotActivity;
+import com.gatar.Spizarka.Depot.View.DepotActivity;
 import com.example.gatar.Spizarka.R;
 import com.gatar.Spizarka.Main.MainMVP;
-import com.gatar.Spizarka.Main.MainPresenterImpl;
+import com.gatar.Spizarka.Main.MainPresenter;
 
 /**
  * Main Menu Fragment. Contains buttons which starts each type of activities in program.
@@ -25,7 +25,7 @@ public class MainMenuFragment extends Fragment implements MainMVP.RequiredViewOp
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        mPresenter = new MainPresenterImpl(this);
+        mPresenter = new MainPresenter(this);
     }
 
     @Override

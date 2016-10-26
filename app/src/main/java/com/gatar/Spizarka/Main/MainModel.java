@@ -11,17 +11,16 @@ import com.gatar.Spizarka.Operations.MyApp;
 /**
  * Model layer of MainActivity.
  */
-public class MainModelImpl implements MainMVP.ModelOperations{
+public class MainModel implements MainMVP.ModelOperations{
 
     private MainMVP.RequiredPresenterOperations mPresenter;
 
     private SharedPreferences.Editor preferencesEditor;
-
     private ManagerDAO managerDAO;
 
 
 
-    public MainModelImpl(MainMVP.RequiredPresenterOperations mPresenter) {
+    public MainModel(MainMVP.RequiredPresenterOperations mPresenter) {
         this.mPresenter = mPresenter;
         setPreferences();
         managerDAO = new ManagerDAO(MyApp.getAppContext());

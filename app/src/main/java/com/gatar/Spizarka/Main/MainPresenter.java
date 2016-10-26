@@ -1,14 +1,14 @@
 package com.gatar.Spizarka.Main;
 
 import com.gatar.Spizarka.Activities.ChangeOptions;
-import com.gatar.Spizarka.Activities.DepotOptions;
+import com.gatar.Spizarka.Depot.DepotOptions;
 
 import java.lang.ref.WeakReference;
 
 /**
  * Logic for Main menu.
  */
-public class MainPresenterImpl implements MainMVP.PresenterOperations, MainMVP.RequiredPresenterOperations {
+public class MainPresenter implements MainMVP.PresenterOperations, MainMVP.RequiredPresenterOperations {
 
     //View layer reference
     private WeakReference<MainMVP.RequiredViewOperations> mView;
@@ -21,9 +21,9 @@ public class MainPresenterImpl implements MainMVP.PresenterOperations, MainMVP.R
     private final String DEPOT_ACTIVITY_OPTION = "com.example.spizarka.depotActivityOption";
 
 
-    public MainPresenterImpl(MainMVP.RequiredViewOperations mView) {
+    public MainPresenter(MainMVP.RequiredViewOperations mView) {
         this.mView = new WeakReference<MainMVP.RequiredViewOperations>(mView);
-        mModel = new MainModelImpl(this);
+        mModel = new MainModel(this);
     }
 
     @Override

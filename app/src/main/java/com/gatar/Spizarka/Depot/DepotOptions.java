@@ -1,4 +1,4 @@
-package com.gatar.Spizarka.Activities;
+package com.gatar.Spizarka.Depot;
 
 /**
  * Possible options of view in depot mode.
