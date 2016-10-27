@@ -15,7 +15,7 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
-import com.gatar.Spizarka.Activities.ChangeActivityUpdate;
+import com.gatar.Spizarka.ItemFiller.View.ItemFillerActivity;
 import com.gatar.Spizarka.Depot.DepotMVP;
 import com.gatar.Spizarka.Database.Categories;
 import com.gatar.Spizarka.Database.Item;
@@ -95,7 +95,7 @@ public class DepotOverviewFragment extends Fragment implements DepotMVP.Required
 
     @Override
     public void toChangeActivity(){
-        Intent intent = new Intent(getActivity(), ChangeActivityUpdate.class);
+        Intent intent = new Intent(getActivity(), ItemFillerActivity.class);
         startActivity(intent);
     }
 

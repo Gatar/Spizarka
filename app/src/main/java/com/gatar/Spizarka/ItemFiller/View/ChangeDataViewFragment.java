@@ -1,4 +1,4 @@
-package com.gatar.Spizarka.Fragments.Change;
+package com.gatar.Spizarka.ItemFiller.View;
 
 
 import android.app.Activity;
@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.gatar.Spizarka.Activities.ChangeOptions;
+import com.gatar.Spizarka.ItemFiller.ItemFillerOptions;
 import com.gatar.Spizarka.Operations.Change.ChangeDataViewSet;
 import com.gatar.Spizarka.Operations.Change.ChangeDataViewGet;
 import com.gatar.Spizarka.Operations.Change.ChangeHideKeyboard;
@@ -19,7 +19,7 @@ import com.gatar.Spizarka.Operations.Change.ChangeDataView;
 
 /**
  * Activity setting up fragment with editable view of data for one item.
- * What fields are permit to edit depends on ChangeOptions variable, which is get from the SharedPreferences via key CHANGE_ACTIVITY_OPTION.
+ * What fields are permit to edit depends on ItemFillerOptions variable, which is get from the SharedPreferences via key CHANGE_ACTIVITY_OPTION.
  *
  * Abstract class responsible for view details and permissions: {@link ChangeDataView}
  * Set permissions and fill it with data: {@link ChangeDataViewSet}
@@ -29,7 +29,7 @@ public class ChangeDataViewFragment extends Fragment {
 
     private ChangeDataViewFragmentListener listener;
     private SharedPreferences preferences;
-    private ChangeOptions options;
+    private ItemFillerOptions options;
     private ChangeDataViewSet viewOperations;
 
     private final static String CHANGE_ACTIVITY_OPTION = "com.example.spizarka.changeActivityOption";
@@ -73,7 +73,7 @@ public class ChangeDataViewFragment extends Fragment {
 
     private void setPreferences(){
         preferences = this.getActivity().getSharedPreferences(getResources().getString(R.string.preferencesKey), Context.MODE_PRIVATE);
-        options = ChangeOptions.valueOf(preferences.getString(CHANGE_ACTIVITY_OPTION,"Error"));
+        options = ItemFillerOptions.valueOf(preferences.getString(CHANGE_ACTIVITY_OPTION,"Error"));
     }
 
     private void closeUnusedKeyboard(View view){

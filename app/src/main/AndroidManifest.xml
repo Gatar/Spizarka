@@ -29,9 +29,9 @@
         <activity android:name="com.gatar.Spizarka.Depot.View.DepotActivity" />
 
         <activity
-            android:name="com.gatar.Spizarka.Activities.ChangeActivityUpdate"
+            android:name="com.gatar.Spizarka.ItemFiller.View.ItemFillerActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.gatar.Spizarka.Activities.BarcodeScannerActivity" />
+        <activity android:name="com.gatar.Spizarka.BarcodeScanner.View.BarcodeScannerActivity" />
 
     </application>
 </manifest>

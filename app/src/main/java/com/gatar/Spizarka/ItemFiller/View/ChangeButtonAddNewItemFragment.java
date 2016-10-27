@@ -1,4 +1,4 @@
-package com.gatar.Spizarka.Fragments.Change;
+package com.gatar.Spizarka.ItemFiller.View;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -26,9 +26,9 @@ public class ChangeButtonAddNewItemFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_change_add_button, container, false);
+        View view = inflater.inflate(R.layout.item_filler_buttons, container, false);
 
-        Button buttonAdd = (Button)view.findViewById(R.id.buttonChangeAdd);
+        Button buttonAdd = (Button)view.findViewById(R.id.itemFillerOkButton);
         buttonAdd.setOnClickListener(new View.OnClickListener() {
 
 

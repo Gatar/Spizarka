@@ -3,11 +3,11 @@ package com.gatar.Spizarka.Operations.Change;
 import android.view.View;
 import android.widget.Toast;
 
-import com.gatar.Spizarka.Activities.ChangeOptions;
+import com.gatar.Spizarka.ItemFiller.ItemFillerOptions;
 import com.gatar.Spizarka.Database.Item;
 import com.gatar.Spizarka.Database.Categories;
 import com.example.gatar.Spizarka.R;
-import com.gatar.Spizarka.Fragments.Change.ChangeDataViewFragment;
+import com.gatar.Spizarka.ItemFiller.View.ChangeDataViewFragment;
 
 /**
  * Providing access to get data from fields in {@link ChangeDataViewFragment} layout.
@@ -20,13 +20,13 @@ public class ChangeDataViewGet extends ChangeDataView {
      * @param view View from inflated fragment {@link ChangeDataViewFragment}
      * @param option Option in which program is
      */
-    public ChangeDataViewGet(View view, ChangeOptions option) {
+    public ChangeDataViewGet(View view, ItemFillerOptions option) {
         super(view, option);
     }
 
     /**
      * Get data from {@link ChangeDataViewFragment} as Item object.
-     * Quantity of item are calculated based on what type of operation ChangeOptions was chosen.
+     * Quantity of item are calculated based on what type of operation ItemFillerOptions was chosen.
      * When data are incorrect shows Toast with information (by @see isDataViewCorrect)
      *
      * @return Item object filled with data from view (EditText fields) is data are correct, NULL when input data are incorrect.

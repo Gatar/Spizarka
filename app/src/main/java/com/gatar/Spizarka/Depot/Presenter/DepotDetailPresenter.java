@@ -1,6 +1,6 @@
 package com.gatar.Spizarka.Depot.Presenter;
 
-import com.gatar.Spizarka.Activities.ChangeOptions;
+import com.gatar.Spizarka.ItemFiller.ItemFillerOptions;
 import com.gatar.Spizarka.Database.Item;
 import com.gatar.Spizarka.Depot.DepotMVP;
 import com.gatar.Spizarka.Depot.DepotModel;
@@ -33,7 +33,7 @@ public class DepotDetailPresenter implements DepotMVP.PresenterOperationsDetail,
 
     @Override
     public void updateItem() {
-        mModel.setPreferencesValue(CHANGE_ACTIVITY_OPTION, ChangeOptions.UpdateItem.toString());
+        mModel.setPreferencesValue(CHANGE_ACTIVITY_OPTION, ItemFillerOptions.UpdateItem.toString());
         getView().toUpdateItemDataActivity();
     }
 

@@ -1,4 +1,4 @@
-package com.gatar.Spizarka.Fragments.Change;
+package com.gatar.Spizarka.ItemFiller.View;
 
 import android.app.Activity;
 import android.os.Bundle;

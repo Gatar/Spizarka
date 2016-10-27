@@ -4,12 +4,12 @@ import android.graphics.Color;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
-import com.gatar.Spizarka.Activities.ChangeOptions;
+import com.gatar.Spizarka.ItemFiller.ItemFillerOptions;
 import com.gatar.Spizarka.Database.Item;
 import com.gatar.Spizarka.Database.ManagerDAO;
 import com.gatar.Spizarka.Database.Categories;
 import com.example.gatar.Spizarka.R;
-import com.gatar.Spizarka.Fragments.Change.ChangeDataViewFragment;
+import com.gatar.Spizarka.ItemFiller.View.ChangeDataViewFragment;
 
 /**
  * Providing access to set data and modify view of fields in {@link ChangeDataViewFragment} layout.
@@ -29,14 +29,14 @@ public class ChangeDataViewSet extends ChangeDataView {
      * @param view View from inflated fragment {@link ChangeDataViewFragment}
      * @param option Option in which program is
      */
-    public ChangeDataViewSet(View view, ChangeOptions option) {
+    public ChangeDataViewSet(View view, ItemFillerOptions option) {
         super(view, option);
         managerDAO = new ManagerDAO(view.getContext());
     }
 
     /**
      * Set up permission to edit or not each EditText field in view and if its necessary fill it with data taken from database.
-     * Working mode is set on base of {@link ChangeOptions} set in class constructor.
+     * Working mode is set on base of {@link ItemFillerOptions} set in class constructor.
      */
     public void setDataView(){
         barcode = preferences.getString(EXTRA_BARCODE,null);
@@ -120,7 +120,7 @@ public class ChangeDataViewSet extends ChangeDataView {
         quantityMinimumText.setEnabled(false);
         descriptionText.setEnabled(false);
 
-        if(option == ChangeOptions.IncreaseQuantity){
+        if(option == ItemFillerOptions.IncreaseQuantity){
             quantityModificationDescription.setText(R.string.add);
         } else {
             quantityModificationDescription.setText(R.string.subtract);

@@ -1,6 +1,6 @@
 package com.gatar.Spizarka.Depot.Presenter;
 
-import com.gatar.Spizarka.Activities.ChangeOptions;
+import com.gatar.Spizarka.ItemFiller.ItemFillerOptions;
 import com.gatar.Spizarka.Database.Categories;
 import com.gatar.Spizarka.Database.Item;
 import com.gatar.Spizarka.Depot.DepotMVP;
@@ -80,7 +80,7 @@ public class DepotOverviewPresenter implements DepotMVP.PresenterOperationsOverv
 
         switch (options){
             case AddBarcodeToExistingItemView:
-                mModel.setPreferencesValue(CHANGE_ACTIVITY_OPTION, ChangeOptions.IncreaseQuantity.toString());
+                mModel.setPreferencesValue(CHANGE_ACTIVITY_OPTION, ItemFillerOptions.IncreaseQuantity.toString());
                 mModel.getPreferencesValue(EXTRA_BARCODE);
                 mModel.addNewBarcode(item,requestedPreferenceValue);
                 getView().toChangeActivity();

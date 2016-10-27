@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    tools:context="com.gatar.Spizarka.Fragments.Change.ChangeButtonAddNewItemFragment"
+    tools:context="com.gatar.Spizarka.ItemFiller.View.ChangeButtonAddNewItemFragment"
     android:rowCount="2"
     android:columnCount="2">
 
@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/add_item"
-        android:id="@+id/buttonChangeAdd"
+        android:id="@+id/itemFillerOkButton"
         android:layout_weight="1"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="15dp"
@@ -23,12 +23,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/add_item_end"
-        android:id="@+id/buttonChangeAddEnd"
+        android:id="@+id/itemFillerOkEndButton"
         android:layout_weight="1"
         android:layout_row="1"
         android:layout_column="0"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/buttonChangeAdd"
-        android:layout_toEndOf="@+id/buttonChangeAdd" />
+        android:layout_toRightOf="@+id/itemFillerOkButton"
+        android:layout_toEndOf="@+id/itemFillerOkButton" />
 
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.gatar.Spizarka.Activities;
+package com.gatar.Spizarka.ItemFiller.View;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -11,18 +11,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.gatar.Spizarka.BarcodeScanner.View.BarcodeScannerActivity;
 import com.gatar.Spizarka.Database.Item;
 import com.gatar.Spizarka.Database.ManagerDAO;
 import com.gatar.Spizarka.Depot.DepotOptions;
 import com.gatar.Spizarka.Depot.View.DepotActivity;
-import com.gatar.Spizarka.Fragments.Change.ChangeButtonUpdateItemFragment;
-import com.gatar.Spizarka.Fragments.Change.ChangeButtonAddNewItemFragment;
-import com.gatar.Spizarka.Fragments.Change.ChangeButtonDecreaseQuantityFragment;
-import com.gatar.Spizarka.Fragments.Change.ChangeButtonIncreaseQuantityFragment;
-import com.gatar.Spizarka.Fragments.Change.ChangeDataViewFragment;
+import com.gatar.Spizarka.ItemFiller.ItemFillerMVP;
+import com.gatar.Spizarka.ItemFiller.ItemFillerOptions;
+import com.gatar.Spizarka.ItemFiller.View.Buttons.ButtonViewStrategy;
+import com.gatar.Spizarka.ItemFiller.View.DataView.DataViewStrategy;
 import com.gatar.Spizarka.Main.View.MainActivity;
 import com.gatar.Spizarka.Operations.Change.ChangeDataViewGet;
-import com.gatar.Spizarka.Operations.Change.ChangeDialogNewBarcode;
+import com.gatar.Spizarka.BarcodeScanner.View.ChangeDialogNewBarcode;
 import com.example.gatar.Spizarka.R;
 
 /**
@@ -38,16 +38,22 @@ import com.example.gatar.Spizarka.R;
  * {@link ChangeButtonAddNewItemFragment}
  *
  *
- * Operations for data as in {@link ChangeOptions}
+ * Operations for data as in {@link ItemFillerOptions}
  */
 
-public class ChangeActivityUpdate extends AppCompatActivity implements
+public class ItemFillerActivity extends AppCompatActivity implements ItemFillerMVP.RequiredViewOperations,
         ChangeButtonAddNewItemFragment.ChangeAddButtonFragmentListener,
         ChangeButtonDecreaseQuantityFragment.ChangeRemoveButtonFragmentListener,
         ChangeButtonIncreaseQuantityFragment.ChangeQuantityChangeButtonFragmentListener,
         ChangeButtonUpdateItemFragment.ChangeButtonUpdateFragmentListener,
-        ChangeDataViewFragment.ChangeDataViewFragmentListener,
-        ChangeDialogNewBarcode.ChangeDialogAddTypeListener {
+        ChangeDataViewFragment.ChangeDataViewFragmentListener{
+
+    //TODO Dokończyć implementacje MVP tutaj
+
+    private ItemFillerMVP.ModelOperations mPresenter;
+
+    private DataViewStrategy dataViewStrategy;
+    private ButtonViewStrategy buttonViewStrategy;
 
     private final FragmentManager fragmentManager = getFragmentManager();
     private Fragment currentDataViewFragment = null;
@@ -61,7 +67,7 @@ public class ChangeActivityUpdate extends AppCompatActivity implements
     private final String EXTRA_TITLE = "com.example.spizarka.TITLE";
     private final String EXTRA_BARCODE = "com.example.gatar.spizarkainterfejs.BARCODE";
 
-    private ChangeOptions option;
+    private ItemFillerOptions option;
     private ManagerDAO managerDAO;
     private ChangeDataViewGet viewOperations;
     private String barcode;
@@ -87,11 +93,11 @@ public class ChangeActivityUpdate extends AppCompatActivity implements
     }
 
     /**
-     * Get from shared preferences chosen option {@link ChangeOptions} of work and set right data view and buttons fragments for it.
+     * Get from shared preferences chosen option {@link ItemFillerOptions} of work and set right data view and buttons fragments for it.
      */
-    @Override
+
     public void proceedChosenOption(){
-        option = ChangeOptions.valueOf(preferences.getString(CHANGE_ACTIVITY_OPTION, "Error"));
+        option = ItemFillerOptions.valueOf(preferences.getString(CHANGE_ACTIVITY_OPTION, "Error"));
         switch(option){
             case AddProduct:
                 setDataView();
@@ -238,7 +244,7 @@ public class ChangeActivityUpdate extends AppCompatActivity implements
     private void setPreferences(){
         preferences = getSharedPreferences(getResources().getString(R.string.preferencesKey), Context.MODE_PRIVATE);
         preferencesEditor = preferences.edit();
-        option = ChangeOptions.valueOf(preferences.getString(CHANGE_ACTIVITY_OPTION, "Error"));
+        option = ItemFillerOptions.valueOf(preferences.getString(CHANGE_ACTIVITY_OPTION, "Error"));
         barcode = preferences.getString(EXTRA_BARCODE,null);
     }
 
@@ -247,17 +253,17 @@ public class ChangeActivityUpdate extends AppCompatActivity implements
      * For example if chosen option is "AddProduct" and scanned barcode exists in database, method automatically change option to "Increase Quantity".
      */
     private void checkIsOptionCorrect(){
-        if(managerDAO.isContainBarcode(barcode) && option == ChangeOptions.AddProduct){
+        if(managerDAO.isContainBarcode(barcode) && option == ItemFillerOptions.AddProduct){
             Toast.makeText(this, R.string.product_found,Toast.LENGTH_LONG).show();
-            preferencesEditor.putString(CHANGE_ACTIVITY_OPTION, ChangeOptions.IncreaseQuantity.toString());
+            preferencesEditor.putString(CHANGE_ACTIVITY_OPTION, ItemFillerOptions.IncreaseQuantity.toString());
             preferencesEditor.commit();
-            option = ChangeOptions.IncreaseQuantity;
+            option = ItemFillerOptions.IncreaseQuantity;
         }
 
-        if(!managerDAO.isContainBarcode(barcode) && (option == ChangeOptions.IncreaseQuantity || option == ChangeOptions.DecreaseQuantity)){
-            preferencesEditor.putString(CHANGE_ACTIVITY_OPTION, ChangeOptions.AddProduct.toString());
+        if(!managerDAO.isContainBarcode(barcode) && (option == ItemFillerOptions.IncreaseQuantity || option == ItemFillerOptions.DecreaseQuantity)){
+            preferencesEditor.putString(CHANGE_ACTIVITY_OPTION, ItemFillerOptions.AddProduct.toString());
             preferencesEditor.commit();
-            option = ChangeOptions.AddProduct;
+            option = ItemFillerOptions.AddProduct;
         }
     }
 
@@ -266,7 +272,7 @@ public class ChangeActivityUpdate extends AppCompatActivity implements
      * @return true - AddProduct option is chosen, false - other option is chosen
      */
     private boolean isBarcodeNew(){
-        return option == ChangeOptions.AddProduct;
+        return option == ItemFillerOptions.AddProduct;
     }
 
     /**
@@ -280,4 +286,21 @@ public class ChangeActivityUpdate extends AppCompatActivity implements
         checkAddType.show(fragmentManager,"addType");
     }
 
+    @Override
+    public void setDataView(DataViewStrategy dataViewStrategy, Item item) {
+        this.dataViewStrategy = dataViewStrategy;
+        dataViewStrategy.setDataView();
+        dataViewStrategy.fillDataView(item);
+    }
+
+    @Override
+    public void setButtonView(ButtonViewStrategy buttonStrategy) {
+        this.buttonViewStrategy = buttonStrategy;
+        buttonViewStrategy.setButtonView();
+    }
+
+    @Override
+    public void showToast(String message) {
+        Toast.makeText(this.getBaseContext(),message,Toast.LENGTH_SHORT).show();
+    }
 }

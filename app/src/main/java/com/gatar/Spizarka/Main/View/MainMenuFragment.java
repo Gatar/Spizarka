@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.gatar.Spizarka.Activities.BarcodeScannerActivity;
+import com.gatar.Spizarka.BarcodeScanner.View.BarcodeScannerActivity;
 import com.gatar.Spizarka.Depot.View.DepotActivity;
 import com.example.gatar.Spizarka.R;
 import com.gatar.Spizarka.Main.MainMVP;

@@ -1,6 +1,6 @@
 package com.gatar.Spizarka.Main;
 
-import com.gatar.Spizarka.Activities.ChangeOptions;
+import com.gatar.Spizarka.ItemFiller.ItemFillerOptions;
 import com.gatar.Spizarka.Depot.DepotOptions;
 
 import java.lang.ref.WeakReference;
@@ -28,14 +28,14 @@ public class MainPresenter implements MainMVP.PresenterOperations, MainMVP.Requi
 
     @Override
     public void toAdd(){
-        mModel.setMainViewPreferences(CHANGE_ACTIVITY_OPTION, ChangeOptions.AddProduct);
+        mModel.setMainViewPreferences(CHANGE_ACTIVITY_OPTION, ItemFillerOptions.AddProduct);
         getView().toBarcodeScannerView();
     }
 
 
     @Override
     public void toDecreaseQuantity(){
-        mModel.setMainViewPreferences(CHANGE_ACTIVITY_OPTION,ChangeOptions.DecreaseQuantity);
+        mModel.setMainViewPreferences(CHANGE_ACTIVITY_OPTION, ItemFillerOptions.DecreaseQuantity);
         getView().toBarcodeScannerView();
     }
 

@@ -1,13 +1,13 @@
-package com.gatar.Spizarka.Activities;
+package com.gatar.Spizarka.BarcodeScanner.View;
 
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.content.Intent;
 
 import com.example.gatar.Spizarka.R;
+import com.gatar.Spizarka.BarcodeScanner.BarcodeScannerMVP;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -19,11 +19,15 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
  */
 
 public class BarcodeScannerActivity extends Activity implements ZXingScannerView.ResultHandler {
+
+    //TODO Dokończyć implementacje MVP tutaj.
+
     private ZXingScannerView mScannerView;
     private SharedPreferences preferences;
     private SharedPreferences.Editor preferencesEditor;
-    private final static String EXTRA_BARCODE = "com.example.gatar.spizarkainterfejs.BARCODE";
     private final FragmentManager fragmentManager = getFragmentManager();
+
+    private final static String EXTRA_BARCODE = "com.example.gatar.spizarkainterfejs.BARCODE";
     private String barcode;
 
     @Override
@@ -56,14 +60,18 @@ public class BarcodeScannerActivity extends Activity implements ZXingScannerView
         preferencesEditor.putString(EXTRA_BARCODE,barcode);
         preferencesEditor.commit();
 
-        Intent intent = new Intent(this, ChangeActivityUpdate.class);
-        startActivity(intent);
+        showNewBarcodeDialogBox();
 
         /* Options:
         * resume scanning:          mScannerView.resumeCameraPreview(this);
         * getting barcode text:     rawResult.getText()
         * getting barcode format:   rawResult.getBarcodeFormat().toString()
         */
+    }
+
+    private void showNewBarcodeDialogBox(){
+        ChangeDialogNewBarcode checkAddType = new ChangeDialogNewBarcode();
+        checkAddType.show(fragmentManager,"addType");
     }
 
 }

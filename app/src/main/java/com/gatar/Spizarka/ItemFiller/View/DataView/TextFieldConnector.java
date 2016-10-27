@@ -1,4 +1,4 @@
-package com.gatar.Spizarka.Operations.Change;
+package com.gatar.Spizarka.ItemFiller.View.DataView;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -7,19 +7,16 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.gatar.Spizarka.ItemFiller.ItemFillerOptions;
 import com.example.gatar.Spizarka.R;
-import com.gatar.Spizarka.ItemFiller.View.ChangeDataViewFragment;
+import com.gatar.Spizarka.Database.Categories;
+import com.gatar.Spizarka.Database.Item;
+import com.gatar.Spizarka.ItemFiller.ItemFillerOptions;
 
 /**
- * Class providing object references for each field in {@link ChangeDataViewFragment} layout.
- * This provide access to change view and data in inherited classes.
- *
+ * Created by Gatar on 2016-10-27.
  */
-abstract public class ChangeDataView {
+abstract public class TextFieldConnector {
     View view;
-    ItemFillerOptions option;
-    SharedPreferences preferences;
 
     TextView titleDescription;
     EditText titleText;
@@ -39,9 +36,8 @@ abstract public class ChangeDataView {
     TextView descriptionDescription;
     EditText descriptionText;
 
-    public ChangeDataView(View view, ItemFillerOptions option){
+    public TextFieldConnector(View view){
         this.view = view;
-        this.option = option;
 
         titleDescription = (TextView)view.findViewById(R.id.textChangeTitleDescription);
         titleText = (EditText) view.findViewById(R.id.textChangeTitle);
@@ -60,8 +56,17 @@ abstract public class ChangeDataView {
 
         descriptionDescription = (TextView)view.findViewById(R.id.textChangeDescriptionDescription);
         descriptionText = (EditText) view.findViewById(R.id.textChangeDescription);
+    }
 
-        preferences = view.getContext().getSharedPreferences(view.getResources().getString(R.string.preferencesKey), Context.MODE_PRIVATE);
+    public void fillDataView(Item item) {
+        titleText.setText(item.getTitle());
+        quantityText.setText(String.format("%d", item.getQuantity()));
+        quantityModificationText.setText("0");
+        quantityMinimumText.setText(String.format("%d", item.getMinimumQuantity()));
+        descriptionText.setText(item.getDescription());
 
+        Categories actualCategory = item.getCategory();
+        int categoryNumber = Categories.getOrdinalNoByCategoryName(actualCategory.toString());
+        categoryText.setSelection(categoryNumber);
     }
 }

@@ -11,13 +11,13 @@ import android.widget.TextView;
 
 import com.gatar.Spizarka.Database.Item;
 import com.example.gatar.Spizarka.R;
-import com.gatar.Spizarka.Activities.ChangeActivityUpdate;
+import com.gatar.Spizarka.ItemFiller.View.ItemFillerActivity;
 import com.gatar.Spizarka.Depot.Presenter.DepotDetailPresenter;
 import com.gatar.Spizarka.Depot.DepotMVP;
 
 /**
  * Fragment providing view with all data information of item chosen in {@link DepotOverviewFragment}
- * Contains button starting {@link ChangeActivityUpdate} with view for actualize data of item
+ * Contains button starting {@link ItemFillerActivity} with view for actualize data of item
  */
 public class DepotDetailFragment extends Fragment implements DepotMVP.RequiredViewOperations.Detail {
 
@@ -79,7 +79,7 @@ public class DepotDetailFragment extends Fragment implements DepotMVP.RequiredVi
 
     @Override
     public void toUpdateItemDataActivity() {
-        Intent intent = new Intent(getActivity(),ChangeActivityUpdate.class);
+        Intent intent = new Intent(getActivity(),ItemFillerActivity.class);
         startActivity(intent);
     }
 }
