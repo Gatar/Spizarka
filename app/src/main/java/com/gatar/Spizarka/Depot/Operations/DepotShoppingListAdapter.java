@@ -1,4 +1,4 @@
-package com.gatar.Spizarka.Operations.Depot;
+package com.gatar.Spizarka.Depot.Operations;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -16,14 +16,14 @@ import java.util.ArrayList;
 
 /**
  * Creating adaptor for ListView in {@link DepotOverviewFragment}.
- * Based on ArrayList<Item> received in constructor.
+ * Based on ArrayList<Item> received in constructor. Show quantity is calculated as subtraction between minimum quantity and on stock quantity.
  *
  */
-public class DepotOverviewAdapter extends ArrayAdapter<Item>{
+public class DepotShoppingListAdapter extends ArrayAdapter<Item> {
     private int layoutResourceId;
     private Context context;
 
-    public DepotOverviewAdapter(Context context, int layoutResourceId, ArrayList<Item> data){
+    public DepotShoppingListAdapter(Context context, int layoutResourceId, ArrayList<Item> data){
         super(context,layoutResourceId,data);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
@@ -48,7 +48,7 @@ public class DepotOverviewAdapter extends ArrayAdapter<Item>{
         }
 
         holder.imgIcon.setImageResource(p.getCategory().getIconId());
-        holder.txtQuantity.setText(String.format("%d",p.getQuantity()));
+        holder.txtQuantity.setText(String.format("%d",p.getMinimumQuantity()-p.getQuantity()));
         holder.txtTitle.setText(p.getTitle());
         return convertView;
     }
@@ -58,7 +58,4 @@ public class DepotOverviewAdapter extends ArrayAdapter<Item>{
         TextView txtTitle;
         TextView txtQuantity;
     }
-
 }
-
-

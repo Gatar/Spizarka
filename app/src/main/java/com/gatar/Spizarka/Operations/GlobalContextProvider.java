@@ -7,13 +7,13 @@ import android.content.Context;
  * Class providing Context access in every class in application by App.getAppContext().
  * Used only for provide Categories enum access to Strings with names from Resources.
  */
-public class MyApp extends Application {
+public class GlobalContextProvider extends Application {
 
     private static Context context;
 
     public void onCreate() {
         super.onCreate();
-        MyApp.context = getApplicationContext();
+        GlobalContextProvider.context = getApplicationContext();
     }
 
     /**
@@ -21,7 +21,7 @@ public class MyApp extends Application {
      * @return return application Context.
      */
     public static Context getAppContext() {
-        return MyApp.context;
+        return GlobalContextProvider.context;
     }
 }
 

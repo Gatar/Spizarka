@@ -10,6 +10,11 @@ public interface BarcodeScannerMVP {
         void showNewBarcodeDialogBox();
 
         void toItemFillerAcitivity();
+
+        /**
+         * Show Toast meessage.
+         */
+        void showToast(String message);
     }
 
     interface PresenterOperations{
@@ -22,9 +27,15 @@ public interface BarcodeScannerMVP {
         void askHowHandleNewBarcode();
 
         void handleExistingBarcode();
+
+        void reportFromModel(String report);
     }
 
     interface ModelOperations{
         void isBarcodeExistInDatabase(String barcode);
+
+        void setItemFillerPreferences(ItemFillerOptions options);
+
+        void setBarcodePreferences(String barcode);
     }
 }

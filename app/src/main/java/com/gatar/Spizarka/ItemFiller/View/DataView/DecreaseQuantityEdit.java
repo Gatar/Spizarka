@@ -4,50 +4,44 @@ import android.graphics.Color;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
-import com.example.gatar.Spizarka.R;
 import com.gatar.Spizarka.Database.Categories;
 import com.gatar.Spizarka.Database.Item;
 
 /**
- * Created by Gatar on 2016-10-27.
+ * Created by Gatar on 2016-10-28.
  */
-public class AddNewEdit extends MyDataView {
+public class DecreaseQuantityEdit extends MyDataView {
 
-    public AddNewEdit(View view) {
+    public DecreaseQuantityEdit(View view) {
         super(view);
     }
 
     @Override
     public void setDataView() {
-        titleDescription.setTextColor(Color.RED);
-        categoryDescription.setTextColor(Color.RED);
+        titleDescription.setTextColor(Color.BLACK);
+        categoryDescription.setTextColor(Color.BLACK);
         quantityDescription.setTextColor(Color.BLACK);
         quantityModificationDescription.setTextColor(Color.RED);
-        quantityMinimumDescription.setTextColor(Color.RED);
-        descriptionDescription.setTextColor(Color.RED);
+        quantityMinimumDescription.setTextColor(Color.BLACK);
+        descriptionDescription.setTextColor(Color.BLACK);
 
-        titleText.setEnabled(true);
-        categoryText.setEnabled(true);
+        titleText.setEnabled(false);
+        categoryText.setEnabled(false);
         quantityText.setEnabled(false);
         quantityModificationText.setEnabled(true);
-        quantityMinimumText.setEnabled(true);
-        descriptionText.setEnabled(true);
-
-        quantityModificationDescription.setText(R.string.add);
+        quantityMinimumText.setEnabled(false);
+        descriptionText.setEnabled(false);
 
         ArrayAdapter<Categories> adapter = new ArrayAdapter<>(view.getContext(),android.R.layout.simple_spinner_dropdown_item,Categories.values());
         categoryText.setAdapter(adapter);
     }
 
 
-    /**
-     * Get data from edit text fields and put it in Item object.
-     * @return Item with all data or NULL when there was any incorrectness ex. new quantity below zero.
-     */
     public Item getDataView(){
         Item item = new Item();
         if(isEditTextNotEmpty()) {
-            int newQuantity = Integer.parseInt(quantityModificationText.getText().toString());
+            int newQuantity = Integer.parseInt(quantityText.getText().toString()) -
+                    Integer.parseInt(quantityModificationText.getText().toString());
 
             if(isQuantityNegativeValue(newQuantity)) return null;
 

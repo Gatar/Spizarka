@@ -7,16 +7,16 @@ import com.example.gatar.Spizarka.R;
 /**
  * Created by Gatar on 2016-10-27.
  */
-public class UpdateButton extends ButtonViewConnector implements ButtonViewStrategy {
+public class UpdateMyButton extends MyButton {
 
-    public UpdateButton(View view) {
+    public UpdateMyButton(View view) {
         super(view);
     }
 
     @Override
     public void setButtonView() {
-        buttonOk.setText(R.string.actualize_item);
-        buttonOkEnd.setText("");
-        buttonOkEnd.setEnabled(false);
+        buttonOkEnd.setText(R.string.actualize_item);
+        buttonOk.setText("");
+        buttonOk.setEnabled(false);
     }
 }

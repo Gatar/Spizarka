@@ -1,4 +1,4 @@
-package com.gatar.Spizarka.Operations.Depot;
+package com.gatar.Spizarka.Depot.Operations;
 
 import com.gatar.Spizarka.Database.Categories;
 import com.gatar.Spizarka.Database.Item;

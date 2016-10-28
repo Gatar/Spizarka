@@ -20,10 +20,10 @@ import com.gatar.Spizarka.Depot.DepotMVP;
 import com.gatar.Spizarka.Database.Categories;
 import com.gatar.Spizarka.Database.Item;
 import com.gatar.Spizarka.Depot.Presenter.DepotOverviewPresenter;
-import com.gatar.Spizarka.Operations.Depot.DepotCategoryLimit;
-import com.gatar.Spizarka.Operations.Depot.DepotOverviewAdapter;
-import com.gatar.Spizarka.Operations.Depot.DepotSort;
-import com.gatar.Spizarka.Operations.Depot.DepotSortTypes;
+import com.gatar.Spizarka.Depot.Operations.DepotCategoryLimit;
+import com.gatar.Spizarka.Depot.Operations.DepotOverviewAdapter;
+import com.gatar.Spizarka.Depot.Operations.DepotSort;
+import com.gatar.Spizarka.Depot.Operations.DepotSortTypes;
 import com.example.gatar.Spizarka.R;
 
 import java.util.ArrayList;
@@ -63,7 +63,7 @@ public class DepotOverviewFragment extends Fragment implements DepotMVP.Required
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_depot_overview, container,false);
+        view = inflater.inflate(R.layout.depot_overview_fragment, container,false);
 
         mPresenter.setListView();
 

@@ -1,4 +1,4 @@
-package com.gatar.Spizarka.Operations.Depot;
+package com.gatar.Spizarka.Depot.Operations;
 
 /**
  * Sorting options in depot view.

@@ -6,9 +6,9 @@ import com.gatar.Spizarka.Database.Item;
 import com.gatar.Spizarka.Depot.DepotMVP;
 import com.gatar.Spizarka.Depot.DepotModel;
 import com.gatar.Spizarka.Depot.DepotOptions;
-import com.gatar.Spizarka.Operations.Depot.DepotCategoryLimit;
-import com.gatar.Spizarka.Operations.Depot.DepotSort;
-import com.gatar.Spizarka.Operations.Depot.DepotSortTypes;
+import com.gatar.Spizarka.Depot.Operations.DepotCategoryLimit;
+import com.gatar.Spizarka.Depot.Operations.DepotSort;
+import com.gatar.Spizarka.Depot.Operations.DepotSortTypes;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

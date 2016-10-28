@@ -2,12 +2,13 @@ package com.gatar.Spizarka.BarcodeScanner.View;
 
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
-import com.example.gatar.Spizarka.R;
 import com.gatar.Spizarka.BarcodeScanner.BarcodeScannerMVP;
+import com.gatar.Spizarka.BarcodeScanner.BarcodeScannerPresenter;
+import com.gatar.Spizarka.ItemFiller.View.ItemFillerActivity;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -18,24 +19,19 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
  * @see <a href="https://github.com/dm77/barcodescanner">ZXing Scanner repository on Git</a>
  */
 
-public class BarcodeScannerActivity extends Activity implements ZXingScannerView.ResultHandler {
+public class BarcodeScannerActivity extends Activity implements ZXingScannerView.ResultHandler, BarcodeScannerMVP.RequiredViewOperations {
 
-    //TODO Dokończyć implementacje MVP tutaj.
+
+    private BarcodeScannerMVP.PresenterOperations mPresenter;
 
     private ZXingScannerView mScannerView;
-    private SharedPreferences preferences;
-    private SharedPreferences.Editor preferencesEditor;
     private final FragmentManager fragmentManager = getFragmentManager();
 
-    private final static String EXTRA_BARCODE = "com.example.gatar.spizarkainterfejs.BARCODE";
-    private String barcode;
 
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
-
-        preferences = getSharedPreferences(getResources().getString(R.string.preferencesKey), Context.MODE_PRIVATE);
-        preferencesEditor = preferences.edit();
+        mPresenter = new BarcodeScannerPresenter(this);
 
         mScannerView = new ZXingScannerView(this);   // Programmatically initialize the scanner view
         setContentView(mScannerView);                // Set the scanner view as the content view
@@ -54,24 +50,43 @@ public class BarcodeScannerActivity extends Activity implements ZXingScannerView
         mScannerView.stopCamera();           // Stop camera on pause
     }
 
+    /**
+     *  Get result from barcode scanner.
+     *
+     * Options:
+     * resume scanning:          mScannerView.resumeCameraPreview(this);
+     * getting barcode text:     rawResult.getText()
+     * getting barcode format:   rawResult.getBarcodeFormat().toString()
+     */
     @Override
     public void handleResult(Result rawResult) {
-        barcode = rawResult.getText();
-        preferencesEditor.putString(EXTRA_BARCODE,barcode);
-        preferencesEditor.commit();
-
-        showNewBarcodeDialogBox();
-
-        /* Options:
-        * resume scanning:          mScannerView.resumeCameraPreview(this);
-        * getting barcode text:     rawResult.getText()
-        * getting barcode format:   rawResult.getBarcodeFormat().toString()
-        */
+        String barcode = rawResult.getText();
+        mPresenter.handleScannedBarcode(barcode);
     }
 
-    private void showNewBarcodeDialogBox(){
+
+    @Override
+    public void toItemFillerAcitivity() {
+        Intent intent = new Intent(this, ItemFillerActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * Show dialog box with question how handle new barcode:
+     * 1. Add it to existing item in database
+     * 2. Add new item to database
+     * {@link ChangeDialogNewBarcode}
+     */
+    @Override
+    public void showNewBarcodeDialogBox(){
         ChangeDialogNewBarcode checkAddType = new ChangeDialogNewBarcode();
+        checkAddType.setPresenter(mPresenter);
         checkAddType.show(fragmentManager,"addType");
+    }
+
+    @Override
+    public void showToast(String message) {
+        Toast.makeText(this.getBaseContext(),message,Toast.LENGTH_SHORT).show();
     }
 
 }

@@ -1,12 +1,11 @@
 package com.gatar.Spizarka.Main;
 
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.gatar.Spizarka.R;
 import com.gatar.Spizarka.Database.ManagerDAO;
-import com.gatar.Spizarka.Operations.MyApp;
+import com.gatar.Spizarka.Operations.GlobalContextProvider;
 
 /**
  * Model layer of MainActivity.
@@ -23,7 +22,7 @@ public class MainModel implements MainMVP.ModelOperations{
     public MainModel(MainMVP.RequiredPresenterOperations mPresenter) {
         this.mPresenter = mPresenter;
         setPreferences();
-        managerDAO = new ManagerDAO(MyApp.getAppContext());
+        managerDAO = new ManagerDAO(GlobalContextProvider.getAppContext());
     }
 
     @Override
@@ -39,7 +38,7 @@ public class MainModel implements MainMVP.ModelOperations{
     }
 
     private void setPreferences(){
-        SharedPreferences preferences = MyApp.getAppContext().getSharedPreferences(MyApp.getAppContext().getResources().getString(R.string.preferencesKey), Context.MODE_PRIVATE);
+        SharedPreferences preferences = GlobalContextProvider.getAppContext().getSharedPreferences(GlobalContextProvider.getAppContext().getResources().getString(R.string.preferencesKey), Context.MODE_PRIVATE);
         preferencesEditor = preferences.edit();
     }
 }

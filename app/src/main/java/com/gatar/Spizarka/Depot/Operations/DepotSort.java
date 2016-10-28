@@ -1,4 +1,4 @@
-package com.gatar.Spizarka.Operations.Depot;
+package com.gatar.Spizarka.Depot.Operations;
 
 import com.gatar.Spizarka.Database.Item;
 
@@ -39,8 +39,7 @@ public class DepotSort {
                 break;
         }
 
-        if(ascending)ascending = false;
-        else ascending = true;
+        ascending = !ascending;
 
         return depotItems;
     }
@@ -49,7 +48,7 @@ public class DepotSort {
 
         @Override
         public int compare(Item lhs, Item rhs) {
-            if(ascending == true){
+            if(ascending){
                 return lhs.getCategory().name().compareTo(rhs.getCategory().name());
             }else{
                 return rhs.getCategory().name().compareTo(lhs.getCategory().name());
@@ -61,7 +60,7 @@ public class DepotSort {
 
         @Override
         public int compare(Item lhs, Item rhs) {
-            if(ascending == true){
+            if(ascending){
                 return lhs.getTitle().compareToIgnoreCase(rhs.getTitle());
             }else{
                 return rhs.getTitle().compareToIgnoreCase(lhs.getTitle());

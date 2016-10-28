@@ -15,6 +15,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         class="com.gatar.Spizarka.Depot.View.DepotOverviewFragment"
-        tools:layout="@layout/fragment_depot_overview">
+        tools:layout="@layout/depot_overview_fragment">
     </fragment>
 </FrameLayout>

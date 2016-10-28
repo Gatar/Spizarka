@@ -1,4 +1,4 @@
-package com.gatar.Spizarka.Operations.Change;
+package com.gatar.Spizarka.ItemFiller.View.DataView;
 
 import android.app.Activity;
 import android.view.View;
@@ -8,11 +8,11 @@ import android.view.inputmethod.InputMethodManager;
 /**
  * Class using for force close the keyboard when clicked outside of EditText fields.
  */
-public class ChangeHideKeyboard implements View.OnClickListener {
+public class KeyboardHider implements View.OnClickListener {
 
         Activity mAct;
 
-        public ChangeHideKeyboard(Activity act) {
+        public KeyboardHider(Activity act) {
             this.mAct = act;
         }
 

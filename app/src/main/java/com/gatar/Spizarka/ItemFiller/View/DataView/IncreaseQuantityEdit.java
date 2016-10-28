@@ -4,16 +4,14 @@ import android.graphics.Color;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
-import com.example.gatar.Spizarka.R;
 import com.gatar.Spizarka.Database.Categories;
 import com.gatar.Spizarka.Database.Item;
-import com.gatar.Spizarka.ItemFiller.ItemFillerOptions;
 
 /**
  * Created by Gatar on 2016-10-27.
  */
-public class QuantityEdit extends TextFieldConnector implements DataViewStrategy{
-    public QuantityEdit(View view) {
+public class IncreaseQuantityEdit extends MyDataView {
+    public IncreaseQuantityEdit(View view) {
         super(view);
     }
 
@@ -37,9 +35,26 @@ public class QuantityEdit extends TextFieldConnector implements DataViewStrategy
         categoryText.setAdapter(adapter);
     }
 
-    @Override
-    public void fillDataView(Item item) {
-        super.fillDataView(item);
+
+    public Item getDataView(){
+        Item item = new Item();
+        if(isEditTextNotEmpty()) {
+            int newQuantity = Integer.parseInt(quantityText.getText().toString()) +
+                    Integer.parseInt(quantityModificationText.getText().toString());
+
+            if(isQuantityNegativeValue(newQuantity)) return null;
+
+            item.setTitle(titleText.getText().toString());
+            item.setCategory(Categories.getEnumByCategoryName(categoryText.getSelectedItem().toString()));
+            item.setQuantity(newQuantity);
+            item.setMinimumQuantity(Integer.parseInt(quantityMinimumText.getText().toString()));
+            item.setDescription(descriptionText.getText().toString());
+
+            return item;
+
+        } else {
+            return null;
+        }
     }
 }
 

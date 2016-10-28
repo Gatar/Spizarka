@@ -79,7 +79,8 @@
     <string name="give_quantity">podaj ilość</string>
     <string name="add_description">dodaj opis</string>
     <string name="give_item_title">podaj nazwę produktu</string>
-
+    <string name="communicateAddedItemAndBarcode">Nowy item oraz kod krskowy dodane do bazy!</string>
+    <string name="communicateItemUpdated">Item zauktualizowany.</string>
 
 
 </resources>

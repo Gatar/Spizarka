@@ -7,16 +7,16 @@ import com.example.gatar.Spizarka.R;
 /**
  * Created by Gatar on 2016-10-27.
  */
-public class AddNewButton extends ButtonViewConnector implements ButtonViewStrategy {
+public class DecreaseQuantityMyButton extends MyButton {
 
-    public AddNewButton(View view) {
+    public DecreaseQuantityMyButton(View view) {
         super(view);
     }
 
     @Override
     public void setButtonView() {
-        buttonOk.setText(R.string.add_item);
-        buttonOkEnd.setText(R.string.add_item_end);
+        buttonOk.setText(R.string.remove_item);
+        buttonOkEnd.setText(R.string.remove_item_end);
         buttonOkEnd.setEnabled(true);
     }
 }

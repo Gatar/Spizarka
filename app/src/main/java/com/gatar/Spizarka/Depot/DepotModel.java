@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import com.example.gatar.Spizarka.R;
 import com.gatar.Spizarka.Database.Item;
 import com.gatar.Spizarka.Database.ManagerDAO;
-import com.gatar.Spizarka.Operations.MyApp;
+import com.gatar.Spizarka.Operations.GlobalContextProvider;
 
 import java.util.ArrayList;
 
@@ -27,7 +27,7 @@ public class DepotModel implements DepotMVP.ModelOperations{
             mPresenterOverview = (DepotMVP.RequiredPresenterOperationsOverview) mPresenter;
         else mPresenterDetail = (DepotMVP.RequiredPresenterOperationsDetail) mPresenter;
 
-        managerDAO = new ManagerDAO(MyApp.getAppContext());
+        managerDAO = new ManagerDAO(GlobalContextProvider.getAppContext());
         setPreferences();
     }
 
@@ -83,7 +83,7 @@ public class DepotModel implements DepotMVP.ModelOperations{
     }
 
     private void setPreferences(){
-        preferences = MyApp.getAppContext().getSharedPreferences(MyApp.getAppContext().getResources().getString(R.string.preferencesKey), Context.MODE_PRIVATE);
+        preferences = GlobalContextProvider.getAppContext().getSharedPreferences(GlobalContextProvider.getAppContext().getResources().getString(R.string.preferencesKey), Context.MODE_PRIVATE);
         preferencesEditor = preferences.edit();
     }
 }

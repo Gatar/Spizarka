@@ -3,7 +3,6 @@ package com.gatar.Spizarka.Depot.View;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -27,7 +26,6 @@ public class DepotActivity extends AppCompatActivity implements
     private final FragmentManager fragmentManager = getFragmentManager();
     private Fragment currentFragment = null;
 
-    private SharedPreferences preferences;
 
 
     @Override
@@ -41,8 +39,7 @@ public class DepotActivity extends AppCompatActivity implements
 
     @Override
     public void setDepotDetail(){
-        if(isLand==true) {
-            DepotDetailFragment detailFragment = (DepotDetailFragment) getFragmentManager().findFragmentById(R.id.detailFragment);
+        if(isLand) {
             this.fragmentManager.executePendingTransactions();
         } else {
             setDepotDetailFragment();

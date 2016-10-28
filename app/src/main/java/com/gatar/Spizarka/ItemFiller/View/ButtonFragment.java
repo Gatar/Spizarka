@@ -15,7 +15,8 @@ import com.example.gatar.Spizarka.R;
  */
 public class ButtonFragment extends Fragment {
 
-    private ChangeAddButtonFragmentListener listener;
+    private ButtonFragmentListener listener;
+    private View view;
 
     public ButtonFragment() {
         // Required empty public constructor
@@ -38,13 +39,16 @@ public class ButtonFragment extends Fragment {
             }
         });
 
-        Button buttonAddEnd = (Button)view.findViewById(R.id.buttonChangeAddEnd);
+        Button buttonAddEnd = (Button)view.findViewById(R.id.itemFillerOkEndButton);
         buttonAddEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.confirmButtonClick(false);
             }
         });
+
+        ItemFillerActivity.buttonView = view;
+        this.view = view;
         return view;
     }
 
@@ -52,8 +56,8 @@ public class ButtonFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (activity instanceof ChangeAddButtonFragmentListener) {
-            listener = (ChangeAddButtonFragmentListener) activity;
+        if (activity instanceof ButtonFragmentListener) {
+            listener = (ButtonFragmentListener) activity;
         } else {
             throw new RuntimeException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -66,13 +70,12 @@ public class ButtonFragment extends Fragment {
         listener = null;
     }
 
+    public View getButtonFragmentView(){
+        return view;
+    }
 
-    public interface ChangeAddButtonFragmentListener {
-        /**
-         * Extract data of new item from TextFields in user input view and add new item with barcode to database.
-         * @see ChangeButtonAddNewItemFragment#listener
-         * @param isItTheLast true - there won't be next items to add, go to Main Activity; false - there will be next items, go to Barcode Scanner
-         */
-        void confirmButtonClick(boolean isItTheLast);
+
+    public interface ButtonFragmentListener {
+        void confirmButtonClick(boolean scanNext);
     }
 }

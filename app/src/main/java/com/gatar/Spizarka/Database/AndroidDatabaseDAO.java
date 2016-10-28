@@ -15,7 +15,6 @@ import java.util.NoSuchElementException;
 class AndroidDatabaseDAO extends SQLiteOpenHelper implements MethodsDAO {
 
     public final String INTERNAL_DATABASE_NAME;
-    public final int    DATABASE_VERSION = 1;
 
     public final String TABLE_NAME_ITEMS = "itemsTable";
     public final String COLUMN_NAME_TITLE = "title";
@@ -64,10 +63,7 @@ class AndroidDatabaseDAO extends SQLiteOpenHelper implements MethodsDAO {
     public boolean isContainBarcode(String barcode) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT "+ COLUMN_NAME_BARCODE +" FROM "+ TABLE_NAME_BARCODES +" WHERE "+ COLUMN_NAME_BARCODE +"='" + barcode + "'",null);
-        if(cursor.getCount() != 0){
-            return true;
-        }
-        return false;
+        return cursor.getCount() != 0;
     }
 
     @Override
@@ -160,7 +156,6 @@ class AndroidDatabaseDAO extends SQLiteOpenHelper implements MethodsDAO {
 
         SQLiteDatabase db = getReadableDatabase();
         String selection = COLUMN_NAME_TITLE + "='" + item.getTitle() + "'";
-        String [] selectionArgs = {item.getTitle()};
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME_CATEGORY,item.getCategory().name());
@@ -231,7 +226,7 @@ class AndroidDatabaseDAO extends SQLiteOpenHelper implements MethodsDAO {
         ArrayList<Item> items = new ArrayList<Item>();
 
         String [] selectionArgs = {"0"};
-        if(overZeroQuantity == false) selectionArgs[0] = "-1";
+        if(!overZeroQuantity) selectionArgs[0] = "-1";
 
 
         SQLiteDatabase db = getReadableDatabase();

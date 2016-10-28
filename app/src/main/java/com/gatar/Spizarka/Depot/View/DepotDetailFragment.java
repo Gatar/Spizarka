@@ -35,7 +35,7 @@ public class DepotDetailFragment extends Fragment implements DepotMVP.RequiredVi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_depot_detail, container, false);
+        View view = inflater.inflate(R.layout.depot_detail_fragment, container, false);
         this.view = view;
         mPresenter.fillViewWithData();
 

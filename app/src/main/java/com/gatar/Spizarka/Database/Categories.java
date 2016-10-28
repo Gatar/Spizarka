@@ -1,6 +1,6 @@
 package com.gatar.Spizarka.Database;
 
-import com.gatar.Spizarka.Operations.MyApp;
+import com.gatar.Spizarka.Operations.GlobalContextProvider;
 import com.example.gatar.Spizarka.R;
 
 /**
@@ -36,7 +36,7 @@ public enum Categories {
      */
     @Override
     public String toString(){
-        return MyApp.getAppContext().getString(textId);
+        return GlobalContextProvider.getAppContext().getString(textId);
     }
 
     /**

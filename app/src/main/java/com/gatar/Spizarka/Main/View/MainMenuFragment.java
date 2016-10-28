@@ -31,7 +31,7 @@ public class MainMenuFragment extends Fragment implements MainMVP.RequiredViewOp
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
-        final View view = inflater.inflate(R.layout.fragment_main_menu,container,false);
+        final View view = inflater.inflate(R.layout.main_menu_fragment,container,false);
 
 
         View.OnClickListener clickListener = new View.OnClickListener() {
@@ -96,6 +96,6 @@ public class MainMenuFragment extends Fragment implements MainMVP.RequiredViewOp
 
     @Override
     public void showToast(String message) {
-        Toast.makeText(getView().getContext(),message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity().getBaseContext(),message,Toast.LENGTH_SHORT).show();
     }
 }

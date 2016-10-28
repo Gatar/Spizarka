@@ -11,7 +11,7 @@ import com.gatar.Spizarka.Database.Item;
 /**
  * Created by Gatar on 2016-10-27.
  */
-public class UpdateEdit extends TextFieldConnector implements DataViewStrategy {
+public class UpdateEdit extends MyDataView {
     public UpdateEdit(View view) {
         super(view);
     }
@@ -38,8 +38,24 @@ public class UpdateEdit extends TextFieldConnector implements DataViewStrategy {
         categoryText.setAdapter(adapter);
     }
 
-    @Override
-    public void fillDataView(Item item) {
-        super.fillDataView(item);
+
+    public Item getDataView(){
+        Item item = new Item();
+        if(isEditTextNotEmpty()) {
+            int newQuantity = Integer.parseInt(quantityText.getText().toString());
+
+            if(isQuantityNegativeValue(newQuantity)) return null;
+
+            item.setTitle(titleText.getText().toString());
+            item.setCategory(Categories.getEnumByCategoryName(categoryText.getSelectedItem().toString()));
+            item.setQuantity(newQuantity);
+            item.setMinimumQuantity(Integer.parseInt(quantityMinimumText.getText().toString()));
+            item.setDescription(descriptionText.getText().toString());
+
+            return item;
+
+        } else {
+            return null;
+        }
     }
 }

@@ -7,9 +7,9 @@ import com.example.gatar.Spizarka.R;
 /**
  * Created by Gatar on 2016-10-27.
  */
-public class IncreaseQuantityButton extends ButtonViewConnector implements ButtonViewStrategy {
+public class IncreaseQuantityMyButton extends MyButton {
 
-    public IncreaseQuantityButton(View view) {
+    public IncreaseQuantityMyButton(View view) {
         super(view);
     }
 

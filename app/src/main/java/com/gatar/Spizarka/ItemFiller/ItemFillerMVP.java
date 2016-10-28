@@ -1,8 +1,7 @@
 package com.gatar.Spizarka.ItemFiller;
 
 import com.gatar.Spizarka.Database.Item;
-import com.gatar.Spizarka.ItemFiller.View.Buttons.ButtonViewStrategy;
-import com.gatar.Spizarka.ItemFiller.View.DataView.DataViewStrategy;
+import com.gatar.Spizarka.Depot.DepotOptions;
 
 /**
  * Created by Gatar on 2016-10-27.
@@ -10,9 +9,15 @@ import com.gatar.Spizarka.ItemFiller.View.DataView.DataViewStrategy;
 public interface ItemFillerMVP {
 
     interface RequiredViewOperations{
-        void setDataView(DataViewStrategy dataView,Item item);
+        void setDataView(ItemFillerOptions options, Item item);
 
-        void setButtonView(ButtonViewStrategy buttonStrategy);
+        void setButtonView(ItemFillerOptions options);
+
+        void toDepotActivity();
+
+        void toMainMenu();
+
+        void toBarcodeScanner();
 
         /**
          * Show Toast meessage.
@@ -26,21 +31,13 @@ public interface ItemFillerMVP {
          */
         void getCorrectView();
 
-        void addNewItem(Item item, Boolean scanNext);
-
-        void increaseQuantityItem(Item item, Boolean scanNext);
-
-        void decreaseQuantityItem(Item item, Boolean scanNext);
-
-        void updateItem(Item item);
+        void saveItem(Item item, Boolean scanNext);
     }
 
     interface RequiredPresenterOperations{
-        void setCorrectView(DataViewStrategy dataView, ButtonViewStrategy buttonViewStrategy, Item item);
+        void setItemFillerOptions(ItemFillerOptions options);
 
-        void addNewItem(Item item);
-
-        void updateItem(Item item);
+        void setItem(Item item);
 
         void reportFromModel(String report);
     }
@@ -49,5 +46,11 @@ public interface ItemFillerMVP {
         void addNewItem(Item item);
 
         void updateItem(Item item);
+
+        void getItemByBarcode();
+
+        void getItemFillerPreferences();
+
+        void setDepotPreferences(DepotOptions depotOptions);
     }
 }

@@ -1,14 +1,10 @@
 package com.gatar.Spizarka.Depot;
 
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-
 import com.gatar.Spizarka.Database.Categories;
 import com.gatar.Spizarka.Database.Item;
-import com.gatar.Spizarka.Operations.Depot.DepotSortTypes;
+import com.gatar.Spizarka.Depot.Operations.DepotSortTypes;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Gatar on 2016-10-26.
