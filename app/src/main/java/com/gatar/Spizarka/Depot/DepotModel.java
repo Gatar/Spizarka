@@ -1,14 +1,17 @@
 package com.gatar.Spizarka.Depot;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.gatar.Spizarka.R;
 import com.gatar.Spizarka.Database.Item;
 import com.gatar.Spizarka.Database.ManagerDAO;
-import com.gatar.Spizarka.Operations.GlobalContextProvider;
+import com.gatar.Spizarka.Operations.MyApp;
 
 import java.util.ArrayList;
+
+import javax.inject.Inject;
 
 /**
  * Created by Gatar on 2016-10-26.
@@ -18,18 +21,18 @@ public class DepotModel implements DepotMVP.ModelOperations{
     DepotMVP.RequiredPresenterOperationsOverview mPresenterOverview;
     DepotMVP.RequiredPresenterOperationsDetail mPresenterDetail;
 
-    private SharedPreferences preferences;
-    private SharedPreferences.Editor preferencesEditor;
-    private ManagerDAO managerDAO;
+    @Inject SharedPreferences preferences;
+    @Inject SharedPreferences.Editor preferencesEditor;
+    @Inject ManagerDAO managerDAO;
+
 
     public DepotModel(Object mPresenter) {
         if(mPresenter instanceof DepotMVP.RequiredPresenterOperationsOverview)
             mPresenterOverview = (DepotMVP.RequiredPresenterOperationsOverview) mPresenter;
         else mPresenterDetail = (DepotMVP.RequiredPresenterOperationsDetail) mPresenter;
-
-        managerDAO = new ManagerDAO(GlobalContextProvider.getAppContext());
-        setPreferences();
+        MyApp.getAppComponent().inject(this);
     }
+
 
     @Override
     public void setPreferencesValue(String preferenceName, String option) {
@@ -81,9 +84,6 @@ public class DepotModel implements DepotMVP.ModelOperations{
         DepotOptions options = DepotOptions.valueOf(preferences.getString(preferenceName, DepotOptions.DepotView.name()));
         mPresenterOverview.setDepotOption(options);
     }
-
-    private void setPreferences(){
-        preferences = GlobalContextProvider.getAppContext().getSharedPreferences(GlobalContextProvider.getAppContext().getResources().getString(R.string.preferencesKey), Context.MODE_PRIVATE);
-        preferencesEditor = preferences.edit();
-    }
 }
+
+

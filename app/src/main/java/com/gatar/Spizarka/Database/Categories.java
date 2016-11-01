@@ -1,7 +1,11 @@
 package com.gatar.Spizarka.Database;
 
-import com.gatar.Spizarka.Operations.GlobalContextProvider;
+import android.content.Context;
+
 import com.example.gatar.Spizarka.R;
+import com.gatar.Spizarka.Operations.MyApp;
+
+import javax.inject.Inject;
 
 /**
  * Categories which are available to set for item.
@@ -26,9 +30,13 @@ public enum Categories {
     private int textId;
     private int iconId;
 
+    @Inject
+    Context context;
+
     Categories (int textId, int iconId){
         this.textId = textId;
         this.iconId = iconId;
+        MyApp.getAppComponent().inject(this);
     }
 
     /**
@@ -36,7 +44,7 @@ public enum Categories {
      */
     @Override
     public String toString(){
-        return GlobalContextProvider.getAppContext().getString(textId);
+        return context.getString(textId);
     }
 
     /**

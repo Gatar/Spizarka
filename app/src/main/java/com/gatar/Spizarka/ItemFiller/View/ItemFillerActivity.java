@@ -30,8 +30,6 @@ public class ItemFillerActivity extends AppCompatActivity implements
 
     private ItemFillerMVP.PresenterOperations mPresenter;
 
-    public static View buttonView;
-
     private MyDataView myDataView;
     private MyButton myButton;
 
@@ -80,7 +78,7 @@ public class ItemFillerActivity extends AppCompatActivity implements
 
     @Override
     public void setButtonView(ItemFillerOptions options) {
-        myButton = ButtonFactory.createButton(options, buttonView);
+        myButton = ButtonFactory.createButton(options, currentButtonFragment.getView());
         myButton.setButtonView();
     }
 

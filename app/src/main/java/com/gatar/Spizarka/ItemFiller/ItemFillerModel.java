@@ -7,7 +7,9 @@ import com.example.gatar.Spizarka.R;
 import com.gatar.Spizarka.Database.Item;
 import com.gatar.Spizarka.Database.ManagerDAO;
 import com.gatar.Spizarka.Depot.DepotOptions;
-import com.gatar.Spizarka.Operations.GlobalContextProvider;
+import com.gatar.Spizarka.Operations.MyApp;
+
+import javax.inject.Inject;
 
 /**
  * Created by Gatar on 2016-10-27.
@@ -16,9 +18,10 @@ public class ItemFillerModel implements ItemFillerMVP.ModelOperations{
 
     private ItemFillerMVP.RequiredPresenterOperations mPresenter;
 
-    private SharedPreferences preferences;
-    private SharedPreferences.Editor preferencesEditor;
-    private ManagerDAO managerDAO;
+    @Inject SharedPreferences preferences;
+    @Inject SharedPreferences.Editor preferencesEditor;
+    @Inject ManagerDAO managerDAO;
+    @Inject Context appContext;
 
     private final static String EXTRA_BARCODE = "com.example.gatar.spizarkainterfejs.BARCODE";
     private final String CHANGE_ACTIVITY_OPTION = "com.example.spizarka.changeActivityOption";
@@ -26,21 +29,20 @@ public class ItemFillerModel implements ItemFillerMVP.ModelOperations{
 
     public ItemFillerModel(ItemFillerMVP.RequiredPresenterOperations mPresenter) {
         this.mPresenter = mPresenter;
-        managerDAO = new ManagerDAO(GlobalContextProvider.getAppContext());
-        setPreferences();
+        MyApp.getAppComponent().inject(this);
     }
 
     @Override
     public void addNewItem(Item item) {
         managerDAO.addNewItem(item);
         managerDAO.addNewBarcode(getBarcodePreferences(),item.getTitle());
-        mPresenter.reportFromModel(GlobalContextProvider.getAppContext().getString(R.string.communicateAddedItemAndBarcode));
+        mPresenter.reportFromModel(appContext.getString(R.string.communicateAddedItemAndBarcode));
     }
 
     @Override
     public void updateItem(Item item) {
         managerDAO.updateItem(item);
-        mPresenter.reportFromModel(GlobalContextProvider.getAppContext().getString(R.string.communicateItemUpdated));
+        mPresenter.reportFromModel(appContext.getString(R.string.communicateItemUpdated));
     }
 
     @Override
@@ -60,11 +62,6 @@ public class ItemFillerModel implements ItemFillerMVP.ModelOperations{
     public void setDepotPreferences(DepotOptions depotOptions){
         preferencesEditor.putString(DEPOT_ACTIVITY_OPTION,depotOptions.toString());
         preferencesEditor.commit();
-    }
-
-    private void setPreferences(){
-        preferences = GlobalContextProvider.getAppContext().getSharedPreferences(GlobalContextProvider.getAppContext().getResources().getString(R.string.preferencesKey), Context.MODE_PRIVATE);
-        preferencesEditor = preferences.edit();
     }
 
     private String getBarcodePreferences(){

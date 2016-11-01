@@ -2,6 +2,8 @@ package com.gatar.Spizarka.Database;
 
 import java.util.ArrayList;
 
+import dagger.Component;
+
 /**
  * Interface for DataAccessObject
  */

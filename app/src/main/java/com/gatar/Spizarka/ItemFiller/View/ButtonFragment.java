@@ -16,7 +16,6 @@ import com.example.gatar.Spizarka.R;
 public class ButtonFragment extends Fragment {
 
     private ButtonFragmentListener listener;
-    private View view;
 
     public ButtonFragment() {
         // Required empty public constructor
@@ -47,8 +46,6 @@ public class ButtonFragment extends Fragment {
             }
         });
 
-        ItemFillerActivity.buttonView = view;
-        this.view = view;
         return view;
     }
 
@@ -68,10 +65,6 @@ public class ButtonFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         listener = null;
-    }
-
-    public View getButtonFragmentView(){
-        return view;
     }
 
 

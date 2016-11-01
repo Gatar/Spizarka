@@ -2,7 +2,15 @@ package com.gatar.Spizarka.Database;
 
 import android.content.Context;
 
+import com.gatar.Spizarka.Operations.MyApp;
+
 import java.util.ArrayList;
+
+import javax.inject.Inject;
+
+import dagger.Component;
+import dagger.Module;
+import dagger.Provides;
 
 /**
  * Manager for both internal and cloud databases working together.
@@ -15,6 +23,8 @@ public class ManagerDAO implements MethodsDAO {
     MethodsDAO androidDatabaseDAO;
     MethodsDAO remoteDatabaseDAO;
 
+
+    @Inject
     public ManagerDAO(Context context){
         androidDatabaseDAO = new AndroidDatabaseDAO(context, INTERNAL_DATABASE_NAME);
         remoteDatabaseDAO = new RemoteDatabaseDAO();

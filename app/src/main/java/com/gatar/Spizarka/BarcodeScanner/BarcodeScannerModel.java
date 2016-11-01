@@ -6,7 +6,9 @@ import android.content.SharedPreferences;
 import com.example.gatar.Spizarka.R;
 import com.gatar.Spizarka.Database.ManagerDAO;
 import com.gatar.Spizarka.ItemFiller.ItemFillerOptions;
-import com.gatar.Spizarka.Operations.GlobalContextProvider;
+import com.gatar.Spizarka.Operations.MyApp;
+
+import javax.inject.Inject;
 
 /**
  * Created by Gatar on 2016-10-27.
@@ -15,17 +17,16 @@ public class BarcodeScannerModel implements BarcodeScannerMVP.ModelOperations{
 
     private BarcodeScannerMVP.RequiredPresenterOperations mPresenter;
 
-    private SharedPreferences preferences;
-    private SharedPreferences.Editor preferencesEditor;
-    private ManagerDAO managerDAO;
+    @Inject SharedPreferences preferences;
+    @Inject SharedPreferences.Editor preferencesEditor;
+    @Inject ManagerDAO managerDAO;
 
     private final String CHANGE_ACTIVITY_OPTION = "com.example.spizarka.changeActivityOption";
     private final static String EXTRA_BARCODE = "com.example.gatar.spizarkainterfejs.BARCODE";
 
     public BarcodeScannerModel(BarcodeScannerMVP.RequiredPresenterOperations mPresenter) {
         this.mPresenter = mPresenter;
-        setPreferences();
-        managerDAO = new ManagerDAO(GlobalContextProvider.getAppContext());
+        MyApp.getAppComponent().inject(this);
     }
 
     @Override
@@ -47,11 +48,6 @@ public class BarcodeScannerModel implements BarcodeScannerMVP.ModelOperations{
     public void setBarcodePreferences(String barcode) {
         preferencesEditor.putString(EXTRA_BARCODE,barcode);
         preferencesEditor.commit();
-    }
-
-    private void setPreferences(){
-        preferences = GlobalContextProvider.getAppContext().getSharedPreferences(GlobalContextProvider.getAppContext().getResources().getString(R.string.preferencesKey), Context.MODE_PRIVATE);
-        preferencesEditor = preferences.edit();
     }
 
     /**

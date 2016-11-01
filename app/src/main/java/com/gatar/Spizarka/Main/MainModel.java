@@ -5,7 +5,9 @@ import android.content.SharedPreferences;
 
 import com.example.gatar.Spizarka.R;
 import com.gatar.Spizarka.Database.ManagerDAO;
-import com.gatar.Spizarka.Operations.GlobalContextProvider;
+import com.gatar.Spizarka.Operations.MyApp;
+
+import javax.inject.Inject;
 
 /**
  * Model layer of MainActivity.
@@ -14,15 +16,12 @@ public class MainModel implements MainMVP.ModelOperations{
 
     private MainMVP.RequiredPresenterOperations mPresenter;
 
-    private SharedPreferences.Editor preferencesEditor;
-    private ManagerDAO managerDAO;
-
-
+    @Inject SharedPreferences.Editor preferencesEditor;
+    @Inject ManagerDAO managerDAO;
 
     public MainModel(MainMVP.RequiredPresenterOperations mPresenter) {
         this.mPresenter = mPresenter;
-        setPreferences();
-        managerDAO = new ManagerDAO(GlobalContextProvider.getAppContext());
+        MyApp.getAppComponent().inject(this);
     }
 
     @Override
@@ -37,8 +36,4 @@ public class MainModel implements MainMVP.ModelOperations{
         preferencesEditor.commit();
     }
 
-    private void setPreferences(){
-        SharedPreferences preferences = GlobalContextProvider.getAppContext().getSharedPreferences(GlobalContextProvider.getAppContext().getResources().getString(R.string.preferencesKey), Context.MODE_PRIVATE);
-        preferencesEditor = preferences.edit();
-    }
 }
