@@ -11,9 +11,11 @@ Provides functionalities: <br>
 * Automatic creating shopping list
 
 <dl><br></dl>
-Future plans:
-* database in cloud by REST (instead of actual database in each phone)
-* creating account for access the same database by many people instantly in the same time (ex. by each people in home)
+In progress:
+* database in cloud communicated via REST, integrated with internal phone database (see in my other repositorium for webapi)
+* UI for account and general settings
+* provide connection to one database from many accounts/users with instant data actualization
 
 <dl><br></dl>
-Used barcode scanner: [Barcode Scanner based on ZXing](https://github.com/dm77/barcodescanner)
+Use barcode scanner: [Barcode Scanner based on ZXing](https://github.com/dm77/barcodescanner)
+Webapi for database: [Spizarka Servlet] (https://github.com/Gatar/SpizarkaServlet) 
