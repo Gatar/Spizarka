@@ -7,16 +7,15 @@ import java.io.Serializable;
  */
 public class Item implements Serializable {
 
+    private Integer id;
 
-    private String barcode;
     private String title;
     private Categories category;
-    private int quantity;
-    private int minimumQuantity;
+    private Integer quantity;
+    private Integer minimumQuantity;
     private String description;
 
     public Item (){
-        this.barcode = "";
         this.title = "";
         this.category = Categories.Other;
         this.quantity = 0;
@@ -24,17 +23,7 @@ public class Item implements Serializable {
         this.description = "";
     }
 
-    public Item(String barcode, String nazwa, Categories category, int quantity, int minimumQuantity, String description) {
-        this.barcode = barcode;
-        this.title = nazwa;
-        this.category = category;
-        this.quantity = (quantity < 0) ? 0 : quantity;
-        this.minimumQuantity = (minimumQuantity < 0)? 0 : minimumQuantity;
-        this.description = description;
-    }
-
     public Item(String nazwa, Categories category, int quantity, int minimumQuantity, String description) {
-        this.barcode = "";
         this.title = nazwa;
         this.category = category;
         this.quantity = (quantity < 0) ? 0 : quantity;
@@ -42,16 +31,13 @@ public class Item implements Serializable {
         this.description = description;
     }
 
-    /**
-     * Relict, always null variable. Thera are no option to get barcodes set to Title.
-     * @return null
-     */
-    public String getBarcode() {
-        return barcode;
+
+    public Integer getId() {
+        return id;
     }
 
-    public void setBarcode(String barcode) {
-        this.barcode = barcode;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     /**
@@ -82,11 +68,11 @@ public class Item implements Serializable {
      * Get quantity of item which are in depot.
      * @return number of items on stock.
      */
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = (quantity < 0) ? 0 : quantity;
     }
 
@@ -94,11 +80,11 @@ public class Item implements Serializable {
      * Get minimum quantity of item, which are used to create Shopping List
      * @return number of minimum items which should be on stock
      */
-    public int getMinimumQuantity() {
+    public Integer getMinimumQuantity() {
         return minimumQuantity;
     }
 
-    public void setMinimumQuantity(int minimumQuantity) {
+    public void setMinimumQuantity(Integer minimumQuantity) {
         this.minimumQuantity = (minimumQuantity < 0)? 0 : minimumQuantity;
     }
 

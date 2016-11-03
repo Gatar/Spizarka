@@ -1,10 +1,7 @@
 package com.gatar.Spizarka.Depot;
 
-import android.app.Application;
-import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.gatar.Spizarka.R;
 import com.gatar.Spizarka.Database.Item;
 import com.gatar.Spizarka.Database.ManagerDAO;
 import com.gatar.Spizarka.Operations.MyApp;
@@ -42,8 +39,8 @@ public class DepotModel implements DepotMVP.ModelOperations{
 
     @Override
     public void getPreferencesValue(String preferenceName){
-        if(mPresenterOverview != null) mPresenterOverview.setPreferencesRequestValue(preferences.getString(preferenceName,null));
-            else mPresenterDetail.setPreferencesRequestValue(preferences.getString(preferenceName,null));
+        if(mPresenterOverview != null) mPresenterOverview.setRequestItemId(preferences.getString(preferenceName,null));
+            else mPresenterDetail.setRequestItemId(preferences.getString(preferenceName,null));
     }
 
     @Override
@@ -68,14 +65,14 @@ public class DepotModel implements DepotMVP.ModelOperations{
     }
 
     @Override
-    public void getSingleItem(String itemTitle) {
-        Item item = managerDAO.getSingleItem(itemTitle);
+    public void getSingleItem(Integer itemId) {
+        Item item = managerDAO.getSingleItem(itemId);
         mPresenterDetail.setItemOnView(item);
     }
 
     @Override
     public void addNewBarcode(Item item, String barcode) {
-        managerDAO.addNewBarcode(barcode,item.getTitle());
+        managerDAO.addNewBarcode(barcode,item.getId());
         mPresenterOverview.reportFromModel("Barcode added to database");
     }
 

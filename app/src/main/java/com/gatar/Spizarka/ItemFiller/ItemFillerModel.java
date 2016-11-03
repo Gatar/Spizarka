@@ -35,12 +35,14 @@ public class ItemFillerModel implements ItemFillerMVP.ModelOperations{
     @Override
     public void addNewItem(Item item) {
         managerDAO.addNewItem(item);
-        managerDAO.addNewBarcode(getBarcodePreferences(),item.getTitle());
+        Integer itemId = managerDAO.getItemIdByTitle(item.getTitle());
+        managerDAO.addNewBarcode(getBarcodePreferences(),itemId);
         mPresenter.reportFromModel(appContext.getString(R.string.communicateAddedItemAndBarcode));
     }
 
     @Override
     public void updateItem(Item item) {
+        item.setId(managerDAO.getItemIdByTitle(item.getTitle()));
         managerDAO.updateItem(item);
         mPresenter.reportFromModel(appContext.getString(R.string.communicateItemUpdated));
     }
@@ -54,7 +56,7 @@ public class ItemFillerModel implements ItemFillerMVP.ModelOperations{
     @Override
     public void getItemByBarcode(){
         String barcode = preferences.getString(EXTRA_BARCODE,null);
-        Item item = managerDAO.getSingleItem(managerDAO.getTitle(barcode));
+        Item item = managerDAO.getSingleItem(managerDAO.getItemIdByBarcode(barcode));
         mPresenter.setItem(item);
     }
 

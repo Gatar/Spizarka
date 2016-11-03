@@ -34,7 +34,7 @@ public interface DepotMVP {
              * load to view actual List Adapter
              * @param depotItems
              */
-            void fillListByItems(ArrayList<Item> depotItems);
+            void fillListByItems(ArrayList<Item> depotItems, DepotOptions depotOptions);
 
             /**
              * Set detail fragment.
@@ -80,7 +80,7 @@ public interface DepotMVP {
 
         void addNewBarcode(Item item, String barcode);
 
-        void getSingleItem(String itemTitle);
+        void getSingleItem(Integer itemId);
     }
 
     interface RequiredPresenterOperationsOverview {
@@ -90,11 +90,11 @@ public interface DepotMVP {
 
         void setDepotOption(DepotOptions option);
 
-        void setPreferencesRequestValue(String requestValue);
+        void setRequestItemId(String requestValue);
     }
 
     interface RequiredPresenterOperationsDetail{
-        void setPreferencesRequestValue(String requestValue);
+        void setRequestItemId(String requestValue);
 
         void setItemOnView(Item item);
     }

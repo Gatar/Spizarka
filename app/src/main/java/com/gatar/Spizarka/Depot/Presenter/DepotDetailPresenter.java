@@ -15,9 +15,9 @@ public class DepotDetailPresenter implements DepotMVP.PresenterOperationsDetail,
     WeakReference<DepotMVP.RequiredViewOperations.Detail> mView;
 
     DepotMVP.ModelOperations mModel;
-    private String requestedPreferenceValue;
+    private Integer requestedItemId;
 
-    private final String EXTRA_TITLE = "com.example.spizarka.TITLE";
+    private final String ITEM_ID = "com.example.spizarka.ITEM_ID";
     private final String CHANGE_ACTIVITY_OPTION = "com.example.spizarka.changeActivityOption";
 
     public DepotDetailPresenter(DepotMVP.RequiredViewOperations.Detail mView) {
@@ -27,8 +27,8 @@ public class DepotDetailPresenter implements DepotMVP.PresenterOperationsDetail,
 
     @Override
     public void fillViewWithData() {
-        mModel.getPreferencesValue(EXTRA_TITLE);
-        mModel.getSingleItem(requestedPreferenceValue);
+        mModel.getPreferencesValue(ITEM_ID);
+        mModel.getSingleItem(requestedItemId);
     }
 
     @Override
@@ -38,8 +38,8 @@ public class DepotDetailPresenter implements DepotMVP.PresenterOperationsDetail,
     }
 
     @Override
-    public void setPreferencesRequestValue(String requestValue) {
-        this.requestedPreferenceValue = requestValue;
+    public void setRequestItemId(String requestValue) {
+        this.requestedItemId = Integer.parseInt(requestValue);
     }
 
     @Override

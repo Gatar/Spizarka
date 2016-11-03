@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Limiting list of items show in DepotOverview by Category.
  */
-public class DepotCategoryLimit {
+public class DepotCategoryLimiter {
     private ArrayList<Item> depotItemsCopy = new ArrayList<>();
     private ArrayList<Item> depotItems;
 
@@ -16,7 +16,7 @@ public class DepotCategoryLimit {
      * Set in class copy of reference to list of Items.
      * @param depotItems list of Items in DepotOverview.
      */
-    public DepotCategoryLimit(ArrayList<Item> depotItems) {
+    public DepotCategoryLimiter(ArrayList<Item> depotItems) {
         this.depotItemsCopy.addAll(depotItems);
         this.depotItems = depotItems;
     }

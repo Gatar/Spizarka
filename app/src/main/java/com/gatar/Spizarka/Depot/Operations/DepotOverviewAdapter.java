@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.gatar.Spizarka.Database.Item;
 import com.example.gatar.Spizarka.R;
+import com.gatar.Spizarka.Depot.DepotOptions;
 import com.gatar.Spizarka.Depot.View.DepotOverviewFragment;
 
 import java.util.ArrayList;
@@ -22,11 +23,13 @@ import java.util.ArrayList;
 public class DepotOverviewAdapter extends ArrayAdapter<Item>{
     private int layoutResourceId;
     private Context context;
+    private DepotOptions depotOptions;
 
-    public DepotOverviewAdapter(Context context, int layoutResourceId, ArrayList<Item> data){
+    public DepotOverviewAdapter(Context context, int layoutResourceId, ArrayList<Item> data, DepotOptions depotOptions){
         super(context,layoutResourceId,data);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
+        this.depotOptions = depotOptions;
     }
 
     @Override
@@ -47,8 +50,18 @@ public class DepotOverviewAdapter extends ArrayAdapter<Item>{
             holder = (ViewHolder) convertView.getTag();
         }
 
+        //TODO Make view factory for different view types
+        Integer quantityValue;
+        switch(depotOptions){
+            case ShoppingListView:
+                quantityValue = p.getMinimumQuantity() - p.getQuantity();
+                break;
+            default:
+                quantityValue = p.getQuantity();
+                break;
+        }
         holder.imgIcon.setImageResource(p.getCategory().getIconId());
-        holder.txtQuantity.setText(String.format("%d",p.getQuantity()));
+        holder.txtQuantity.setText(String.format("%d",quantityValue));
         holder.txtTitle.setText(p.getTitle());
         return convertView;
     }

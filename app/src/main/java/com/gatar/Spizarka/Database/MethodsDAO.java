@@ -21,32 +21,27 @@ public interface MethodsDAO {
     /**
      * Add new barcode connected with title to database.
      * @param barcode String with barcode value
-     * @param title String with title connected to barcode
+     * @param itemId id of item connected to barcode
      */
-    void addNewBarcode (String barcode, String title);
+    void addNewBarcode (String barcode, Integer itemId);
+
 
     /**
-     * Deleting barcode value from database.
-     * @param barcode String with barcode value
-     */
-    void deleteBarcode(String barcode);
-
-    /**
-     * Get title connceted with barcode
+     * Get item id connceted with barcode
      * @param barcode String with barcode
-     * @return String with title.
+     * @return Integer with id number.
      */
-    String getTitle(String barcode);
+    Integer getItemIdByBarcode(String barcode);
 
 
     //METHODS OF ITEMS TABLE
 
     /**
-     * Check of item with specified name presence in database.
-     * @param title title of searched item.
-     * @return true - item exist in databse, false - item doesn't exist in database
+     * Get item id connceted with barcode
+     * @param title String with barcode
+     * @return Integer with id number.
      */
-    boolean isContainItem(String title);
+    Integer getItemIdByTitle(String title);
 
     /**
      * Add new item to database.
@@ -61,8 +56,15 @@ public interface MethodsDAO {
     void updateItem(Item item);
 
     /**
+     * Get single Item from database by it's id.
+     * @param itemId id of Item to get out.
+     * @return Item for inputed title.
+     */
+    Item getSingleItem(Integer itemId);
+
+    /**
      * Get single Item from database by it's title.
-     * @param title title of Item to get out.
+     * @param title id of Item to get out.
      * @return Item for inputed title.
      */
     Item getSingleItem(String title);
@@ -82,7 +84,7 @@ public interface MethodsDAO {
     ArrayList<Item> getAllItems(boolean overZeroQuantity);
 
     /**
-     * Get all items with quantity under minimum quantity
+     * Get all items with quantity under minimum quantity.
      * @return list of all Item with quantity under minimum
      */
     ArrayList<Item> getShoppingList();
@@ -92,10 +94,5 @@ public interface MethodsDAO {
      */
     void deleteDatabase();
 
-    /**
-     * Delete one item with specified title.
-     * @param title String with title of item to delete.
-     */
-    void deleteItem(String title);
 
 }

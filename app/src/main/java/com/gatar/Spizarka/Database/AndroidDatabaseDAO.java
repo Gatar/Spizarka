@@ -7,40 +7,46 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
 
 /**
  * Manager for Android internal SQLite Database
  */
 class AndroidDatabaseDAO extends SQLiteOpenHelper implements MethodsDAO {
 
-    public final String INTERNAL_DATABASE_NAME;
+    //TODO przeobić wszystkie obsługi bazy w programie na sterowanie przez ID, a nie przez title
 
-    public final String TABLE_NAME_ITEMS = "itemsTable";
-    public final String COLUMN_NAME_TITLE = "title";
-    public final String COLUMN_NAME_CATEGORY = "category";
-    public final String COLUMN_NAME_QUANTITY = "quantity";
-    public final String COLUMN_NAME_MINIMUM_QUANTITY = "minimum";
-    public final String COLUMN_NAME_DESCRIPTION = "description";
+    private final String INTERNAL_DATABASE_NAME;
 
-    public final String TABLE_NAME_BARCODES = "barcodes";
-    public final String COLUMN_NAME_BARCODE = "barcode";
+    private final String TABLE_NAME_ITEMS = "ITEMS";
+    private final String COLUMN_NAME_ID_KEY = "id";
+    private final String COLUMN_NAME_TITLE = "title";
+    private final String COLUMN_NAME_CATEGORY = "category";
+    private final String COLUMN_NAME_QUANTITY = "quantity";
+    private final String COLUMN_NAME_MINIMUM_QUANTITY = "minimum";
+    private final String COLUMN_NAME_DESCRIPTION = "description";
 
-    public final String SQL_CREATE_TABLE_ITEMS=
+    private final String TABLE_NAME_BARCODES = "BARCODES";
+    private final String COLUMN_NAME_BARCODE_KEY = "barcode";
+    private final String COLUMN_NAME_ITEM_ID = "item_id";
+
+    private final String SQL_CREATE_TABLE_ITEMS=
             "CREATE TABLE " + TABLE_NAME_ITEMS + " (" +
-                    COLUMN_NAME_TITLE + " TEXT PRIMARY KEY NOT NULL, " +
-                    COLUMN_NAME_CATEGORY + " TEXT NOT NULL, " +
-                    COLUMN_NAME_QUANTITY + " INTEGER NOT NULL, " +
-                    COLUMN_NAME_MINIMUM_QUANTITY + " INTEGER NOT NULL, " +
-                    COLUMN_NAME_DESCRIPTION + " TEXT );";
+                    COLUMN_NAME_ID_KEY + "              INTEGER     PRIMARY KEY     AUTOINCREMENT, " +
+                    COLUMN_NAME_TITLE + "               TEXT        NOT NULL        UNIQUE, " +
+                    COLUMN_NAME_CATEGORY + "            TEXT        NOT NULL, " +
+                    COLUMN_NAME_QUANTITY + "            INTEGER     NOT NULL, " +
+                    COLUMN_NAME_MINIMUM_QUANTITY + "    INTEGER     NOT NULL, " +
+                    COLUMN_NAME_DESCRIPTION + "         TEXT );";
 
-    public final String SQL_CREATE_TABLE_BARCODES=
+    private final String SQL_CREATE_TABLE_BARCODES=
             "CREATE TABLE " + TABLE_NAME_BARCODES + "(" +
-                    COLUMN_NAME_BARCODE +" TEXT PRIMARY KEY NOT NULL, " +
-                    COLUMN_NAME_TITLE + " TEXT NOT NULL );";
+                    COLUMN_NAME_BARCODE_KEY +"          TEXT    PRIMARY KEY     NOT NULL, " +
+                    COLUMN_NAME_ITEM_ID + "         INTEGER    NOT NULL );";
 
 
     private Context context;
+
+    private SQLiteDatabase db;
 
     public AndroidDatabaseDAO(Context context, String INTERNAL_DATABASE_NAME){
         super(context,INTERNAL_DATABASE_NAME,null,1);
@@ -56,18 +62,34 @@ class AndroidDatabaseDAO extends SQLiteOpenHelper implements MethodsDAO {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        onCreate(db);
     }
 
     @Override
     public boolean isContainBarcode(String barcode) {
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT "+ COLUMN_NAME_BARCODE +" FROM "+ TABLE_NAME_BARCODES +" WHERE "+ COLUMN_NAME_BARCODE +"='" + barcode + "'",null);
+        db = this.getReadableDatabase();
+
+        String[] projection = new String[]{COLUMN_NAME_BARCODE_KEY};
+        String selection = COLUMN_NAME_BARCODE_KEY + " = ?";
+        String[] selectionArgs = new String[]{barcode};
+
+        Cursor cursor = db.query(
+                TABLE_NAME_BARCODES,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+                );
+
         return cursor.getCount() != 0;
     }
 
     @Override
-    public String getTitle(String barcode) {
+    public Integer getItemIdByBarcode(String barcode) {
+        db = this.getReadableDatabase();
+
         if(!isContainBarcode(barcode)) try {
             throw new Exception("BarcodeDAO.getTitle: Barcode " + barcode + " doesn't exists in database");
         } catch (Exception e) {
@@ -75,14 +97,50 @@ class AndroidDatabaseDAO extends SQLiteOpenHelper implements MethodsDAO {
             return null;
         }
 
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT "+ COLUMN_NAME_TITLE +" FROM "+ TABLE_NAME_BARCODES +" WHERE "+ COLUMN_NAME_BARCODE +"='" + barcode + "'",null);
+        String[] projection = new String[]{COLUMN_NAME_ITEM_ID};
+        String selection = COLUMN_NAME_BARCODE_KEY + " = ?";
+        String[] selectionArgs = new String[]{barcode};
+
+        Cursor cursor = db.query(
+                TABLE_NAME_BARCODES,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
         cursor.moveToFirst();
-        return cursor.getString(0);
+        return cursor.getInt(cursor.getColumnIndex(COLUMN_NAME_ITEM_ID));
     }
 
     @Override
-    public void addNewBarcode(String barcode, String title) {
+    public Integer getItemIdByTitle(String title) {
+        db = this.getReadableDatabase();
+
+        String[] projection = new String[]{COLUMN_NAME_ID_KEY};
+        String selection = COLUMN_NAME_TITLE + " = ?";
+        String[] selectionArgs = new String[]{title};
+
+        Cursor cursor = db.query(
+                TABLE_NAME_ITEMS,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        cursor.moveToFirst();
+        return cursor.getInt(cursor.getColumnIndex(COLUMN_NAME_ID_KEY));
+    }
+
+    @Override
+    public void addNewBarcode(String barcode, Integer itemId) {
+        db = this.getWritableDatabase();
+
         if(isContainBarcode(barcode)) try {
             throw new Exception("BarcodeDAO.putData: Barcode " + barcode + " exists in database");
         } catch (Exception e) {
@@ -90,50 +148,16 @@ class AndroidDatabaseDAO extends SQLiteOpenHelper implements MethodsDAO {
             return;
         }
 
-        SQLiteDatabase db = getWritableDatabase();
-
         ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME_BARCODE,barcode);
-        values.put(COLUMN_NAME_TITLE,title);
+        values.put(COLUMN_NAME_BARCODE_KEY,barcode);
+        values.put(COLUMN_NAME_ITEM_ID,itemId);
 
         db.insert(TABLE_NAME_BARCODES,null,values);
     }
 
     @Override
-    public void deleteBarcode(String barcode) {
-        if(!isContainBarcode(barcode)) try {
-            throw new NoSuchElementException("BarcodeDAO.deleteData: Data with barcode " + barcode + " doesn't exists in database");
-        } catch (NoSuchElementException e) {
-            e.printStackTrace();
-            return;
-        }
-
-        SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("DELETE FROM "+ TABLE_NAME_BARCODES +" WHERE " + COLUMN_NAME_BARCODE +"='" + barcode +"'");
-    }
-
-    @Override
-    public boolean isContainItem(String title) {
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT "+ COLUMN_NAME_TITLE +" FROM "+ TABLE_NAME_ITEMS +" WHERE "+ COLUMN_NAME_TITLE +"='" + title + "'",null);
-        if(cursor.getCount() != 0){
-            cursor.close();
-            return true;
-        }
-
-        return false;
-    }
-
-    @Override
     public void addNewItem(Item item) {
-        if(isContainItem(item.getTitle())) try {
-            throw new Exception("ItemDAO.addNewItem: Item with title  " + item.getTitle() + " exists in database");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
-
-        SQLiteDatabase db = getWritableDatabase();
+        db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME_TITLE,item.getTitle());
@@ -142,47 +166,68 @@ class AndroidDatabaseDAO extends SQLiteOpenHelper implements MethodsDAO {
         values.put(COLUMN_NAME_MINIMUM_QUANTITY,item.getMinimumQuantity());
         values.put(COLUMN_NAME_DESCRIPTION,item.getDescription());
 
-        db.insert(TABLE_NAME_ITEMS,null,values);
+        db.insert(
+                TABLE_NAME_ITEMS,
+                null,
+                values);
     }
 
     @Override
     public void updateItem(Item item) {
-        if(!isContainItem(item.getTitle())) try {
-            throw new Exception("ItemDAO.updateItem: Item with title  " + item.getTitle() + " doesn't exists in database");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
+        db = this.getReadableDatabase();
 
-        SQLiteDatabase db = getReadableDatabase();
-        String selection = COLUMN_NAME_TITLE + "='" + item.getTitle() + "'";
+        String selection = COLUMN_NAME_ID_KEY + "= ?";
+        String[] selectionArgs = new String[]{item.getId().toString()};
 
         ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME_TITLE, item.getTitle());
         values.put(COLUMN_NAME_CATEGORY,item.getCategory().name());
         values.put(COLUMN_NAME_QUANTITY,item.getQuantity());
         values.put(COLUMN_NAME_MINIMUM_QUANTITY,item.getMinimumQuantity());
         values.put(COLUMN_NAME_DESCRIPTION,item.getDescription());
 
-        db.update(TABLE_NAME_ITEMS,values,selection,null);
+        db.update(
+                TABLE_NAME_ITEMS,
+                values,
+                selection,
+                selectionArgs);
+    }
+
+    @Override
+    public Item getSingleItem(Integer idItem) {
+        db = this.getReadableDatabase();
+        Item item = new Item();
+        String selection = COLUMN_NAME_ID_KEY + " = ?";
+        String [] selectionArgs = {idItem.toString()};
+
+        Cursor cursor = db.query(false,
+                TABLE_NAME_ITEMS,
+                null,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null,
+                null);
+
+        cursor.moveToFirst();
+        fillItemWithValues(cursor,item);
+
+        return item;
     }
 
     @Override
     public Item getSingleItem(String title) {
-        if(!isContainItem(title)) try {
-            throw new Exception("ItemDAO.getSingleItem: Item with title  " + title + " doesn't exists in database");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        db = this.getReadableDatabase();
 
         Item item = new Item();
+        String selection = COLUMN_NAME_TITLE + " = ?";
         String [] selectionArgs = {title};
 
-        SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(false,
                 TABLE_NAME_ITEMS,
                 null,
-                COLUMN_NAME_TITLE+"=?",
+                selection,
                 selectionArgs,
                 null,
                 null,
@@ -197,16 +242,17 @@ class AndroidDatabaseDAO extends SQLiteOpenHelper implements MethodsDAO {
 
     @Override
     public ArrayList<Item> getItemsByCategory(String category) {
+        db = this.getReadableDatabase();
 
         ArrayList<Item> items = new ArrayList<Item>();
 
+        String selection = COLUMN_NAME_CATEGORY + " = ?";
         String [] selectionArgs = {category};
 
-        SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(false,
                 TABLE_NAME_ITEMS,
                 null,
-                COLUMN_NAME_CATEGORY+"=?",
+                selection,
                 selectionArgs,
                 null,
                 null,
@@ -223,17 +269,20 @@ class AndroidDatabaseDAO extends SQLiteOpenHelper implements MethodsDAO {
 
     @Override
     public ArrayList<Item> getAllItems(boolean overZeroQuantity) {
+        db = this.getReadableDatabase();
+
         ArrayList<Item> items = new ArrayList<Item>();
 
+        String selection = COLUMN_NAME_QUANTITY + " > ?";
         String [] selectionArgs = {"0"};
+
         if(!overZeroQuantity) selectionArgs[0] = "-1";
 
 
-        SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(false,
                 TABLE_NAME_ITEMS,
                 null,
-                COLUMN_NAME_QUANTITY+">?",
+                selection,
                 selectionArgs,
                 null,
                 null,
@@ -250,13 +299,16 @@ class AndroidDatabaseDAO extends SQLiteOpenHelper implements MethodsDAO {
 
     @Override
     public ArrayList<Item> getShoppingList() {
+        db = this.getReadableDatabase();
+
         ArrayList<Item> items = new ArrayList<Item>();
 
-        SQLiteDatabase db = getReadableDatabase();
+        String selection = COLUMN_NAME_QUANTITY + " < " + COLUMN_NAME_MINIMUM_QUANTITY;
+
         Cursor cursor = db.query(false,
                 TABLE_NAME_ITEMS,
                 null,
-                COLUMN_NAME_QUANTITY+"<"+COLUMN_NAME_MINIMUM_QUANTITY,
+                selection,
                 null,
                 null,
                 null,
@@ -271,18 +323,7 @@ class AndroidDatabaseDAO extends SQLiteOpenHelper implements MethodsDAO {
         return items;
     }
 
-    @Override
-    public void deleteItem(String title) {
-        if(!isContainItem(title)) try {
-            throw new Exception("ItemDAO.deleteItem: Item with title  " + title + " doesn't exists in database");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
 
-        SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("DELETE FROM "+ TABLE_NAME_ITEMS +" WHERE " + COLUMN_NAME_TITLE +"='" + title +"'");
-    }
 
     @Override
     public void deleteDatabase() {
@@ -290,10 +331,11 @@ class AndroidDatabaseDAO extends SQLiteOpenHelper implements MethodsDAO {
     }
 
     private void fillItemWithValues(Cursor cursor, Item item){
-        item.setTitle(cursor.getString(0));
-        item.setCategory(Categories.valueOf(cursor.getString(1)));
-        item.setQuantity(cursor.getInt(2));
-        item.setMinimumQuantity(cursor.getInt(3));
-        item.setDescription(cursor.getString(4));
+        item.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_NAME_ID_KEY)));
+        item.setTitle(cursor.getString(cursor.getColumnIndex(COLUMN_NAME_TITLE)));
+        item.setCategory(Categories.valueOf(cursor.getString(cursor.getColumnIndex(COLUMN_NAME_CATEGORY))));
+        item.setQuantity(cursor.getInt(cursor.getColumnIndex(COLUMN_NAME_QUANTITY)));
+        item.setMinimumQuantity(cursor.getInt(cursor.getColumnIndex(COLUMN_NAME_MINIMUM_QUANTITY)));
+        item.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_NAME_DESCRIPTION)));
     }
 }

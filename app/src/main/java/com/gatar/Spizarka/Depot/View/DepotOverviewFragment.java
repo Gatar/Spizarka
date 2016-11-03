@@ -15,12 +15,13 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import com.gatar.Spizarka.Depot.DepotOptions;
 import com.gatar.Spizarka.ItemFiller.View.ItemFillerActivity;
 import com.gatar.Spizarka.Depot.DepotMVP;
 import com.gatar.Spizarka.Database.Categories;
 import com.gatar.Spizarka.Database.Item;
 import com.gatar.Spizarka.Depot.Presenter.DepotOverviewPresenter;
-import com.gatar.Spizarka.Depot.Operations.DepotCategoryLimit;
+import com.gatar.Spizarka.Depot.Operations.DepotCategoryLimiter;
 import com.gatar.Spizarka.Depot.Operations.DepotOverviewAdapter;
 import com.gatar.Spizarka.Depot.Operations.DepotSort;
 import com.gatar.Spizarka.Depot.Operations.DepotSortTypes;
@@ -33,7 +34,7 @@ import java.util.ArrayList;
  *
  * Could be limited by:
  * <ol>
- *     <li>Category type of item {@link DepotCategoryLimit}</li>
+ *     <li>Category type of item {@link DepotCategoryLimiter}</li>
  * </ol>
  *
  * Could be sort by:
@@ -105,9 +106,9 @@ public class DepotOverviewFragment extends Fragment implements DepotMVP.Required
     }
 
     @Override
-    public void fillListByItems(ArrayList<Item> depotItems) {
+    public void fillListByItems(ArrayList<Item> depotItems, DepotOptions options) {
         this.depotItems = depotItems;
-        setOverviewListAdaptor(view);
+        setOverviewListAdaptor(view, options);
         loadListAdaptor(view);
     }
 
@@ -122,8 +123,8 @@ public class DepotOverviewFragment extends Fragment implements DepotMVP.Required
         listView.setAdapter(adapter);
     }
 
-    private void setOverviewListAdaptor(View view){
-        adapter = new DepotOverviewAdapter(view.getContext(),R.layout.depot_row,depotItems);
+    private void setOverviewListAdaptor(View view, DepotOptions depotOptions){
+        adapter = new DepotOverviewAdapter(view.getContext(),R.layout.depot_row,depotItems, depotOptions);
     }
 
     private void setListViewItemListener(){
@@ -177,7 +178,6 @@ public class DepotOverviewFragment extends Fragment implements DepotMVP.Required
             @Override
             public void onClick(View v) {
 
-                //Fill popup menu with Categories values
                 final PopupMenu popup = new PopupMenu(view.getContext(),buttonCategory);
                 Categories [] categories = Categories.values();
                 popup.getMenu().add(R.string.category_all);

@@ -12,23 +12,23 @@ class RemoteDatabaseDAO implements MethodsDAO{
     }
 
     @Override
-    public void addNewBarcode(String barcode, String title) {
+    public void addNewBarcode(String barcode, Integer itemId) {
 
     }
 
     @Override
-    public void deleteBarcode(String barcode) {
-
-    }
-
-    @Override
-    public String getTitle(String barcode) {
+    public Integer getItemIdByBarcode(String barcode) {
         return null;
     }
 
     @Override
-    public boolean isContainItem(String title) {
-        return false;
+    public Integer getItemIdByTitle(String title) {
+        return null;
+    }
+
+    @Override
+    public Item getSingleItem(String title) {
+        return null;
     }
 
     @Override
@@ -42,7 +42,7 @@ class RemoteDatabaseDAO implements MethodsDAO{
     }
 
     @Override
-    public Item getSingleItem(String title) {
+    public Item getSingleItem(Integer itemId) {
         return null;
     }
 
@@ -63,11 +63,7 @@ class RemoteDatabaseDAO implements MethodsDAO{
 
     @Override
     public void deleteDatabase() {
-
-    }
-
-    @Override
-    public void deleteItem(String title) {
-
     }
 }
+
+
