@@ -1,17 +1,15 @@
 package com.gatar.Spizarka.BarcodeScanner;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.gatar.Spizarka.R;
 import com.gatar.Spizarka.Database.ManagerDAO;
 import com.gatar.Spizarka.ItemFiller.ItemFillerOptions;
-import com.gatar.Spizarka.Operations.MyApp;
+import com.gatar.Spizarka.Application.MyApp;
 
 import javax.inject.Inject;
 
 /**
- * Created by Gatar on 2016-10-27.
+ * Model layer for BarcodeScanner.
  */
 public class BarcodeScannerModel implements BarcodeScannerMVP.ModelOperations{
 
@@ -21,7 +19,7 @@ public class BarcodeScannerModel implements BarcodeScannerMVP.ModelOperations{
     @Inject SharedPreferences.Editor preferencesEditor;
     @Inject ManagerDAO managerDAO;
 
-    private final String CHANGE_ACTIVITY_OPTION = "com.example.spizarka.changeActivityOption";
+    private final String ITEM_FILLER_OPTION = "com.example.spizarka.changeActivityOption";
     private final static String EXTRA_BARCODE = "com.example.gatar.spizarkainterfejs.BARCODE";
 
     public BarcodeScannerModel(BarcodeScannerMVP.RequiredPresenterOperations mPresenter) {
@@ -40,7 +38,7 @@ public class BarcodeScannerModel implements BarcodeScannerMVP.ModelOperations{
 
     @Override
     public void setItemFillerPreferences(ItemFillerOptions options) {
-        preferencesEditor.putString(CHANGE_ACTIVITY_OPTION,options.toString());
+        preferencesEditor.putString(ITEM_FILLER_OPTION,options.toString());
         preferencesEditor.commit();
     }
 
@@ -55,7 +53,7 @@ public class BarcodeScannerModel implements BarcodeScannerMVP.ModelOperations{
      * IncreaseQuantity, because our product need only quantity change.
      */
     private void checkItemFillerOptionCorrectness(){
-        ItemFillerOptions options = ItemFillerOptions.valueOf(preferences.getString(CHANGE_ACTIVITY_OPTION,null));
+        ItemFillerOptions options = ItemFillerOptions.valueOf(preferences.getString(ITEM_FILLER_OPTION,null));
         if(options.equals(ItemFillerOptions.AddProduct)){
             setItemFillerPreferences(ItemFillerOptions.IncreaseQuantity);
         }

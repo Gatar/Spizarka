@@ -7,12 +7,12 @@ import com.example.gatar.Spizarka.R;
 import com.gatar.Spizarka.Database.Item;
 import com.gatar.Spizarka.Database.ManagerDAO;
 import com.gatar.Spizarka.Depot.DepotOptions;
-import com.gatar.Spizarka.Operations.MyApp;
+import com.gatar.Spizarka.Application.MyApp;
 
 import javax.inject.Inject;
 
 /**
- * Created by Gatar on 2016-10-27.
+ * Model layer for ItemFiller.
  */
 public class ItemFillerModel implements ItemFillerMVP.ModelOperations{
 

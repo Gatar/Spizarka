@@ -161,7 +161,7 @@
 
         <TextView
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Opis:"
+            android:text="@string/description"
             android:id="@+id/textDepotOpisDescription"
             android:layout_column="0"
             android:textSize="12sp"

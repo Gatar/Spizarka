@@ -81,6 +81,10 @@
     <string name="give_item_title">podaj nazwę produktu</string>
     <string name="communicateAddedItemAndBarcode">Nowy item oraz kod krskowy dodane do bazy!</string>
     <string name="communicateItemUpdated">Item zauktualizowany.</string>
+    <string name="by_title">po Nazwie</string>
+    <string name="by_category">po Kategorii</string>
+    <string name="chose_category">Wybierz Kategorię</string>
+    <string name="description">Opis:</string>
 
 
 </resources>

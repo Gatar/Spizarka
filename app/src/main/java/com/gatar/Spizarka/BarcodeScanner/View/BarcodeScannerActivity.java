@@ -75,11 +75,11 @@ public class BarcodeScannerActivity extends Activity implements ZXingScannerView
      * Show dialog box with question how handle new barcode:
      * 1. Add it to existing item in database
      * 2. Add new item to database
-     * {@link ChangeDialogNewBarcode}
+     * {@link DialogBoxNewBarcode}
      */
     @Override
     public void showNewBarcodeDialogBox(){
-        ChangeDialogNewBarcode checkAddType = new ChangeDialogNewBarcode();
+        DialogBoxNewBarcode checkAddType = new DialogBoxNewBarcode();
         checkAddType.setPresenter(mPresenter);
         checkAddType.show(fragmentManager,"addType");
     }

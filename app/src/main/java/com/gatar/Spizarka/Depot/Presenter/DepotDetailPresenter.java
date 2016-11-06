@@ -8,7 +8,7 @@ import com.gatar.Spizarka.Depot.DepotModel;
 import java.lang.ref.WeakReference;
 
 /**
- * Created by Gatar on 2016-10-26.
+ * Presenter for depot detail data view.
  */
 public class DepotDetailPresenter implements DepotMVP.PresenterOperationsDetail, DepotMVP.RequiredPresenterOperationsDetail{
 
@@ -17,8 +17,7 @@ public class DepotDetailPresenter implements DepotMVP.PresenterOperationsDetail,
     DepotMVP.ModelOperations mModel;
     private Integer requestedItemId;
 
-    private final String ITEM_ID = "com.example.spizarka.ITEM_ID";
-    private final String CHANGE_ACTIVITY_OPTION = "com.example.spizarka.changeActivityOption";
+    private final String ITEM_FILLER_OPTION = "com.example.spizarka.changeActivityOption";
 
     public DepotDetailPresenter(DepotMVP.RequiredViewOperations.Detail mView) {
         this.mView = new WeakReference<DepotMVP.RequiredViewOperations.Detail>(mView);
@@ -27,19 +26,20 @@ public class DepotDetailPresenter implements DepotMVP.PresenterOperationsDetail,
 
     @Override
     public void fillViewWithData() {
-        mModel.getPreferencesValue(ITEM_ID);
+        mModel.getItemId();
         mModel.getSingleItem(requestedItemId);
     }
 
     @Override
     public void updateItem() {
-        mModel.setPreferencesValue(CHANGE_ACTIVITY_OPTION, ItemFillerOptions.UpdateItem.toString());
+        mModel.setBarcodePreferenceByItemId(requestedItemId);
+        mModel.setPreferencesValue(ITEM_FILLER_OPTION, ItemFillerOptions.UpdateItem.toString());
         getView().toUpdateItemDataActivity();
     }
 
     @Override
-    public void setRequestItemId(String requestValue) {
-        this.requestedItemId = Integer.parseInt(requestValue);
+    public void setRequestItemId(Integer requestedItemId) {
+        this.requestedItemId = requestedItemId;
     }
 
     @Override

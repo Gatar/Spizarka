@@ -6,7 +6,7 @@ import android.widget.Button;
 import com.example.gatar.Spizarka.R;
 
 /**
- * Created by Gatar on 2016-10-27.
+ * Extendable class for all button view set objects. Contains references for each buttons in {@link com.gatar.Spizarka.ItemFiller.View.ButtonFragment}
  */
 abstract public class MyButton {
     View view;
@@ -21,5 +21,8 @@ abstract public class MyButton {
         buttonOkEnd = (Button) view.findViewById(R.id.itemFillerOkEndButton);
     }
 
+    /**
+     * Defines buttons parameters like labels, enable etc.
+     */
     abstract public void setButtonView();
 }

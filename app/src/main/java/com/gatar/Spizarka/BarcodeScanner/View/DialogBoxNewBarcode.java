@@ -9,7 +9,6 @@ import android.os.Bundle;
 import com.gatar.Spizarka.BarcodeScanner.BarcodeScannerMVP;
 import com.gatar.Spizarka.ItemFiller.ItemFillerOptions;
 import com.example.gatar.Spizarka.R;
-import com.gatar.Spizarka.ItemFiller.View.ItemFillerActivity;
 
 /**
  * Class providing dialog box asking user about handling new barcode, which doesn't exist in database.
@@ -18,9 +17,9 @@ import com.gatar.Spizarka.ItemFiller.View.ItemFillerActivity;
  *     <li> Add barcode to existing product: set {@link ItemFillerOptions} to AddBarcodeToProduct</li>
  *     <li> Create completely new product: set {@link ItemFillerOptions} to AddProduct</li>
  * </ol>
- * Finally dialog box start method proceeding chosen option via activityListener in {@link ItemFillerActivity}
+ * Finally dialog box start method proceeding chosen option.
  */
-public class ChangeDialogNewBarcode extends DialogFragment{
+public class DialogBoxNewBarcode extends DialogFragment{
 
     private BarcodeScannerMVP.PresenterOperations mPresenter;
 

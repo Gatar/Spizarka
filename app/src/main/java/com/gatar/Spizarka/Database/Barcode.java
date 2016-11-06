@@ -3,7 +3,7 @@ package com.gatar.Spizarka.Database;
 import java.io.Serializable;
 
 /**
- * Created by Gatar on 2016-11-02.
+ * Barcode object containing barcode value and bind with it item id.
  */
 public class Barcode implements Serializable {
 

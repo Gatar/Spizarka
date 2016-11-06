@@ -8,7 +8,7 @@ import com.gatar.Spizarka.Database.Categories;
 import com.gatar.Spizarka.Database.Item;
 
 /**
- * Created by Gatar on 2016-10-27.
+ * Set data view parameters for increase quantity.
  */
 public class IncreaseQuantityEdit extends MyDataView {
     public IncreaseQuantityEdit(View view) {
@@ -35,7 +35,10 @@ public class IncreaseQuantityEdit extends MyDataView {
         categoryText.setAdapter(adapter);
     }
 
-
+    /**
+     * {@inheritDoc}
+     * @return Item with all data or NULL when there was any incorrectness ex. new quantity below zero.
+     */
     public Item getDataView(){
         Item item = new Item();
         if(isEditTextNotEmpty()) {

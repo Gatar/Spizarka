@@ -18,7 +18,6 @@ import java.util.ArrayList;
 /**
  * Creating adaptor for ListView in {@link DepotOverviewFragment}.
  * Based on ArrayList<Item> received in constructor.
- *
  */
 public class DepotOverviewAdapter extends ArrayAdapter<Item>{
     private int layoutResourceId;

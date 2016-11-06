@@ -1,4 +1,4 @@
-package com.gatar.Spizarka.Operations;
+package com.gatar.Spizarka.Application;
 
 import android.content.Context;
 import android.content.SharedPreferences;

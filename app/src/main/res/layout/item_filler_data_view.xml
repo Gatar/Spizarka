@@ -182,7 +182,7 @@
 
         <TextView
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Opis:"
+            android:text="@string/description"
             android:id="@+id/textChangeDescriptionDescription"
             android:layout_column="0"
             android:textSize="20sp"

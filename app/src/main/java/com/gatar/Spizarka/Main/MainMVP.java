@@ -5,13 +5,11 @@ import com.gatar.Spizarka.Depot.View.DepotActivity;
 import com.gatar.Spizarka.Main.View.MainDialogDatabaseDelete;
 
 /**
- * MVP Interfaces for Main Menu.
+ * MVP pattern interface for Main activity.
  */
 public interface MainMVP {
 
-    /**
-     * Presenter -> View operations
-     */
+    //---------Operations in View used by Presenter-------------------
     interface RequiredViewOperations {
 
         /**
@@ -39,9 +37,7 @@ public interface MainMVP {
         void showToast(String message);
     }
 
-    /**
-     * View -> Presenter operations
-     */
+    //---------Operations in Presenter used by View-------------------
     interface PresenterOperations {
 
         /**
@@ -81,19 +77,30 @@ public interface MainMVP {
         void deleteInternalDatabase();
     }
 
-    /**
-     * Presenter -> Model operations
-     */
+    //---------Operations in Presenter used by Model-------------------
+    interface RequiredPresenterOperations{
+
+        /**
+         * Passing massage to make Toast in View.
+         * @param report message body
+         */
+        void reportFromModel(String report);
+    }
+
+    //---------Operations in Model used by Presenter-------------------
     interface ModelOperations{
+
+        /**
+         * Delete internal android database ane restart to 0 database version in preferences.
+         */
         void deleteInternalDatabase();
 
+        /**
+         * Set in preferences chosen by button click value of next activity - {@link com.gatar.Spizarka.Depot.DepotOptions} or {@link com.gatar.Spizarka.ItemFiller.ItemFillerOptions}
+         * @param preferenceName key-value for preference
+         * @param option value of Enum for set
+         */
         void setMainViewPreferences(String preferenceName, Enum option);
     }
 
-    /**
-     * Model -> Presenter operations
-     */
-    interface RequiredPresenterOperations{
-        void reportFromModel(String report);
-    }
 }

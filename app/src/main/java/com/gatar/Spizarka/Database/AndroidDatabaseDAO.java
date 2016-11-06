@@ -13,7 +13,6 @@ import java.util.ArrayList;
  */
 class AndroidDatabaseDAO extends SQLiteOpenHelper implements MethodsDAO {
 
-    //TODO przeobić wszystkie obsługi bazy w programie na sterowanie przez ID, a nie przez title
 
     private final String INTERNAL_DATABASE_NAME;
 
@@ -113,6 +112,28 @@ class AndroidDatabaseDAO extends SQLiteOpenHelper implements MethodsDAO {
 
         cursor.moveToFirst();
         return cursor.getInt(cursor.getColumnIndex(COLUMN_NAME_ITEM_ID));
+    }
+
+    @Override
+    public String getFirstBarcodeByItemId(Integer itemId) {
+        db = this.getReadableDatabase();
+
+        String[] projection = new String[]{COLUMN_NAME_BARCODE_KEY};
+        String selection = COLUMN_NAME_ITEM_ID + " = ?";
+        String[] selectionArgs = new String[]{itemId.toString()};
+
+        Cursor cursor = db.query(
+                TABLE_NAME_BARCODES,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        cursor.moveToFirst();
+        return cursor.getString(cursor.getColumnIndex(COLUMN_NAME_BARCODE_KEY));
     }
 
     @Override

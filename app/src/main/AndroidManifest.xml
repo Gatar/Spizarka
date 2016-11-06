@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name="com.gatar.Spizarka.Operations.MyApp">
+        android:name="com.gatar.Spizarka.Application.MyApp">
 
         <activity
             android:name="com.gatar.Spizarka.Main.View.MainActivity"

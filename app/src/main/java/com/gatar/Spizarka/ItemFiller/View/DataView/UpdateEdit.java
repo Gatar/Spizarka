@@ -9,7 +9,7 @@ import com.gatar.Spizarka.Database.Categories;
 import com.gatar.Spizarka.Database.Item;
 
 /**
- * Created by Gatar on 2016-10-27.
+ * Set data view parameters for update item value
  */
 public class UpdateEdit extends MyDataView {
     public UpdateEdit(View view) {
@@ -18,7 +18,7 @@ public class UpdateEdit extends MyDataView {
 
     @Override
     public void setDataView() {
-        titleDescription.setTextColor(Color.BLACK);
+        titleDescription.setTextColor(Color.RED);
         categoryDescription.setTextColor(Color.RED);
         quantityDescription.setTextColor(Color.RED);
         quantityModificationDescription.setTextColor(Color.BLACK);
@@ -38,7 +38,10 @@ public class UpdateEdit extends MyDataView {
         categoryText.setAdapter(adapter);
     }
 
-
+    /**
+     * {@inheritDoc}
+     * @return Item with all data or NULL when there was any incorrectness ex. new quantity below zero.
+     */
     public Item getDataView(){
         Item item = new Item();
         if(isEditTextNotEmpty()) {

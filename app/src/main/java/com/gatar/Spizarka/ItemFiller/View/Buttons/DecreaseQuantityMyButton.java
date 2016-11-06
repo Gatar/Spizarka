@@ -5,7 +5,7 @@ import android.view.View;
 import com.example.gatar.Spizarka.R;
 
 /**
- * Created by Gatar on 2016-10-27.
+ * Set on view buttons for remove item.
  */
 public class DecreaseQuantityMyButton extends MyButton {
 

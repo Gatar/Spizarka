@@ -8,6 +8,9 @@ import android.os.Bundle;
 
 import com.example.gatar.Spizarka.R;
 
+/**
+ * Main Activity, used for show MainMenu as fragment {@link MainMenuFragment}
+ */
 public class MainActivity extends Activity  {
 
     private final FragmentManager fragmentManager = getFragmentManager();

@@ -28,7 +28,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:gravity="center"
-        android:textSize="14dp"
+        android:textSize="14sp"
         android:layout_weight="1" />
 
     <TextView
@@ -42,6 +42,6 @@
         android:layout_marginBottom="5dp"
         android:gravity="center"
         android:layout_gravity="center"
-        android:textSize="14dp"
+        android:textSize="14sp"
         android:layout_weight="2" />
 </LinearLayout>

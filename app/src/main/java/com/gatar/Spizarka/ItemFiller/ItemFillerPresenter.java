@@ -6,7 +6,7 @@ import com.gatar.Spizarka.Depot.DepotOptions;
 import java.lang.ref.WeakReference;
 
 /**
- * Created by Gatar on 2016-10-27.
+ * Presenter layer for ItemFiller.
  */
 public class ItemFillerPresenter implements ItemFillerMVP.PresenterOperations, ItemFillerMVP.RequiredPresenterOperations{
 

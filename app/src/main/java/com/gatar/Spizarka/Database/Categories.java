@@ -3,7 +3,7 @@ package com.gatar.Spizarka.Database;
 import android.content.Context;
 
 import com.example.gatar.Spizarka.R;
-import com.gatar.Spizarka.Operations.MyApp;
+import com.gatar.Spizarka.Application.MyApp;
 
 import javax.inject.Inject;
 

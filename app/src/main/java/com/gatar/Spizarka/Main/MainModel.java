@@ -1,11 +1,9 @@
 package com.gatar.Spizarka.Main;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.gatar.Spizarka.R;
 import com.gatar.Spizarka.Database.ManagerDAO;
-import com.gatar.Spizarka.Operations.MyApp;
+import com.gatar.Spizarka.Application.MyApp;
 
 import javax.inject.Inject;
 

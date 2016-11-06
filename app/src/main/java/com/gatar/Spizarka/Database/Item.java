@@ -3,7 +3,25 @@ package com.gatar.Spizarka.Database;
 import java.io.Serializable;
 
 /**
- * Created by Gatar on 2016-08-09.
+ * Item object,
+ * containing values:
+ * <ol>
+ *      <li>id {@link Integer}</li>
+ *      <li>title {@link String}</li>
+ *      <li>category {@link Categories}</li>
+ *      <li>quantity {@link Integer}</li>
+ *      <li>minimum quantity {@link Integer}</li>
+ *      <li>description {@link String}</li>
+ *</ol>
+ *
+ * Constructor without parameters set values as:
+ * <ol>
+ *      <li>integers: 0</li>
+ *      <li>strings: "" (empty, but not null)</li>
+ *      <li>category: Other</li>
+ * </ol>
+ *
+ * Setters check quantity and minimum quantity values, in case of set values below zero, saved value will be zero.
  */
 public class Item implements Serializable {
 
@@ -31,7 +49,10 @@ public class Item implements Serializable {
         this.description = description;
     }
 
-
+    /**
+     * Get id of item. Id is unique key-value for both databases.
+     * @return id value.
+     */
     public Integer getId() {
         return id;
     }
@@ -41,7 +62,7 @@ public class Item implements Serializable {
     }
 
     /**
-     * Get title of item. Title is specific, key-unique value for each item.
+     * Get title of item. Title is unique value for each item.
      * @return title of item.
      */
     public String getTitle() {

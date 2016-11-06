@@ -5,9 +5,16 @@ import android.view.View;
 import com.gatar.Spizarka.ItemFiller.ItemFillerOptions;
 
 /**
- * Created by Gatar on 2016-10-28.
+ * Button factory, types described by enum {@link ItemFillerOptions}.
  */
 public class ButtonFactory {
+
+    /**
+     * Set button type in {@link com.gatar.Spizarka.ItemFiller.View.ButtonFragment} on option base.
+     * @param options {@link ItemFillerOptions} value for button set
+     * @param view {@link View} specified for {@link com.gatar.Spizarka.ItemFiller.View.ButtonFragment}
+     * @return instance of {@link MyButton} object
+     */
     public static MyButton createButton(ItemFillerOptions options, View view){
         switch(options){
             case AddBarcodeToProduct:

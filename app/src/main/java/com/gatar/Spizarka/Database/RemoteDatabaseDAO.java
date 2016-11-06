@@ -22,6 +22,11 @@ class RemoteDatabaseDAO implements MethodsDAO{
     }
 
     @Override
+    public String getFirstBarcodeByItemId(Integer itemId) {
+        return null;
+    }
+
+    @Override
     public Integer getItemIdByTitle(String title) {
         return null;
     }

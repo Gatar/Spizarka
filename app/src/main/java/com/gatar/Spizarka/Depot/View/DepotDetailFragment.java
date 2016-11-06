@@ -77,6 +77,9 @@ public class DepotDetailFragment extends Fragment implements DepotMVP.RequiredVi
     }
 
 
+    /**
+     * Start ItemFiller activity, used after click "Actualize" button in detail item view.
+     */
     @Override
     public void toUpdateItemDataActivity() {
         Intent intent = new Intent(getActivity(),ItemFillerActivity.class);

@@ -3,7 +3,7 @@ package com.gatar.Spizarka.BarcodeScanner;
 import com.gatar.Spizarka.ItemFiller.ItemFillerOptions;
 
 /**
- * Created by Gatar on 2016-10-27.
+ * Presenter layer for BarcodeScanner.
  */
 public class BarcodeScannerPresenter implements BarcodeScannerMVP.PresenterOperations, BarcodeScannerMVP.RequiredPresenterOperations {
 

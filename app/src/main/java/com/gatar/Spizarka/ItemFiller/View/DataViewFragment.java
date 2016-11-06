@@ -10,7 +10,7 @@ import com.example.gatar.Spizarka.R;
 import com.gatar.Spizarka.ItemFiller.View.DataView.KeyboardHider;
 
 /**
- * Created by Gatar on 2016-10-27.
+ * Fragment with edit and view text fields for input item's data.
  */
 public class DataViewFragment extends Fragment {
 

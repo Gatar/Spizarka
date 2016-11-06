@@ -11,7 +11,7 @@ import com.gatar.Spizarka.Database.Categories;
 import com.gatar.Spizarka.Database.Item;
 
 /**
- * Created by Gatar on 2016-10-27.
+ * Extendable class for all data view set objects. Contains references for text views, edit texts and spinner in {@link com.gatar.Spizarka.ItemFiller.View.DataViewFragment}
  */
 abstract public class MyDataView {
     View view;
@@ -56,6 +56,10 @@ abstract public class MyDataView {
         descriptionText = (EditText) view.findViewById(R.id.textChangeDescription);
     }
 
+    /**
+     * Fill all edit text fields in {@link com.gatar.Spizarka.ItemFiller.View.DataViewFragment} with item values.
+     * @param item item for set on view
+     */
     public void fillDataView(Item item) {
         titleText.setText(item.getTitle());
         quantityText.setText(String.format("%d", item.getQuantity()));
@@ -68,6 +72,10 @@ abstract public class MyDataView {
         categoryText.setSelection(categoryNumber);
     }
 
+    /**
+     * Check does all edit text fields contains value. Shows Toast messages when not.
+     * @return true if everything is correct, false when there are some problems.
+     */
     protected boolean isEditTextNotEmpty(){
 
         if (titleText.getText().toString().matches("")){
@@ -84,6 +92,11 @@ abstract public class MyDataView {
         return false;
     }
 
+    /**
+     * Check does quantity value is over zero. Show Toast message if not.
+     * @param quantity value of quantity
+     * @return true - value below zero, false - OK
+     */
     protected boolean isQuantityNegativeValue(int quantity){
         if(quantity < 0){
             Toast.makeText(view.getContext(), R.string.quantity_under_zero,Toast.LENGTH_LONG).show();
@@ -96,7 +109,19 @@ abstract public class MyDataView {
         Toast.makeText(view.getContext(), message,Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Set text view, edit text and spinner fields with correct to inherited type of object parameters:
+     * <ol>
+     *     <li>enable</li>
+     *     <li>color</li>
+     *     <li>Spinner adapter</li>
+     * </ol>
+     */
     abstract public void setDataView();
 
+    /**
+     * Get all data from edit text fields and parse to the Item object.
+     * @return item with input values.
+     */
     abstract public Item getDataView();
 }

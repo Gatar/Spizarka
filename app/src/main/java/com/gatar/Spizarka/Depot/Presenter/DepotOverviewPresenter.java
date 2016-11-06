@@ -14,7 +14,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 /**
- * Created by Gatar on 2016-10-26.
+ * Presenter for overview depot view.
  */
 public class DepotOverviewPresenter implements DepotMVP.PresenterOperationsOverview, DepotMVP.RequiredPresenterOperationsOverview {
 
@@ -25,13 +25,11 @@ public class DepotOverviewPresenter implements DepotMVP.PresenterOperationsOverv
     private DepotOptions options;
     private DepotSort depotSort;
     private DepotCategoryLimiter depotCategoryLimiter;
-    private String requestedItemId;
+    private String requestedBarcode;
 
 
-    private final String DEPOT_ACTIVITY_OPTION = "com.example.spizarka.depotActivityOption";
     private final String ITEM_ID = "com.example.spizarka.ITEM_ID";
-    private final static String CHANGE_ACTIVITY_OPTION = "com.example.spizarka.changeActivityOption";
-    private final static String EXTRA_BARCODE = "com.example.gatar.spizarkainterfejs.BARCODE";
+    private final static String ITEM_FILLER_OPTION = "com.example.spizarka.changeActivityOption";
 
     public DepotOverviewPresenter(DepotMVP.RequiredViewOperations.Overview mView) {
         this.mView = new WeakReference<DepotMVP.RequiredViewOperations.Overview>(mView);
@@ -59,7 +57,7 @@ public class DepotOverviewPresenter implements DepotMVP.PresenterOperationsOverv
 
     @Override
     public void setListView() {
-        mModel.getDepotOptions(DEPOT_ACTIVITY_OPTION);
+        mModel.getDepotOptions();
         switch(options){
             case DepotView:
                 mModel.getAllItemsOverZeroQuantity();
@@ -77,14 +75,14 @@ public class DepotOverviewPresenter implements DepotMVP.PresenterOperationsOverv
 
     @Override
     public void setItemForDetailFragment(Item item) {
-        mModel.getDepotOptions(DEPOT_ACTIVITY_OPTION);
-        mModel.setPreferencesValue(ITEM_ID,item.getId().toString());
+        mModel.getDepotOptions();
+        mModel.setPreferencesValue(ITEM_ID,item.getId());
 
         switch (options){
             case AddBarcodeToExistingItemView:
-                mModel.setPreferencesValue(CHANGE_ACTIVITY_OPTION, ItemFillerOptions.IncreaseQuantity.toString());
-                mModel.getPreferencesValue(EXTRA_BARCODE);
-                mModel.addNewBarcode(item, requestedItemId);
+                mModel.setPreferencesValue(ITEM_FILLER_OPTION, ItemFillerOptions.IncreaseQuantity.toString());
+                mModel.getBarcode();
+                mModel.addNewBarcode(item, requestedBarcode);
                 getView().toChangeActivity();
                 break;
             default:
@@ -109,8 +107,8 @@ public class DepotOverviewPresenter implements DepotMVP.PresenterOperationsOverv
     }
 
     @Override
-    public void setRequestItemId(String requestValue) {
-        this.requestedItemId = requestValue;
+    public void setRequestBarcode(String requestBarcode) {
+        this.requestedBarcode = requestBarcode;
     }
 
     /**

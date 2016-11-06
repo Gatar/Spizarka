@@ -9,7 +9,7 @@ import com.gatar.Spizarka.Database.Categories;
 import com.gatar.Spizarka.Database.Item;
 
 /**
- * Created by Gatar on 2016-10-27.
+ * Set data view parameters for add new item.
  */
 public class AddNewEdit extends MyDataView {
 
@@ -41,7 +41,7 @@ public class AddNewEdit extends MyDataView {
 
 
     /**
-     * Get data from edit text fields and put it in Item object.
+     * {@inheritDoc}
      * @return Item with all data or NULL when there was any incorrectness ex. new quantity below zero.
      */
     public Item getDataView(){

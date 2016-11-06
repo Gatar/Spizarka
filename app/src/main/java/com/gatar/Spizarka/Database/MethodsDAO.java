@@ -2,8 +2,6 @@ package com.gatar.Spizarka.Database;
 
 import java.util.ArrayList;
 
-import dagger.Component;
-
 /**
  * Interface for DataAccessObject
  */
@@ -32,6 +30,13 @@ public interface MethodsDAO {
      * @return Integer with id number.
      */
     Integer getItemIdByBarcode(String barcode);
+
+    /**
+     * Get first barcode value saved for received item's id.
+     * @param itemId value of item id
+     * @return connected with id value of barcode
+     */
+    String getFirstBarcodeByItemId(Integer itemId);
 
 
     //METHODS OF ITEMS TABLE
@@ -90,7 +95,7 @@ public interface MethodsDAO {
     ArrayList<Item> getShoppingList();
 
     /**
-     * Delete all databases.
+     * Deleta Android database and clear cloud database.
      */
     void deleteDatabase();
 

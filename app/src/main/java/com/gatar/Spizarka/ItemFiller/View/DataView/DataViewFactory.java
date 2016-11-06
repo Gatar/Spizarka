@@ -3,11 +3,17 @@ package com.gatar.Spizarka.ItemFiller.View.DataView;
 import android.view.View;
 
 import com.gatar.Spizarka.ItemFiller.ItemFillerOptions;
-
 /**
- * Created by Gatar on 2016-10-28.
+ * Data view factory, types described by enum {@link ItemFillerOptions}.
  */
 public class DataViewFactory {
+
+    /**
+     * Set data view type in {@link com.gatar.Spizarka.ItemFiller.View.DataViewFragment} on option base.
+     * @param options {@link ItemFillerOptions} value for data view set
+     * @param view {@link View} specified for {@link com.gatar.Spizarka.ItemFiller.View.DataViewFragment}
+     * @return instance of {@link MyDataView} object
+     */
     public static MyDataView createDataView(ItemFillerOptions options, View view){
         switch(options){
             case AddProduct:

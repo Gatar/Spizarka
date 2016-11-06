@@ -11,7 +11,7 @@ import android.widget.Button;
 import com.example.gatar.Spizarka.R;
 
 /**
- * Created by Gatar on 2016-10-27.
+ * Fragment with two buttons for manage Data View.
  */
 public class ButtonFragment extends Fragment {
 
@@ -25,7 +25,7 @@ public class ButtonFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.item_filler_buttons, container, false);
 
         Button buttonAdd = (Button)view.findViewById(R.id.itemFillerOkButton);

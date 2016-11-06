@@ -6,7 +6,6 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.gatar.Spizarka.R;
@@ -23,7 +22,9 @@ import com.gatar.Spizarka.ItemFiller.View.DataView.MyDataView;
 import com.gatar.Spizarka.Main.View.MainActivity;
 
 
-
+/**
+ * Activity for provide input item's data by user (title, quantity etc.) Used for any item data input/modification,
+ */
 public class ItemFillerActivity extends AppCompatActivity implements
         ItemFillerMVP.RequiredViewOperations,
         ButtonFragment.ButtonFragmentListener{
@@ -101,6 +102,12 @@ public class ItemFillerActivity extends AppCompatActivity implements
     }
 
 
+    @Override
+    public void showToast(String message) {
+        Toast.makeText(this.getBaseContext(),message,Toast.LENGTH_SHORT).show();
+    }
+
+
     private void setDataViewFragment(){
         FragmentTransaction fragmentTransaction = this.fragmentManager.beginTransaction();
         this.currentDataViewFragment = new DataViewFragment();
@@ -109,18 +116,12 @@ public class ItemFillerActivity extends AppCompatActivity implements
         fragmentTransaction.commit();
     }
 
-
     private void setButtonFragment(){
         FragmentTransaction fragmentTransaction = this.fragmentManager.beginTransaction();
         this.currentButtonFragment = new ButtonFragment();
         fragmentTransaction.replace(R.id.change_button_container,this.currentButtonFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-    }
-
-    @Override
-    public void showToast(String message) {
-        Toast.makeText(this.getBaseContext(),message,Toast.LENGTH_SHORT).show();
     }
 
 
