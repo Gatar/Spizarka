@@ -3,6 +3,8 @@ package com.gatar.Spizarka.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.android.volley.RequestQueue;
+import com.gatar.Spizarka.Account.AccountModel;
 import com.gatar.Spizarka.BarcodeScanner.BarcodeScannerModel;
 import com.gatar.Spizarka.Database.Categories;
 import com.gatar.Spizarka.Database.ManagerDAO;
@@ -24,6 +26,7 @@ public interface AppComponent {
     SharedPreferences provideSharedPreferences();
     ManagerDAO provideManagerDAO();
     Context provideAppContext();
+    RequestQueue provideRequestQueue();
 
     void inject(DepotModel model);
     void inject(ItemFillerModel model);
@@ -31,4 +34,5 @@ public interface AppComponent {
     void inject(MainModel model);
     void inject(Categories categories);
     void inject(ManagerDAO managerDAO);
+    void inject(AccountModel accountModel);
 }

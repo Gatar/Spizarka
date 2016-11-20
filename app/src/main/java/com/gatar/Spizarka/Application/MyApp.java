@@ -29,9 +29,5 @@ public class MyApp extends Application {
         MyApp.context = this;
         component = DaggerAppComponent.builder().appModule(getApplicationModule()).build();
     }
-
-    public static Context getAppContext() {
-        return context;
-    }
 }
 

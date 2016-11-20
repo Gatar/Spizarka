@@ -116,7 +116,7 @@ public class ManagerDAO implements MethodsDAO {
     private void restartDatabaseVersion(){
         preferencesEditor.putInt(DATABASE_VERSION_PREFERENCES,0);
         preferencesEditor.commit();
-        Log.d("**DB version 0** ","0");
+        Log.d("**DB version *** ","0");
     }
 
 }

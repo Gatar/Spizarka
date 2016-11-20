@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.gatar.Spizarka.BarcodeScanner.View.BarcodeScannerActivity;
 import com.gatar.Spizarka.Depot.View.DepotActivity;
 import com.example.gatar.Spizarka.R;
+import com.gatar.Spizarka.Account.LoginActivity;
 import com.gatar.Spizarka.Main.MainMVP;
 import com.gatar.Spizarka.Main.MainPresenter;
 
@@ -53,6 +54,10 @@ public class MainMenuFragment extends Fragment implements MainMVP.RequiredViewOp
                     case R.id.buttonMainSettings:
                         mPresenter.toDatabaseDeleteDialog();
                         break;
+                    //Test of login
+                    case R.id.buttonLogin:
+                        toLoginActivity();
+                        break;
                     default:
                         break;
                 }
@@ -64,14 +69,21 @@ public class MainMenuFragment extends Fragment implements MainMVP.RequiredViewOp
         Button buttonToDepot = (Button) view.findViewById(R.id.buttonMainDepot);
         Button buttonToShoppingList = (Button) view.findViewById(R.id.buttonMainShoppingList);
         Button buttonToSettings = (Button) view.findViewById(R.id.buttonMainSettings);
+        Button buttonToLogin = (Button) view.findViewById(R.id.buttonLogin);
 
         buttonToAdd.setOnClickListener(clickListener);
         buttonToRemove.setOnClickListener(clickListener);
         buttonToDepot.setOnClickListener(clickListener);
         buttonToShoppingList.setOnClickListener(clickListener);
         buttonToSettings.setOnClickListener(clickListener);
+        buttonToLogin.setOnClickListener(clickListener);
 
         return view;
+    }
+
+    public void toLoginActivity(){
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        startActivity(intent);
     }
 
     @Override

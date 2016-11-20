@@ -88,18 +88,22 @@
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
+    <string name="prompt_login">  Login</string>
+    <string name="prompt_email">  Email</string>
+    <string name="prompt_password">  Hasło</string>
+    <string name="action_sign_in">Zaloguj/zarejestruj</string>
+    <string name="action_sign_in_short">Zaloguj</string>
+    <string name="error_invalid_email">Adres email jest nieprawidłowy</string>
+    <string name="error_invalid_login">Login jest za krótki</string>
+    <string name="error_invalid_password">Hasło jest za krótkie</string>
+    <string name="error_incorrect_password">Hasło jest nieprawidłowe</string>
+    <string name="error_field_required">To pole jest wymagane</string>
+    <string name="permission_rationale">"Pozwolenia odczytu kontaktów są wymagane"
     </string>
     <string name="remember_password">Pamiętaj hasło</string>
+    <string name="login">Login</string>
+    <string name="spizarka_account">Spizarka Account</string>
+    <string name="need_login">Podaj login</string>
 
 
 </resources>
