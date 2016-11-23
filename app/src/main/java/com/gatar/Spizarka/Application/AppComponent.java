@@ -11,6 +11,7 @@ import com.gatar.Spizarka.Database.ManagerDAO;
 import com.gatar.Spizarka.Depot.DepotModel;
 import com.gatar.Spizarka.ItemFiller.ItemFillerModel;
 import com.gatar.Spizarka.Main.MainModel;
+import com.gatar.Spizarka.Main.View.MainActivity;
 
 import javax.inject.Singleton;
 
@@ -35,4 +36,5 @@ public interface AppComponent {
     void inject(Categories categories);
     void inject(ManagerDAO managerDAO);
     void inject(AccountModel accountModel);
+    void inject(MainActivity mainActivity);
 }

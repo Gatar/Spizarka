@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.gatar.Spizarka.Account.LoginActivity">
+    tools:context="com.gatar.Spizarka.Account.AccountActivity">
 
     <!-- Login progress -->
     <ProgressBar
@@ -97,30 +97,39 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
-                android:id="@+id/email_sign_in_button"
+                android:id="@+id/button_email_sign_in"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/action_sign_in"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_height="60dp" />
 
             <Button
-                android:id="@+id/remember_account_button"
+                android:id="@+id/button_remember_account"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="Remember account data"
+                android:text="@string/text_remember_password_email"
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/change_password_button"
+                android:id="@+id/button_change_password"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="Change password"
+                android:text="@string/text_password_change"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/button_account_delete"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/text_delete_account"
                 android:textStyle="bold" />
 
         </LinearLayout>

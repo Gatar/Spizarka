@@ -51,7 +51,7 @@ public class MainPresenter implements MainMVP.PresenterOperations, MainMVP.Requi
 
     @Override
     public void toDatabaseDeleteDialog(){
-        getView().toDatabaseDeleteView();
+        getView().startDeleteDatabaseDialog();
     }
 
     @Override

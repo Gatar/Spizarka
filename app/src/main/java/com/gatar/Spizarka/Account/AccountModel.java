@@ -10,14 +10,13 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.gatar.Spizarka.Account.Request.RequestGET;
+import com.gatar.Spizarka.Account.Request.RequestStringPOST;
 import com.gatar.Spizarka.Application.MyApp;
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.http.HttpHeaders;
@@ -25,7 +24,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.util.support.Base64;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -46,7 +47,10 @@ public class AccountModel implements AccountMVP.ModelOperations{
 
     AccountMVP.RequiredPresenterOperations mPresenter;
 
-    public final String DATABASE_VERSION_PREFERENCES = "com.gatar.Spizarka.DB_VERSION";
+    private final String DATABASE_VERSION_PREFERENCES = "com.gatar.Spizarka.DB_VERSION";
+    private final String USERNAME_PREFERENCES = "com.gatar.Spizarka.USERNAME";
+    private final String PASSWORD_PREFERENCES = "com.gatar.Spizarka.P_A_SS_WOR_D";
+    private final String EMAIL_PREFERENCES = "com.gatar.Spizarka.EMAIL";
 
     private final String DOMAIN_PATH = "http://spizarkaservlet.eu-west-1.elasticbeanstalk.com/";
     private final String ADD_ACCOUNT_PATH = "addNewAccount";
@@ -56,7 +60,6 @@ public class AccountModel implements AccountMVP.ModelOperations{
     private final String CHANGE_PASSWORD_PATH = "/changePassword";
     private final String DELETE_ACCOUNT_PATH = "/delete";
 
-    private HttpHeaders httpHeaders;
     private Gson gson;
 
     public AccountModel(AccountPresenter presenter) {
@@ -67,22 +70,22 @@ public class AccountModel implements AccountMVP.ModelOperations{
     }
 
     public void addAccountToPreferences(AccountDTO account){
-        preferencesEditor.putString("username",account.getUsername());
-        preferencesEditor.putString("email",account.getEmail());
-        preferencesEditor.putString("password",account.getPassword());
+        preferencesEditor.putString(USERNAME_PREFERENCES,account.getUsername());
+        preferencesEditor.putString(PASSWORD_PREFERENCES,account.getPassword());
+        preferencesEditor.putString(EMAIL_PREFERENCES,account.getEmail() == null ? "" : account.getEmail());
         preferencesEditor.commit();
     }
 
-    public void getAccountFromPreferences(){
+    public void setAccountFromPreferencesToView(){
         AccountDTO thisAccount = new AccountDTO();
-        thisAccount.setUsername(preferences.getString("username",""));
-        thisAccount.setPassword(preferences.getString("password",""));
-        thisAccount.setEmail(preferences.getString("email",""));
-        mPresenter.setAccountDataOnView(thisAccount);
+        thisAccount.setUsername(preferences.getString(USERNAME_PREFERENCES,""));
+        thisAccount.setPassword("");
+        thisAccount.setEmail(preferences.getString(EMAIL_PREFERENCES,""));
+        mPresenter.setAccountOnView(thisAccount);
     }
 
     @Override
-    public void addNewAccount(AccountDTO account) {
+    public void addNewAccountToWebAPI(AccountDTO account) {
         final String URI = DOMAIN_PATH + ADD_ACCOUNT_PATH;
         final AccountDTO accountDTO = account;
         final JSONObject accountJSON;
@@ -126,12 +129,12 @@ public class AccountModel implements AccountMVP.ModelOperations{
     }
 
     @Override
-    public void loginToAccount(AccountDTO account) {
+    public void loginToWebAPI(AccountDTO account) {
         final String URI = DOMAIN_PATH + account.getUsername() + GET_DB_VERSION_PATH;
 
-        Response.Listener<Integer> responseListener = new Response.Listener<Integer>() {
+        Response.Listener<Long> responseListener = new Response.Listener<Long>() {
             @Override
-            public void onResponse(Integer response) {
+            public void onResponse(Long response) {
                 mPresenter.handleLoginToAccountResponse(HttpStatus.OK,response);
             }
         };
@@ -145,9 +148,9 @@ public class AccountModel implements AccountMVP.ModelOperations{
             }
         };
 
-        RequestGET<Integer> loginToAccount = new RequestGET<>(
+        RequestGET<Long> loginToAccount = new RequestGET<>(
                 URI,
-                Integer.TYPE,
+                Long.TYPE,
                 buildAuthHeaders(account).toSingleValueMap(),
                 responseListener,
                 errorListener
@@ -157,15 +160,17 @@ public class AccountModel implements AccountMVP.ModelOperations{
 
 
     @Override
-    public void putDatabaseVersion() {
+    public void putDatabaseVersionToWebAPI() {
         final AccountDTO accountDTO = getCredentialsFromPreferences();
+        final Long dbVersion = getDatabaseVersionFromPreferences();
         final String URI = DOMAIN_PATH + accountDTO.getUsername() + PUT_DB_VERSION_PATH;
-        final Integer dbVersion = getDatabaseVersionFromPreferences();
-        final JSONArray dbVersionJSON;
 
-        Response.Listener<JSONArray> responseListener = new Response.Listener<JSONArray>() {
+        final String postData = String.format("\"%d\"",dbVersion);
+        final Map<String,String> headers = buildAuthHeaders(accountDTO).toSingleValueMap();
+
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONArray response) {
+            public void onResponse(String response) {
                 mPresenter.reportFromModel("Dodano wersję do zdalnej bazy: " + dbVersion);
 
             }
@@ -179,32 +184,18 @@ public class AccountModel implements AccountMVP.ModelOperations{
             }
         };
 
-        try{
-            dbVersionJSON  = new JSONArray().put(dbVersion);
-
-            JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.POST, URI,dbVersionJSON,responseListener,errorListener){
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    return buildAuthHeaders(accountDTO).toSingleValueMap();
-                }
-
-            };
-            mRequestQueue.add(jsonObjectRequest);
-        }catch(Exception e){
-            Log.d("PutDatabaseVExcep ","Error: " + e.getMessage());
-        }
+        RequestStringPOST sendDatabaseVersion = new RequestStringPOST(URI,headers,postData,responseListener,errorListener);
+        mRequestQueue.add(sendDatabaseVersion);
     }
 
     @Override
-    public void rememberUserData() {
-        final AccountDTO accountDTO = getCredentialsFromPreferences();
-        final String URI = DOMAIN_PATH + accountDTO.getUsername() + ACCOUNT_REMIND_PATH;
+    public void resetAccountPassword(String username) {
+        final String URI = DOMAIN_PATH + username + ACCOUNT_REMIND_PATH;
 
-        Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {
+        Response.Listener<Void> responseListener = new Response.Listener<Void>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(Void response) {
                 mPresenter.reportFromModel("Dane i hasło zostały wysłane na  email");
-
             }
         };
 
@@ -215,19 +206,94 @@ public class AccountModel implements AccountMVP.ModelOperations{
             }
         };
 
-        JsonObjectRequest requestNewPassword = new JsonObjectRequest(Request.Method.GET, URI,null,responseListener,errorListener);
-        mRequestQueue.add(requestNewPassword);
+        try {
+            RequestGET<Void> requestNewPassword = new RequestGET<>(URI, Void.TYPE, Collections.EMPTY_MAP, responseListener, errorListener);
+            mRequestQueue.add(requestNewPassword);
+        }catch (Exception e){
+            Log.d("ResetPassword ", e.toString());
+        }
     }
 
     @Override
-    public void changePassword() {
+    public void changePassword(AccountDTO newCredentials, String oldPassword) {
+        final String URI = DOMAIN_PATH + newCredentials.getUsername() + CHANGE_PASSWORD_PATH;
 
+        final String postData = newCredentials.getPassword();
+        final Map<String,String> headers = buildAuthHeaders(newCredentials.getUsername(),oldPassword).toSingleValueMap();
+
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                mPresenter.handleChangePasswordResponse(HttpStatus.OK);
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                mPresenter.handleChangePasswordResponse(HttpStatus.valueOf(error.networkResponse.statusCode));
+                Log.d("ChangePassword ","Error: " + error.toString());
+            }
+        };
+
+        RequestStringPOST changePassword = new RequestStringPOST(URI,headers,postData,responseListener,errorListener);
+        mRequestQueue.add(changePassword);
+    }
+
+    @Override
+    public void deleteAccount(String username, String password) {
+        final String URI = DOMAIN_PATH + username + DELETE_ACCOUNT_PATH;
+        final Map<String,String> headers = buildAuthHeaders(username,password).toSingleValueMap();
+
+        Response.Listener<Void> responseListener = new Response.Listener<Void>() {
+            @Override
+            public void onResponse(Void response) {
+                mPresenter.reportFromModel("Konto zostało usunięte!");
+
+                //Reset Account in Preferences
+                AccountDTO emptyAccount = new AccountDTO();
+                emptyAccount.setUsername("");
+                emptyAccount.setPassword("");
+                emptyAccount.setEmail("");
+                addAccountToPreferences(emptyAccount);
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                mPresenter.reportFromModel("Konto nie zostało usunięte, złe hasło.");
+            }
+        };
+
+        try {
+            RequestGET<Void> deleteAccount = new RequestGET<>(URI, Void.TYPE, headers, responseListener, errorListener);
+            mRequestQueue.add(deleteAccount);
+        }catch (Exception e){
+            Log.d("DeleteAccount ", e.toString());
+        }
+    }
+
+    @Override
+    public void putDatabaseVersionToPreferences(Long databaseVersion) {
+        preferencesEditor.putLong(DATABASE_VERSION_PREFERENCES,databaseVersion);
+        preferencesEditor.commit();
     }
 
     private HttpHeaders buildAuthHeaders(AccountDTO credentials){
         String plainCredentials=credentials.getUsername()+":"+credentials.getPassword();
 
-        //Below may arise error
+        String base64Credentials = Base64.encodeBytes(plainCredentials.getBytes());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Basic " + base64Credentials);
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        return headers;
+    }
+
+    private HttpHeaders buildAuthHeaders(String username, String password){
+        String plainCredentials=username+":"+password;
+
         String base64Credentials = Base64.encodeBytes(plainCredentials.getBytes());
 
         HttpHeaders headers = new HttpHeaders();
@@ -238,13 +304,13 @@ public class AccountModel implements AccountMVP.ModelOperations{
 
     private AccountDTO getCredentialsFromPreferences(){
         AccountDTO credentials = new AccountDTO();
-        credentials.setUsername(preferences.getString("username",""));
-        credentials.setPassword(preferences.getString("password",""));
+        credentials.setUsername(preferences.getString(USERNAME_PREFERENCES,""));
+        credentials.setPassword(preferences.getString(PASSWORD_PREFERENCES,""));
         return credentials;
     }
 
-    private Integer getDatabaseVersionFromPreferences(){
-        return preferences.getInt(DATABASE_VERSION_PREFERENCES,1);
+    private Long getDatabaseVersionFromPreferences(){
+        return preferences.getLong(DATABASE_VERSION_PREFERENCES,-1);
     }
 
 }

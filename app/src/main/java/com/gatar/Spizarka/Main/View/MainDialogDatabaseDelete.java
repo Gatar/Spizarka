@@ -18,7 +18,7 @@ public class MainDialogDatabaseDelete extends DialogFragment {
 
     private MainMVP.PresenterOperations mPresenter;
 
-    public void setmPresenter(MainMVP.PresenterOperations mPresenter) {
+    public void setPresenter(MainMVP.PresenterOperations mPresenter) {
         this.mPresenter = mPresenter;
     }
 

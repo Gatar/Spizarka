@@ -15,7 +15,7 @@ public interface MainMVP {
         /**
          * Set DatabaseDeleteDialog.
          */
-        void toDatabaseDeleteView();
+        void startDeleteDatabaseDialog();
 
         /**
          * Set BarcodeScannerActivity to scan barcode of add/remove product.

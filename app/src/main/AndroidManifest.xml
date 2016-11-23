@@ -31,7 +31,7 @@
             android:name="com.gatar.Spizarka.ItemFiller.View.ItemFillerActivity"
             android:screenOrientation="portrait" />
         <activity android:name="com.gatar.Spizarka.BarcodeScanner.View.BarcodeScannerActivity" />
-        <activity android:name="com.gatar.Spizarka.Account.LoginActivity"
+        <activity android:name="com.gatar.Spizarka.Account.AccountActivity"
             android:screenOrientation="portrait"/>
     </application>
 

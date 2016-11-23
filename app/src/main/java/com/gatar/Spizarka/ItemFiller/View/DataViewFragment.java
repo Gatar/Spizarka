@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.gatar.Spizarka.R;
-import com.gatar.Spizarka.ItemFiller.View.DataView.KeyboardHider;
+import com.gatar.Spizarka.Application.KeyboardHider;
 
 /**
  * Fragment with edit and view text fields for input item's data.

@@ -1,4 +1,4 @@
-package com.gatar.Spizarka.ItemFiller.View.DataView;
+package com.gatar.Spizarka.Application;
 
 import android.app.Activity;
 import android.view.View;

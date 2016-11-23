@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AutoCompleteTextView;
@@ -18,15 +17,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.gatar.Spizarka.R;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.gatar.Spizarka.Account.Dialog.AccountDialogDelete;
+import com.gatar.Spizarka.Account.Dialog.AccountDialogNewPassword;
+import com.gatar.Spizarka.Application.KeyboardHider;
 
 
 /**
  * A login screen that offers login via username/password and provide account options like remember or reset account..
  */
-public class LoginActivity extends AppCompatActivity implements AccountMVP.RequiredViewOperations {
+public class AccountActivity extends AppCompatActivity implements AccountMVP.RequiredViewOperations {
 
 
     private AccountMVP.PresenterOperations mPresenter;
@@ -56,6 +55,7 @@ public class LoginActivity extends AppCompatActivity implements AccountMVP.Requi
         mPresenter.tryGetAccountFromPreferences();
 
         setButtonListeners();
+        closeUnusedKeyboard(findViewById(R.id.login_form));
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
@@ -89,56 +89,45 @@ public class LoginActivity extends AppCompatActivity implements AccountMVP.Requi
      */
     public void attemptLogin() {
 
-        // Reset errors.
-        mEmailView.setError(null);
-        mLoginView.setError(null);
-        mPasswordView.setError(null);
+        resetTextEditErrors();
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
         String login = mLoginView.getText().toString();
 
-        // Check validity of inputed fields
-        if (    validLogin(login) &&
-                validPassword(password) &&
-                validEmailAdress(email)) {
-
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            showProgress(true);
-            mPresenter.postAccountData(login, password, email);
-        } else {
-
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
-            focusView.requestFocus();
-        }
+        // Show a progress spinner, and kick off a background task to
+        // perform the user login attempt.
+        showProgress(true);
+        mPresenter.postAccountData(login, password, email);
     }
 
 
 
     @Override
     public void rememberAccountDataByEmail() {
-
-        mLoginView.setError(null);
+        resetTextEditErrors();
         String login = mLoginView.getText().toString();
-
-        //TODO Finish this functionality
-        if(TextUtils.isEmpty(login)){
-            mLoginView.setError(getString(R.string.need_login));
-            mLoginView.requestFocus();
-        }
-
-
+        mPresenter.rememberUserData(login);
     }
 
     @Override
     public void changePassword() {
-
+        mPresenter.tryGetAccountFromPreferences();
+        mPresenter.changePassword();
     }
 
+    @Override
+    public void startNewPasswordDialog() {
+        AccountDialogNewPassword newPasswordDialog = new AccountDialogNewPassword();
+        newPasswordDialog.setPresenter(mPresenter);
+        newPasswordDialog.show(getFragmentManager(),"newPassword");
+    }
 
+    @Override
+    public void deleteAccount() {
+        startDeleteAccountDialog();
+    }
 
     /**
      * Shows the progress UI and hides the login form.
@@ -177,9 +166,10 @@ public class LoginActivity extends AppCompatActivity implements AccountMVP.Requi
     }
 
     private void setButtonListeners(){
-        Button mRememberAccountButton = (Button) findViewById(R.id.remember_account_button);
-        Button mSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        Button mChangePasswordButton = (Button) findViewById(R.id.change_password_button);
+        Button mRememberAccountButton = (Button) findViewById(R.id.button_remember_account);
+        Button mSignInButton = (Button) findViewById(R.id.button_email_sign_in);
+        Button mChangePasswordButton = (Button) findViewById(R.id.button_change_password);
+        Button mDeleteAccountButton = (Button) findViewById(R.id.button_account_delete);
 
         mSignInButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -201,37 +191,48 @@ public class LoginActivity extends AppCompatActivity implements AccountMVP.Requi
                 changePassword();
             }
         });
+
+        mDeleteAccountButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteAccount();
+            }
+        });
     }
 
-    private boolean validPassword(String password){
-        if(password.length() < 4){
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
-            return false;
+    public void setValidationError(AccountFieldValidation error){
+        showProgress(false);
+        switch(error){
+            case WRONG_PASSWORD:
+                mPasswordView.setError(getString(R.string.error_invalid_password));
+                focusView = mPasswordView;
+                break;
+            case WRONG_LOGIN:
+                mLoginView.setError(getString(R.string.error_invalid_login));
+                focusView = mLoginView;
+                break;
+            case WRONG_EMAIL:
+                mEmailView.setError(getString(R.string.error_invalid_email));
+                focusView = mEmailView;
+                break;
         }
-        return true;
+        focusView.requestFocus();
     }
 
-    private boolean validLogin(String login){
-        if(login.length() < 4){
-            mLoginView.setError(getString(R.string.error_invalid_login));
-            focusView = mLoginView;
-            return false;
-        }
-        return true;
+    private void closeUnusedKeyboard(View view){
+        view.setOnClickListener( new KeyboardHider(this));
     }
 
-    private boolean validEmailAdress(String email){
-        String emailPattern = "[\\S]+@{1}[\\S]+[.]{1}[\\S]+";
-        Pattern pattern = Pattern.compile(emailPattern);
-        Matcher matcher = pattern.matcher(email);
+    private void resetTextEditErrors(){
+        mEmailView.setError(null);
+        mLoginView.setError(null);
+        mPasswordView.setError(null);
+    }
 
-        if (!matcher.matches()) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            return false;
-        }
-        return true;
+    private void startDeleteAccountDialog() {
+        AccountDialogDelete deleteAccountDialog = new AccountDialogDelete();
+        deleteAccountDialog.setPresenter(mPresenter);
+        deleteAccountDialog.show(getFragmentManager(),"deleteAccount");
     }
 }
 

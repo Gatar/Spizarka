@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.gatar.Spizarka.Account.AccountActivity;
 import com.gatar.Spizarka.BarcodeScanner.View.BarcodeScannerActivity;
 import com.gatar.Spizarka.Depot.View.DepotActivity;
 import com.example.gatar.Spizarka.R;
-import com.gatar.Spizarka.Account.LoginActivity;
 import com.gatar.Spizarka.Main.MainMVP;
 import com.gatar.Spizarka.Main.MainPresenter;
 
@@ -82,14 +82,14 @@ public class MainMenuFragment extends Fragment implements MainMVP.RequiredViewOp
     }
 
     public void toLoginActivity(){
-        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        Intent intent = new Intent(getActivity(), AccountActivity.class);
         startActivity(intent);
     }
 
     @Override
-    public void toDatabaseDeleteView() {
+    public void startDeleteDatabaseDialog() {
         MainDialogDatabaseDelete databaseDeleteDialog = new MainDialogDatabaseDelete();
-        databaseDeleteDialog.setmPresenter(mPresenter);
+        databaseDeleteDialog.setPresenter(mPresenter);
         databaseDeleteDialog.show(getFragmentManager(),"databaseDelete");
 
     }
