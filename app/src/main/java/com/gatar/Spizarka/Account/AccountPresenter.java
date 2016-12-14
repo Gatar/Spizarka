@@ -38,7 +38,11 @@ public class AccountPresenter implements AccountMVP.RequiredPresenterOperations,
 
     @Override
     public void postAccountData(String username, String password, String email) {
+
+        if(!mModel.isConnectedWithInternet()) return;
+
         if(validLogin(username) && validPassword(password)) {
+            mView.showProgress(true);
             createAccountReference(username, password, email);
             mModel.addAccountToPreferences(accountValidated);
             mModel.loginToWebAPI(accountValidated);
@@ -47,17 +51,22 @@ public class AccountPresenter implements AccountMVP.RequiredPresenterOperations,
 
     @Override
     public void rememberUserData(String username) {
+        if(!mModel.isConnectedWithInternet()) return;
         if(validLogin(username)) mModel.resetAccountPassword(username);
     }
 
     @Override
     public void changePassword() {
+        if(!mModel.isConnectedWithInternet()) return;
         if(!accountValidated.getUsername().equals("")) mView.startNewPasswordDialog();
             else mView.showToast("Brak konta w telefonie. Wpierw zaloguj się.");
     }
 
     @Override
     public void changePassword(AccountDTO newCredentials, String oldPassword) {
+
+        if(!mModel.isConnectedWithInternet()) return;
+
         newCredentials.setUsername(accountValidated.getUsername());
         newCredentials.setEmail(accountValidated.getEmail());
         accountValidated = newCredentials;
@@ -67,12 +76,8 @@ public class AccountPresenter implements AccountMVP.RequiredPresenterOperations,
 
     @Override
     public void deleteAccount(String password) {
+        if(!mModel.isConnectedWithInternet()) return;
         mModel.deleteAccount(accountValidated.getUsername(),password);
-    }
-
-    @Override
-    public void reportFromModel(String report) {
-        mView.showToast(report);
     }
 
     @Override
@@ -103,7 +108,6 @@ public class AccountPresenter implements AccountMVP.RequiredPresenterOperations,
         switch (status){
             case OK:
                 mModel.putDatabaseVersionToPreferences(databaseVersion);
-                //TODO download all database from webapi
                 mView.showToast("Prawidłowe dane logowania. Wersja bazy: " + databaseVersion);
                 break;
 
@@ -133,6 +137,11 @@ public class AccountPresenter implements AccountMVP.RequiredPresenterOperations,
                 mView.showToast("Error " + status.toString());
                 break;
         }
+    }
+
+    @Override
+    public void reportFromModel(String report) {
+        mView.showToast(report);
     }
 
     private boolean validPassword(String password){

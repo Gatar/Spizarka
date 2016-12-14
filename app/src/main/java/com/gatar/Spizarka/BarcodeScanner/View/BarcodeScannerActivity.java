@@ -81,7 +81,6 @@ public class BarcodeScannerActivity extends Activity implements ZXingScannerView
     }
 
 
-
     /**
      *  Get result from barcode scanner.
      *

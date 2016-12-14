@@ -192,5 +192,11 @@ public interface AccountMVP {
          */
         void deleteAccount(String username, String password);
 
+        /**
+         * Check internet connection and show toast message if not.
+         * @return true - internet connection established, false - no internet connection
+         */
+        boolean isConnectedWithInternet();
+
     }
 }

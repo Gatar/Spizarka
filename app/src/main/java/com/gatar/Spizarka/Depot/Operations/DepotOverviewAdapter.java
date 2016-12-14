@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.gatar.Spizarka.Database.Item;
+import com.gatar.Spizarka.Database.Objects.Item;
 import com.example.gatar.Spizarka.R;
 import com.gatar.Spizarka.Depot.DepotOptions;
 import com.gatar.Spizarka.Depot.View.DepotOverviewFragment;

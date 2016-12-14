@@ -2,7 +2,7 @@ package com.gatar.Spizarka.BarcodeScanner;
 
 import android.content.SharedPreferences;
 
-import com.gatar.Spizarka.Database.ManagerDAO;
+import com.gatar.Spizarka.Database.ManagerDAOImpl;
 import com.gatar.Spizarka.ItemFiller.ItemFillerOptions;
 import com.gatar.Spizarka.Application.MyApp;
 
@@ -17,7 +17,8 @@ public class BarcodeScannerModel implements BarcodeScannerMVP.ModelOperations{
 
     @Inject SharedPreferences preferences;
     @Inject SharedPreferences.Editor preferencesEditor;
-    @Inject ManagerDAO managerDAO;
+    @Inject
+    ManagerDAOImpl managerDAOImpl;
 
     private final String ITEM_FILLER_OPTION = "com.example.spizarka.changeActivityOption";
     private final static String EXTRA_BARCODE = "com.example.gatar.spizarkainterfejs.BARCODE";
@@ -29,7 +30,7 @@ public class BarcodeScannerModel implements BarcodeScannerMVP.ModelOperations{
 
     @Override
     public void isBarcodeExistInDatabase(String barcode) {
-        if(managerDAO.isContainBarcode(barcode)) {
+        if(managerDAOImpl.isContainBarcode(barcode)) {
             checkItemFillerOptionCorrectness();
             mPresenter.handleExistingBarcode();
         }

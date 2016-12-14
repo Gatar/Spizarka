@@ -1,6 +1,6 @@
 package com.gatar.Spizarka.ItemFiller;
 
-import com.gatar.Spizarka.Database.Item;
+import com.gatar.Spizarka.Database.Objects.Item;
 import com.gatar.Spizarka.Depot.DepotOptions;
 
 /**
@@ -114,5 +114,10 @@ public interface ItemFillerMVP {
          * @param depotOptions value for save.
          */
         void setDepotPreferences(DepotOptions depotOptions);
+
+        /**
+         * Synchronize cloud with internal database
+         */
+        void synchronizeDatabases();
     }
 }

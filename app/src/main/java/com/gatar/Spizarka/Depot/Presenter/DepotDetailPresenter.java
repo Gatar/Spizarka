@@ -1,7 +1,7 @@
 package com.gatar.Spizarka.Depot.Presenter;
 
 import com.gatar.Spizarka.ItemFiller.ItemFillerOptions;
-import com.gatar.Spizarka.Database.Item;
+import com.gatar.Spizarka.Database.Objects.Item;
 import com.gatar.Spizarka.Depot.DepotMVP;
 import com.gatar.Spizarka.Depot.DepotModel;
 
@@ -15,7 +15,7 @@ public class DepotDetailPresenter implements DepotMVP.PresenterOperationsDetail,
     WeakReference<DepotMVP.RequiredViewOperations.Detail> mView;
 
     DepotMVP.ModelOperations mModel;
-    private Integer requestedItemId;
+    private Long requestedItemId;
 
     private final String ITEM_FILLER_OPTION = "com.example.spizarka.changeActivityOption";
 
@@ -32,14 +32,20 @@ public class DepotDetailPresenter implements DepotMVP.PresenterOperationsDetail,
 
     @Override
     public void updateItem() {
+        if(!mModel.isConnectedWithInternet()) return;
         mModel.setBarcodePreferenceByItemId(requestedItemId);
         mModel.setPreferencesValue(ITEM_FILLER_OPTION, ItemFillerOptions.UpdateItem.toString());
         getView().toUpdateItemDataActivity();
     }
 
     @Override
-    public void setRequestItemId(Integer requestedItemId) {
+    public void setRequestItemId(Long requestedItemId) {
         this.requestedItemId = requestedItemId;
+    }
+
+    @Override
+    public void reportFromModel(String report) {
+        getView().showToast(report);
     }
 
     @Override

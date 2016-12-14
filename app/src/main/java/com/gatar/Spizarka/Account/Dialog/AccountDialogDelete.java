@@ -12,21 +12,20 @@ import com.example.gatar.Spizarka.R;
 import com.gatar.Spizarka.Account.AccountMVP;
 
 /**
- * Dialogbox for confirm password for complete delete account from WebAPI.
+ * Dialogbox for confirm password for complete delete account from WebAPI (and also all data from internal database).
  */
 
 public class AccountDialogDelete extends DialogFragment implements View.OnClickListener {
 
     private AccountMVP.PresenterOperations mPresenter;
 
+    private EditText mPassword;
+    private Button mConfirm;
+    private Button mCancel;
+
     public void setPresenter(AccountMVP.PresenterOperations mPresenter) {
         this.mPresenter = mPresenter;
     }
-
-    private EditText mPassword;
-
-    private Button mConfirm;
-    private Button mCancel;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_delete_account, container);

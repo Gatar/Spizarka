@@ -3,7 +3,9 @@ package com.gatar.Spizarka.Account;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 
 
@@ -21,13 +23,20 @@ import com.gatar.Spizarka.Account.Dialog.AccountDialogDelete;
 import com.gatar.Spizarka.Account.Dialog.AccountDialogNewPassword;
 import com.gatar.Spizarka.Application.KeyboardHider;
 
+import static android.Manifest.permission.INTERNET;
+
 
 /**
  * A login screen that offers login via username/password and provide account options like remember or reset account..
  */
 public class AccountActivity extends AppCompatActivity implements AccountMVP.RequiredViewOperations {
 
+    /**
+     * Id to identity CAMERA permission request.
+     */
+    private static final int REQUEST_INTERNET = 0;
 
+    //Presenter layer reference
     private AccountMVP.PresenterOperations mPresenter;
 
     // UI references.
@@ -39,6 +48,9 @@ public class AccountActivity extends AppCompatActivity implements AccountMVP.Req
 
     //Focus view for errors
     private View focusView = null;
+
+    //View for ask Internet permission
+    private View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,14 +71,18 @@ public class AccountActivity extends AppCompatActivity implements AccountMVP.Req
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        view = mLoginView.getRootView();
     }
 
-    /**
-     * Callback received when a permissions request has been completed.
-     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_INTERNET) {
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                mayRequestCamera();
+            }
+        }
     }
 
 
@@ -80,7 +96,6 @@ public class AccountActivity extends AppCompatActivity implements AccountMVP.Req
     public void showToast(String message) {
         Toast.makeText(this.getBaseContext(),message,Toast.LENGTH_SHORT).show();
     }
-
 
     /**
      * Attempts to sign in or register the account specified by the login form.
@@ -98,11 +113,8 @@ public class AccountActivity extends AppCompatActivity implements AccountMVP.Req
 
         // Show a progress spinner, and kick off a background task to
         // perform the user login attempt.
-        showProgress(true);
         mPresenter.postAccountData(login, password, email);
     }
-
-
 
     @Override
     public void rememberAccountDataByEmail() {
@@ -134,6 +146,7 @@ public class AccountActivity extends AppCompatActivity implements AccountMVP.Req
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     public void showProgress(final boolean show) {
+
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
@@ -163,6 +176,25 @@ public class AccountActivity extends AppCompatActivity implements AccountMVP.Req
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
+    }
+
+    public void setValidationError(AccountFieldValidation error){
+        showProgress(false);
+        switch(error){
+            case WRONG_PASSWORD:
+                mPasswordView.setError(getString(R.string.error_invalid_password));
+                focusView = mPasswordView;
+                break;
+            case WRONG_LOGIN:
+                mLoginView.setError(getString(R.string.error_invalid_login));
+                focusView = mLoginView;
+                break;
+            case WRONG_EMAIL:
+                mEmailView.setError(getString(R.string.error_invalid_email));
+                focusView = mEmailView;
+                break;
+        }
+        focusView.requestFocus();
     }
 
     private void setButtonListeners(){
@@ -200,25 +232,6 @@ public class AccountActivity extends AppCompatActivity implements AccountMVP.Req
         });
     }
 
-    public void setValidationError(AccountFieldValidation error){
-        showProgress(false);
-        switch(error){
-            case WRONG_PASSWORD:
-                mPasswordView.setError(getString(R.string.error_invalid_password));
-                focusView = mPasswordView;
-                break;
-            case WRONG_LOGIN:
-                mLoginView.setError(getString(R.string.error_invalid_login));
-                focusView = mLoginView;
-                break;
-            case WRONG_EMAIL:
-                mEmailView.setError(getString(R.string.error_invalid_email));
-                focusView = mEmailView;
-                break;
-        }
-        focusView.requestFocus();
-    }
-
     private void closeUnusedKeyboard(View view){
         view.setOnClickListener( new KeyboardHider(this));
     }
@@ -233,6 +246,28 @@ public class AccountActivity extends AppCompatActivity implements AccountMVP.Req
         AccountDialogDelete deleteAccountDialog = new AccountDialogDelete();
         deleteAccountDialog.setPresenter(mPresenter);
         deleteAccountDialog.show(getFragmentManager(),"deleteAccount");
+    }
+
+    private boolean mayRequestCamera() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return true;
+        }
+        if (checkSelfPermission(INTERNET) == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        }
+        if (shouldShowRequestPermissionRationale(INTERNET)) {
+            Snackbar.make(view, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(android.R.string.ok, new View.OnClickListener() {
+                        @Override
+                        @TargetApi(Build.VERSION_CODES.M)
+                        public void onClick(View v) {
+                            requestPermissions(new String[]{INTERNET}, REQUEST_INTERNET);
+                        }
+                    });
+        } else {
+            requestPermissions(new String[]{INTERNET}, REQUEST_INTERNET);
+        }
+        return false;
     }
 }
 

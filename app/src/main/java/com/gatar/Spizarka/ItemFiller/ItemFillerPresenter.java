@@ -1,6 +1,6 @@
 package com.gatar.Spizarka.ItemFiller;
 
-import com.gatar.Spizarka.Database.Item;
+import com.gatar.Spizarka.Database.Objects.Item;
 import com.gatar.Spizarka.Depot.DepotOptions;
 
 import java.lang.ref.WeakReference;
@@ -23,6 +23,7 @@ public class ItemFillerPresenter implements ItemFillerMVP.PresenterOperations, I
 
     @Override
     public void getCorrectView() {
+        mModel.synchronizeDatabases();
         mModel.getItemFillerPreferences();
 
         switch (options){

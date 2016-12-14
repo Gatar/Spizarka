@@ -14,7 +14,12 @@ import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 /**
- *Make a GET request and return a parsed object from JSON.
+ * Class providing generic GET request for object and return it parsed from JSON. Used for:
+ * <ul>
+ *     <li> Get database version </li>
+ *     <li> Reset password in webAPI </li>
+ *     <li> Delete account in webAPI </li>
+ * </ul>
  */
 public class RequestGET<T> extends Request<T> {
 

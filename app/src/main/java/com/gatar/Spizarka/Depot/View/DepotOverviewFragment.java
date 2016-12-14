@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +19,7 @@ import com.gatar.Spizarka.Depot.DepotOptions;
 import com.gatar.Spizarka.ItemFiller.View.ItemFillerActivity;
 import com.gatar.Spizarka.Depot.DepotMVP;
 import com.gatar.Spizarka.Database.Categories;
-import com.gatar.Spizarka.Database.Item;
+import com.gatar.Spizarka.Database.Objects.Item;
 import com.gatar.Spizarka.Depot.Presenter.DepotOverviewPresenter;
 import com.gatar.Spizarka.Depot.Operations.DepotCategoryLimiter;
 import com.gatar.Spizarka.Depot.Operations.DepotOverviewAdapter;
@@ -66,7 +65,6 @@ public class DepotOverviewFragment extends Fragment implements DepotMVP.Required
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.depot_overview_fragment, container,false);
-
         mPresenter.setListView();
 
         setCategoryLimitButton(view);

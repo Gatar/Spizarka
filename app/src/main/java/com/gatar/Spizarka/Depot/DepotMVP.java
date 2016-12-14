@@ -1,7 +1,7 @@
 package com.gatar.Spizarka.Depot;
 
 import com.gatar.Spizarka.Database.Categories;
-import com.gatar.Spizarka.Database.Item;
+import com.gatar.Spizarka.Database.Objects.Item;
 import com.gatar.Spizarka.Depot.Operations.DepotSortTypes;
 
 import java.util.ArrayList;
@@ -25,6 +25,11 @@ public interface DepotMVP {
              * Fill view with Item data
              */
             void setDataOnView(Item item);
+
+            /**
+             * Show Toast message.
+             */
+            void showToast(String message);
         }
 
         //--------------Overview View------------------
@@ -138,23 +143,29 @@ public interface DepotMVP {
          * Set in Presenter private ItemId variable.
          * @param requestedItemId value for set.
          */
-        void setRequestItemId(Integer requestedItemId);
+        void setRequestItemId(Long requestedItemId);
 
         /**
          * Passing item from database to set in on Detail view.
          * @param item item for set on view.
          */
         void setItemOnView(Item item);
+
+        /**
+         * Send message to create Toast.
+         * @param report message as String
+         */
+        void reportFromModel(String report);
     }
 
     //---------Operations in Model used by Presenter-------------------
     interface ModelOperations{
 
         /**
-         * Set value in Shared Preferences with key and value. It works for types Integer and String.
+         * Set value in Shared Preferences with key and value. It works for types Long and String.
          * @param preferenceName key value
          * @param value value for save in preferences
-         * @param <T> can be only String and Integer type
+         * @param <T> can be only String and Long type
          */
         <T> void setPreferencesValue(String preferenceName, T value);
 
@@ -199,14 +210,25 @@ public interface DepotMVP {
          * Get single item from database by id
          * @param itemId value of item's id
          */
-        void getSingleItem(Integer itemId);
+        void getSingleItem(Long itemId);
 
         /**
          * Set in preferences value of first barcode in database connected with actual item.
          * It's necessary for bind correct item in ItemFiller activity for it update.
          * @param requestedItemId item's id value
          */
-        void setBarcodePreferenceByItemId(Integer requestedItemId);
+        void setBarcodePreferenceByItemId(Long requestedItemId);
+
+        /**
+         * Synchronize cloud with internal database
+         */
+        void synchronizeDatabases();
+
+        /**
+         * Check internet connection and show toast message if not.
+         * @return true - internet connection established, false - no internet connection
+         */
+        boolean isConnectedWithInternet();
     }
 
 

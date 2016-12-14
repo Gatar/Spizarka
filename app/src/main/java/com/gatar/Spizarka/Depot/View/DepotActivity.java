@@ -36,7 +36,6 @@ public class DepotActivity extends AppCompatActivity implements
         isLand = getResources().getBoolean(R.bool.isLandscape);
     }
 
-
     @Override
     public void setDepotDetail(){
         if(isLand) {

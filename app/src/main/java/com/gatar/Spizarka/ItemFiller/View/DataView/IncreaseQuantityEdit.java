@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 
 import com.gatar.Spizarka.Database.Categories;
-import com.gatar.Spizarka.Database.Item;
+import com.gatar.Spizarka.Database.Objects.Item;
 
 /**
  * Set data view parameters for increase quantity.

@@ -24,15 +24,19 @@ public class MainPresenter implements MainMVP.PresenterOperations, MainMVP.Requi
 
     @Override
     public void toAdd(){
-        mModel.setMainViewPreferences(CHANGE_ACTIVITY_OPTION, ItemFillerOptions.AddProduct);
-        getView().toBarcodeScannerView();
+        if(mModel.isConnectedWithInternet()) {
+            mModel.setMainViewPreferences(CHANGE_ACTIVITY_OPTION, ItemFillerOptions.AddProduct);
+            getView().toBarcodeScannerView();
+        }
     }
 
 
     @Override
     public void toDecreaseQuantity(){
-        mModel.setMainViewPreferences(CHANGE_ACTIVITY_OPTION, ItemFillerOptions.DecreaseQuantity);
-        getView().toBarcodeScannerView();
+        if(mModel.isConnectedWithInternet()) {
+            mModel.setMainViewPreferences(CHANGE_ACTIVITY_OPTION, ItemFillerOptions.DecreaseQuantity);
+            getView().toBarcodeScannerView();
+        }
     }
 
 
@@ -57,6 +61,11 @@ public class MainPresenter implements MainMVP.PresenterOperations, MainMVP.Requi
     @Override
     public void deleteInternalDatabase() {
         mModel.deleteInternalDatabase();
+    }
+
+    @Override
+    public void toLoginActivity() {
+        if(mModel.isConnectedWithInternet()) getView().toLoginActivity();
     }
 
     @Override

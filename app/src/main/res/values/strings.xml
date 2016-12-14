@@ -116,6 +116,8 @@
     <string name="text_remember_password_email">Przypomnij hasło na email</string>
     <string name="text_too_short_password">Podane hasło jest za krótkie!</string>
     <string name="delete_account">Usuń konto</string>
+    <string name="database_erased">Baza została usunięta.</string>
+    <string name="no_internet_connection">Brak połączenia z Internetem!</string>
 
 
 </resources>

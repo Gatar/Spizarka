@@ -20,15 +20,15 @@ public class AccountDialogNewPassword extends DialogFragment implements View.OnC
 
     private AccountMVP.PresenterOperations mPresenter;
 
-    public void setPresenter(AccountMVP.PresenterOperations mPresenter) {
-        this.mPresenter = mPresenter;
-    }
-
     private EditText mOldPassword;
     private EditText mNewPassword;
     private EditText mNewConfirmPassword;
     private Button mConfirm;
     private Button mCancel;
+
+    public void setPresenter(AccountMVP.PresenterOperations mPresenter) {
+        this.mPresenter = mPresenter;
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_new_password, container);

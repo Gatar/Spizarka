@@ -1,4 +1,6 @@
-package com.gatar.Spizarka.Database;
+package com.gatar.Spizarka.Database.Objects;
+
+import com.gatar.Spizarka.Database.Categories;
 
 import java.io.Serializable;
 
@@ -25,7 +27,7 @@ import java.io.Serializable;
  */
 public class Item implements Serializable {
 
-    private Integer id;
+    private Long id;
 
     private String title;
     private Categories category;
@@ -53,11 +55,11 @@ public class Item implements Serializable {
      * Get id of item. Id is unique key-value for both databases.
      * @return id value.
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -119,5 +121,20 @@ public class Item implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    /**
+     * Create {@link ItemDTO} object for send it to the remote database.
+     * @return Item as ItemDTO object.
+     */
+    public ItemDTO toItemDTO(){
+        ItemDTO itemDTO = new ItemDTO();
+        itemDTO.setTitle(title);
+        itemDTO.setCategory(category.name());
+        itemDTO.setDescription(description);
+        itemDTO.setMinimumQuantity(minimumQuantity);
+        itemDTO.setQuantity(quantity);
+        itemDTO.setIdItemAndroid(id);
+        return itemDTO;
     }
 }

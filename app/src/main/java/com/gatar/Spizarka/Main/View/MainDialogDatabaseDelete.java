@@ -7,12 +7,11 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 
 import com.example.gatar.Spizarka.R;
-import com.gatar.Spizarka.Database.ManagerDAO;
+import com.gatar.Spizarka.Database.ManagerDAOImpl;
 import com.gatar.Spizarka.Main.MainMVP;
 
 /**
- * Dialog in database asking user about confirmation of database delete decision.
- * If user confirm, DATABASE IS DELETED IN THIS CLASS by {@link ManagerDAO}
+ * Dialog asking user about confirmation of internal database delete decision.
  */
 public class MainDialogDatabaseDelete extends DialogFragment {
 

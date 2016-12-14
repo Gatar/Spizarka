@@ -56,7 +56,7 @@ public class MainMenuFragment extends Fragment implements MainMVP.RequiredViewOp
                         break;
                     //Test of login
                     case R.id.buttonLogin:
-                        toLoginActivity();
+                        mPresenter.toLoginActivity();
                         break;
                     default:
                         break;
@@ -81,6 +81,7 @@ public class MainMenuFragment extends Fragment implements MainMVP.RequiredViewOp
         return view;
     }
 
+    @Override
     public void toLoginActivity(){
         Intent intent = new Intent(getActivity(), AccountActivity.class);
         startActivity(intent);

@@ -4,20 +4,21 @@ import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
-import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 /**
- * Created by bargat on 2016-11-22.
+ * Request POST for String object. Used for:
+ * <ul>
+ *     <li> Send database version </li>
+ *     <li> Send new password after manually change </li>
+ * </ul>
  */
-
 public class RequestStringPOST extends Request<String>{
     private final String postData;
     private final Gson gson = new Gson();

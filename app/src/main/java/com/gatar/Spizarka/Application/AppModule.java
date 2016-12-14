@@ -6,7 +6,7 @@ import android.preference.PreferenceManager;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.gatar.Spizarka.Database.ManagerDAO;
+import com.gatar.Spizarka.Database.ManagerDAOImpl;
 
 import javax.inject.Singleton;
 
@@ -14,18 +14,20 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by Gatar on 2016-11-01.
+ * Module providing field injections for Dagger2 use.
  */
 @Module
 public class AppModule {
     private MyApp myApp;
-    private final ManagerDAO managerDAO;
+    private final ManagerDAOImpl managerDAOImpl;
     private final RequestQueue mRequestQueue;
+    private final InternetConnectionStatus internetConnectionStatus;
 
     public AppModule(MyApp myApp){
         this.myApp = myApp;
-        managerDAO = new ManagerDAO(myApp);
+        managerDAOImpl = new ManagerDAOImpl(myApp);
         mRequestQueue = Volley.newRequestQueue(myApp);
+        internetConnectionStatus = new InternetConnectionStatus(myApp);
     }
 
     @Provides
@@ -41,8 +43,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public ManagerDAO provideManagerDAO(){
-        return managerDAO;
+    public ManagerDAOImpl provideManagerDAO(){
+        return managerDAOImpl;
     }
 
     @Provides
@@ -54,5 +56,11 @@ public class AppModule {
     @Singleton
     public RequestQueue provideRequestQueue(){
         return mRequestQueue;
+    }
+
+    @Provides
+    @Singleton
+    public InternetConnectionStatus provideInternetConnectionStatus(){
+        return internetConnectionStatus;
     }
 }

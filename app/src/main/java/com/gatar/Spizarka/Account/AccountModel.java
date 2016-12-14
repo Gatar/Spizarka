@@ -1,5 +1,6 @@
 package com.gatar.Spizarka.Account;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -11,10 +12,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
+import com.example.gatar.Spizarka.R;
 import com.gatar.Spizarka.Account.Request.RequestGET;
 import com.gatar.Spizarka.Account.Request.RequestStringPOST;
+import com.gatar.Spizarka.Application.InternetConnectionStatus;
 import com.gatar.Spizarka.Application.MyApp;
+import com.gatar.Spizarka.Database.ManagerDAOImpl;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -24,7 +27,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.util.support.Base64;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
@@ -44,6 +46,15 @@ public class AccountModel implements AccountMVP.ModelOperations{
 
     @Inject
     RequestQueue mRequestQueue;
+
+    @Inject
+    ManagerDAOImpl managerDAO;
+
+    @Inject
+    InternetConnectionStatus internetConnectionStatus;
+
+    @Inject
+    Context context;
 
     AccountMVP.RequiredPresenterOperations mPresenter;
 
@@ -94,6 +105,7 @@ public class AccountModel implements AccountMVP.ModelOperations{
             @Override
             public void onResponse(JSONObject response) {
                 mPresenter.handleNewAccountResponse(HttpStatus.CREATED);
+                managerDAO.deleteDatabase();
             }
         };
 
@@ -136,6 +148,8 @@ public class AccountModel implements AccountMVP.ModelOperations{
             @Override
             public void onResponse(Long response) {
                 mPresenter.handleLoginToAccountResponse(HttpStatus.OK,response);
+                managerDAO.deleteDatabase();
+                managerDAO.synchronizeDatabases();
             }
         };
 
@@ -249,6 +263,7 @@ public class AccountModel implements AccountMVP.ModelOperations{
             @Override
             public void onResponse(Void response) {
                 mPresenter.reportFromModel("Konto zostało usunięte!");
+                managerDAO.deleteDatabase();
 
                 //Reset Account in Preferences
                 AccountDTO emptyAccount = new AccountDTO();
@@ -291,6 +306,15 @@ public class AccountModel implements AccountMVP.ModelOperations{
         return headers;
     }
 
+    @Override
+    public boolean isConnectedWithInternet(){
+        if(!internetConnectionStatus.isConnectedWithInternet()){
+            mPresenter.reportFromModel(context.getString(R.string.no_internet_connection));
+            return false;
+        }
+        return true;
+    }
+
     private HttpHeaders buildAuthHeaders(String username, String password){
         String plainCredentials=username+":"+password;
 
@@ -312,5 +336,7 @@ public class AccountModel implements AccountMVP.ModelOperations{
     private Long getDatabaseVersionFromPreferences(){
         return preferences.getLong(DATABASE_VERSION_PREFERENCES,-1);
     }
+
+
 
 }

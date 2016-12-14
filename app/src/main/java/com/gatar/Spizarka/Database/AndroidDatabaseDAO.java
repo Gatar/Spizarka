@@ -1,34 +1,29 @@
 package com.gatar.Spizarka.Database;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import com.gatar.Spizarka.Database.Objects.Barcode;
+import com.gatar.Spizarka.Database.Objects.Item;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
- * Manager for Android internal SQLite Database
+ * Interface for DataAccessObject
  */
-class AndroidDatabaseDAO extends SQLiteOpenHelper implements MethodsDAO {
+public interface AndroidDatabaseDAO {
 
+      String TABLE_NAME_ITEMS = "ITEMS";
+      String COLUMN_NAME_ID_KEY = "id";
+      String COLUMN_NAME_TITLE = "title";
+      String COLUMN_NAME_CATEGORY = "category";
+      String COLUMN_NAME_QUANTITY = "quantity";
+      String COLUMN_NAME_MINIMUM_QUANTITY = "minimum";
+      String COLUMN_NAME_DESCRIPTION = "description";
 
-    private final String INTERNAL_DATABASE_NAME;
+      String TABLE_NAME_BARCODES = "BARCODES";
+      String COLUMN_NAME_BARCODE_KEY = "barcode";
+      String COLUMN_NAME_ITEM_ID = "item_id";
 
-    private final String TABLE_NAME_ITEMS = "ITEMS";
-    private final String COLUMN_NAME_ID_KEY = "id";
-    private final String COLUMN_NAME_TITLE = "title";
-    private final String COLUMN_NAME_CATEGORY = "category";
-    private final String COLUMN_NAME_QUANTITY = "quantity";
-    private final String COLUMN_NAME_MINIMUM_QUANTITY = "minimum";
-    private final String COLUMN_NAME_DESCRIPTION = "description";
-
-    private final String TABLE_NAME_BARCODES = "BARCODES";
-    private final String COLUMN_NAME_BARCODE_KEY = "barcode";
-    private final String COLUMN_NAME_ITEM_ID = "item_id";
-
-    private final String SQL_CREATE_TABLE_ITEMS=
+      String SQL_CREATE_TABLE_ITEMS=
             "CREATE TABLE " + TABLE_NAME_ITEMS + " (" +
                     COLUMN_NAME_ID_KEY + "              INTEGER     PRIMARY KEY     AUTOINCREMENT, " +
                     COLUMN_NAME_TITLE + "               TEXT        NOT NULL        UNIQUE, " +
@@ -37,326 +32,114 @@ class AndroidDatabaseDAO extends SQLiteOpenHelper implements MethodsDAO {
                     COLUMN_NAME_MINIMUM_QUANTITY + "    INTEGER     NOT NULL, " +
                     COLUMN_NAME_DESCRIPTION + "         TEXT );";
 
-    private final String SQL_CREATE_TABLE_BARCODES=
+      String SQL_CREATE_TABLE_BARCODES=
             "CREATE TABLE " + TABLE_NAME_BARCODES + "(" +
                     COLUMN_NAME_BARCODE_KEY +"          TEXT    PRIMARY KEY     NOT NULL, " +
                     COLUMN_NAME_ITEM_ID + "         INTEGER    NOT NULL );";
 
 
-    private Context context;
 
-    private SQLiteDatabase db;
+    //METHODS OF BARCODES TABLE
+    /**
+     * Check of barcode presence in database.
+     * @param barcode String with barcode value
+     * @return true - barcode exist in database, false - barcode doesn't exist in database
+     */
+    boolean isContainBarcode(String barcode);
 
-    public AndroidDatabaseDAO(Context context, String INTERNAL_DATABASE_NAME){
-        super(context,INTERNAL_DATABASE_NAME,null,1);
-        this.context = context;
-        this.INTERNAL_DATABASE_NAME = INTERNAL_DATABASE_NAME;
-    }
+    /**
+     * Add new single barcode connected with title to database.
+     * @param barcode {@link Barcode} object with barcode value and item's id
+     */
+    void addNewBarcode (Barcode barcode);
 
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL(SQL_CREATE_TABLE_BARCODES);
-        db.execSQL(SQL_CREATE_TABLE_ITEMS);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        onCreate(db);
-    }
-
-    @Override
-    public boolean isContainBarcode(String barcode) {
-        db = this.getReadableDatabase();
-
-        String[] projection = new String[]{COLUMN_NAME_BARCODE_KEY};
-        String selection = COLUMN_NAME_BARCODE_KEY + " = ?";
-        String[] selectionArgs = new String[]{barcode};
-
-        Cursor cursor = db.query(
-                TABLE_NAME_BARCODES,
-                projection,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null
-                );
-
-        return cursor.getCount() != 0;
-    }
-
-    @Override
-    public Integer getItemIdByBarcode(String barcode) {
-        db = this.getReadableDatabase();
-
-        if(!isContainBarcode(barcode)) try {
-            throw new Exception("BarcodeDAO.getTitle: Barcode " + barcode + " doesn't exists in database");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-
-        String[] projection = new String[]{COLUMN_NAME_ITEM_ID};
-        String selection = COLUMN_NAME_BARCODE_KEY + " = ?";
-        String[] selectionArgs = new String[]{barcode};
-
-        Cursor cursor = db.query(
-                TABLE_NAME_BARCODES,
-                projection,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null
-        );
-
-        cursor.moveToFirst();
-        return cursor.getInt(cursor.getColumnIndex(COLUMN_NAME_ITEM_ID));
-    }
-
-    @Override
-    public String getFirstBarcodeByItemId(Integer itemId) {
-        db = this.getReadableDatabase();
-
-        String[] projection = new String[]{COLUMN_NAME_BARCODE_KEY};
-        String selection = COLUMN_NAME_ITEM_ID + " = ?";
-        String[] selectionArgs = new String[]{itemId.toString()};
-
-        Cursor cursor = db.query(
-                TABLE_NAME_BARCODES,
-                projection,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null
-        );
-
-        cursor.moveToFirst();
-        return cursor.getString(cursor.getColumnIndex(COLUMN_NAME_BARCODE_KEY));
-    }
-
-    @Override
-    public Integer getItemIdByTitle(String title) {
-        db = this.getReadableDatabase();
-
-        String[] projection = new String[]{COLUMN_NAME_ID_KEY};
-        String selection = COLUMN_NAME_TITLE + " = ?";
-        String[] selectionArgs = new String[]{title};
-
-        Cursor cursor = db.query(
-                TABLE_NAME_ITEMS,
-                projection,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null
-        );
-
-        cursor.moveToFirst();
-        return cursor.getInt(cursor.getColumnIndex(COLUMN_NAME_ID_KEY));
-    }
-
-    @Override
-    public void addNewBarcode(String barcode, Integer itemId) {
-        db = this.getWritableDatabase();
-
-        if(isContainBarcode(barcode)) try {
-            throw new Exception("BarcodeDAO.putData: Barcode " + barcode + " exists in database");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
-
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME_BARCODE_KEY,barcode);
-        values.put(COLUMN_NAME_ITEM_ID,itemId);
-
-        db.insert(TABLE_NAME_BARCODES,null,values);
-    }
-
-    @Override
-    public void addNewItem(Item item) {
-        db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME_TITLE,item.getTitle());
-        values.put(COLUMN_NAME_CATEGORY,item.getCategory().name());
-        values.put(COLUMN_NAME_QUANTITY,item.getQuantity());
-        values.put(COLUMN_NAME_MINIMUM_QUANTITY,item.getMinimumQuantity());
-        values.put(COLUMN_NAME_DESCRIPTION,item.getDescription());
-
-        db.insert(
-                TABLE_NAME_ITEMS,
-                null,
-                values);
-    }
-
-    @Override
-    public void updateItem(Item item) {
-        db = this.getReadableDatabase();
-
-        String selection = COLUMN_NAME_ID_KEY + "= ?";
-        String[] selectionArgs = new String[]{item.getId().toString()};
-
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME_TITLE, item.getTitle());
-        values.put(COLUMN_NAME_CATEGORY,item.getCategory().name());
-        values.put(COLUMN_NAME_QUANTITY,item.getQuantity());
-        values.put(COLUMN_NAME_MINIMUM_QUANTITY,item.getMinimumQuantity());
-        values.put(COLUMN_NAME_DESCRIPTION,item.getDescription());
-
-        db.update(
-                TABLE_NAME_ITEMS,
-                values,
-                selection,
-                selectionArgs);
-    }
-
-    @Override
-    public Item getSingleItem(Integer idItem) {
-        db = this.getReadableDatabase();
-        Item item = new Item();
-        String selection = COLUMN_NAME_ID_KEY + " = ?";
-        String [] selectionArgs = {idItem.toString()};
-
-        Cursor cursor = db.query(false,
-                TABLE_NAME_ITEMS,
-                null,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null,
-                null);
-
-        cursor.moveToFirst();
-        fillItemWithValues(cursor,item);
-
-        return item;
-    }
-
-    @Override
-    public Item getSingleItem(String title) {
-        db = this.getReadableDatabase();
-
-        Item item = new Item();
-        String selection = COLUMN_NAME_TITLE + " = ?";
-        String [] selectionArgs = {title};
-
-        Cursor cursor = db.query(false,
-                TABLE_NAME_ITEMS,
-                null,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null,
-                null);
-
-        cursor.moveToFirst();
-        fillItemWithValues(cursor,item);
-
-        return item;
-    }
-
-    @Override
-    public ArrayList<Item> getItemsByCategory(String category) {
-        db = this.getReadableDatabase();
-
-        ArrayList<Item> items = new ArrayList<Item>();
-
-        String selection = COLUMN_NAME_CATEGORY + " = ?";
-        String [] selectionArgs = {category};
-
-        Cursor cursor = db.query(false,
-                TABLE_NAME_ITEMS,
-                null,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null,
-                null);
-
-        while(cursor.moveToNext()) {
-            Item item = new Item();
-            fillItemWithValues(cursor,item);
-            items.add(item);
-        }
-        return items;
-    }
-
-    @Override
-    public ArrayList<Item> getAllItems(boolean overZeroQuantity) {
-        db = this.getReadableDatabase();
-
-        ArrayList<Item> items = new ArrayList<Item>();
-
-        String selection = COLUMN_NAME_QUANTITY + " > ?";
-        String [] selectionArgs = {"0"};
-
-        if(!overZeroQuantity) selectionArgs[0] = "-1";
+    /**
+     * Add new barcodes list connected with title to database.
+     * @param barcodes {@link Barcode} object list with barcode value and item's id
+     */
+    void addNewBarcode (LinkedList<Barcode> barcodes);
 
 
-        Cursor cursor = db.query(false,
-                TABLE_NAME_ITEMS,
-                null,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null,
-                null);
+    /**
+     * Get item id connceted with barcode
+     * @param barcode String with barcode
+     * @return Long with id number.
+     */
+    Long getItemIdByBarcode(String barcode);
 
-        while(cursor.moveToNext()) {
-            Item item = new Item();
-            fillItemWithValues(cursor, item);
-            items.add(item);
-        }
-        return items;
-    }
-
-    @Override
-    public ArrayList<Item> getShoppingList() {
-        db = this.getReadableDatabase();
-
-        ArrayList<Item> items = new ArrayList<Item>();
-
-        String selection = COLUMN_NAME_QUANTITY + " < " + COLUMN_NAME_MINIMUM_QUANTITY;
-
-        Cursor cursor = db.query(false,
-                TABLE_NAME_ITEMS,
-                null,
-                selection,
-                null,
-                null,
-                null,
-                null,
-                null);
-
-        while(cursor.moveToNext()) {
-            Item item = new Item();
-            fillItemWithValues(cursor,item);
-            items.add(item);
-        }
-        return items;
-    }
+    /**
+     * Get first barcode value saved for received item's id.
+     * @param itemId value of item id
+     * @return connected with id value of barcode
+     */
+    String getFirstBarcodeByItemId(Long itemId);
 
 
+    //METHODS OF ITEMS TABLE
 
-    @Override
-    public void deleteDatabase() {
-        context.deleteDatabase(INTERNAL_DATABASE_NAME);
-    }
+    /**
+     * Get item id connceted with barcode
+     * @param title String with barcode
+     * @return Long with id number.
+     */
+    Long getItemIdByTitle(String title);
 
-    private void fillItemWithValues(Cursor cursor, Item item){
-        item.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_NAME_ID_KEY)));
-        item.setTitle(cursor.getString(cursor.getColumnIndex(COLUMN_NAME_TITLE)));
-        item.setCategory(Categories.valueOf(cursor.getString(cursor.getColumnIndex(COLUMN_NAME_CATEGORY))));
-        item.setQuantity(cursor.getInt(cursor.getColumnIndex(COLUMN_NAME_QUANTITY)));
-        item.setMinimumQuantity(cursor.getInt(cursor.getColumnIndex(COLUMN_NAME_MINIMUM_QUANTITY)));
-        item.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_NAME_DESCRIPTION)));
-    }
+    /**
+     * Add new item to database.
+     * @param item Item to add.
+     */
+    void addNewItem(Item item);
+
+    /**
+     * Add list of new items to database.
+     * @param items Item to add.
+     */
+    void addNewItem(LinkedList<Item> items);
+
+    /**
+     * Update item which exists in database.
+     * @param item Item do update.
+     */
+    void updateItem(Item item);
+
+    /**
+     * Get single Item from database by it's id.
+     * @param itemId id of Item to get out.
+     * @return Item for inputed title.
+     */
+    Item getSingleItem(Long itemId);
+
+    /**
+     * Get single Item from database by it's title.
+     * @param title id of Item to get out.
+     * @return Item for inputed title.
+     */
+    Item getSingleItem(String title);
+
+    /**
+     * Get all items limited by value of {@link Categories}
+     * @param category limiting value of Categories
+     * @return list of Item limited by category
+     */
+    ArrayList<Item> getItemsByCategory(String category);
+
+    /**
+     * Get all items in database.
+     * @param overZeroQuantity true - return only items with quantity > 0, false - return all items with ANY quantity value
+     * @return list of all Item
+     */
+    ArrayList<Item> getAllItems(boolean overZeroQuantity);
+
+    /**
+     * Get all items with quantity under minimum quantity.
+     * @return list of all Item with quantity under minimum
+     */
+    ArrayList<Item> getShoppingList();
+
+    /**
+     * Deleta Android database and clear cloud database.
+     */
+    void deleteDatabase();
+
+
 }

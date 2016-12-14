@@ -2,7 +2,7 @@ package com.gatar.Spizarka.Depot.Presenter;
 
 import com.gatar.Spizarka.ItemFiller.ItemFillerOptions;
 import com.gatar.Spizarka.Database.Categories;
-import com.gatar.Spizarka.Database.Item;
+import com.gatar.Spizarka.Database.Objects.Item;
 import com.gatar.Spizarka.Depot.DepotMVP;
 import com.gatar.Spizarka.Depot.DepotModel;
 import com.gatar.Spizarka.Depot.DepotOptions;
@@ -57,6 +57,7 @@ public class DepotOverviewPresenter implements DepotMVP.PresenterOperationsOverv
 
     @Override
     public void setListView() {
+        mModel.synchronizeDatabases();
         mModel.getDepotOptions();
         switch(options){
             case DepotView:

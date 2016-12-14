@@ -4,8 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.gatar.Spizarka.R;
-import com.gatar.Spizarka.Database.Item;
-import com.gatar.Spizarka.Database.ManagerDAO;
+import com.gatar.Spizarka.Database.ManagerDAOImpl;
+import com.gatar.Spizarka.Database.Objects.Barcode;
+import com.gatar.Spizarka.Database.Objects.Item;
 import com.gatar.Spizarka.Depot.DepotOptions;
 import com.gatar.Spizarka.Application.MyApp;
 
@@ -20,7 +21,7 @@ public class ItemFillerModel implements ItemFillerMVP.ModelOperations{
 
     @Inject SharedPreferences preferences;
     @Inject SharedPreferences.Editor preferencesEditor;
-    @Inject ManagerDAO managerDAO;
+    @Inject ManagerDAOImpl managerDAOImpl;
     @Inject Context appContext;
 
     private final static String EXTRA_BARCODE = "com.example.gatar.spizarkainterfejs.BARCODE";
@@ -30,20 +31,22 @@ public class ItemFillerModel implements ItemFillerMVP.ModelOperations{
     public ItemFillerModel(ItemFillerMVP.RequiredPresenterOperations mPresenter) {
         this.mPresenter = mPresenter;
         MyApp.getAppComponent().inject(this);
+        synchronizeDatabases();
     }
 
     @Override
     public void addNewItem(Item item) {
-        managerDAO.addNewItem(item);
-        Integer itemId = managerDAO.getItemIdByTitle(item.getTitle());
-        managerDAO.addNewBarcode(getBarcodePreferences(),itemId);
+        managerDAOImpl.addNewItem(item);
+        Long itemId = managerDAOImpl.getItemIdByTitle(item.getTitle());
+        Barcode bar = new Barcode(getBarcodePreferences(),itemId);
+        managerDAOImpl.addNewBarcode(bar);
         mPresenter.reportFromModel(appContext.getString(R.string.communicateAddedItemAndBarcode));
     }
 
     @Override
     public void updateItem(Item item) {
-        item.setId(managerDAO.getItemIdByTitle(item.getTitle()));
-        managerDAO.updateItem(item);
+        item.setId(managerDAOImpl.getItemIdByTitle(item.getTitle()));
+        managerDAOImpl.updateItem(item);
         mPresenter.reportFromModel(appContext.getString(R.string.communicateItemUpdated));
     }
 
@@ -56,7 +59,7 @@ public class ItemFillerModel implements ItemFillerMVP.ModelOperations{
     @Override
     public void getItemByBarcode(){
         String barcode = preferences.getString(EXTRA_BARCODE,null);
-        Item item = managerDAO.getSingleItem(managerDAO.getItemIdByBarcode(barcode));
+        Item item = managerDAOImpl.getSingleItem(managerDAOImpl.getItemIdByBarcode(barcode));
         mPresenter.setItem(item);
     }
 
@@ -64,6 +67,11 @@ public class ItemFillerModel implements ItemFillerMVP.ModelOperations{
     public void setDepotPreferences(DepotOptions depotOptions){
         preferencesEditor.putString(DEPOT_ACTIVITY_OPTION,depotOptions.toString());
         preferencesEditor.commit();
+    }
+
+    @Override
+    public void synchronizeDatabases() {
+        managerDAOImpl.synchronizeDatabases();
     }
 
     private String getBarcodePreferences(){

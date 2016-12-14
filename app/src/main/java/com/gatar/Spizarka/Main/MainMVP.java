@@ -32,6 +32,11 @@ public interface MainMVP {
         void toDepotView();
 
         /**
+         * Set LoginActivity to manage account in phone.
+         */
+        void toLoginActivity();
+
+        /**
          * Show Toast meessage.
          */
         void showToast(String message);
@@ -75,6 +80,11 @@ public interface MainMVP {
          * Tell MainModel to delete internal Android database.
          */
         void deleteInternalDatabase();
+
+        /**
+         * Set LoginActivity on view to manage Accounts.
+         */
+        void toLoginActivity();
     }
 
     //---------Operations in Presenter used by Model-------------------
@@ -101,6 +111,12 @@ public interface MainMVP {
          * @param option value of Enum for set
          */
         void setMainViewPreferences(String preferenceName, Enum option);
+
+        /**
+         * Check Internet connection
+         * @return true - connection are established, false - no connection
+         */
+        boolean isConnectedWithInternet();
     }
 
 }

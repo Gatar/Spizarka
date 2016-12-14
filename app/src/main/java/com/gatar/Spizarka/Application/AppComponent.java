@@ -7,25 +7,25 @@ import com.android.volley.RequestQueue;
 import com.gatar.Spizarka.Account.AccountModel;
 import com.gatar.Spizarka.BarcodeScanner.BarcodeScannerModel;
 import com.gatar.Spizarka.Database.Categories;
-import com.gatar.Spizarka.Database.ManagerDAO;
+import com.gatar.Spizarka.Database.ManagerDAOImpl;
+import com.gatar.Spizarka.Database.RemoteDatabaseDAOImpl;
 import com.gatar.Spizarka.Depot.DepotModel;
 import com.gatar.Spizarka.ItemFiller.ItemFillerModel;
 import com.gatar.Spizarka.Main.MainModel;
 import com.gatar.Spizarka.Main.View.MainActivity;
 
 import javax.inject.Singleton;
-
 import dagger.Component;
 
 /**
- * Created by Gatar on 2016-10-30.
+ * Interface with application components serviced by Dagger
  */
 @Singleton
 @Component(modules = {AppModule.class})
 public interface AppComponent {
     SharedPreferences.Editor provideSharedPreferencesEditor();
     SharedPreferences provideSharedPreferences();
-    ManagerDAO provideManagerDAO();
+    ManagerDAOImpl provideManagerDAO();
     Context provideAppContext();
     RequestQueue provideRequestQueue();
 
@@ -34,7 +34,7 @@ public interface AppComponent {
     void inject(BarcodeScannerModel model);
     void inject(MainModel model);
     void inject(Categories categories);
-    void inject(ManagerDAO managerDAO);
     void inject(AccountModel accountModel);
     void inject(MainActivity mainActivity);
+    void inject(RemoteDatabaseDAOImpl remoteDatabase);
 }

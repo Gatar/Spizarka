@@ -1,74 +1,72 @@
 package com.gatar.Spizarka.Database;
 
-import java.util.ArrayList;
+import com.gatar.Spizarka.Database.Objects.BarcodeDTO;
+import com.gatar.Spizarka.Database.Objects.Item;
 
 /**
- * Manager for esrvice cloud database by REST.
+ * Interface for WebAPI methods.
  */
-class RemoteDatabaseDAO implements MethodsDAO{
-    @Override
-    public boolean isContainBarcode(String barcode) {
-        return false;
-    }
+public interface RemoteDatabaseDAO {
 
-    @Override
-    public void addNewBarcode(String barcode, Integer itemId) {
+    /**
+     * Tag for get database version from preferences
+     */
+    String DATABASE_VERSION_PREFERENCES = "com.gatar.Spizarka.DB_VERSION";
+    /**
+     * Tag for get Username from preferences
+     */
+    String USERNAME_PREFERENCES = "com.gatar.Spizarka.USERNAME";
+    /**
+     * Tag for get Password from preferences
+     */
+    String PASSWORD_PREFERENCES = "com.gatar.Spizarka.P_A_SS_WOR_D";
 
-    }
 
-    @Override
-    public Integer getItemIdByBarcode(String barcode) {
-        return null;
-    }
+    // Paths for WebAPI
+    String DOMAIN_PATH = "http://spizarkaservlet.eu-west-1.elasticbeanstalk.com/";
+    String PUT_DB_VERSION_PATH = "/putDataVersion";
+    String SAVE_ITEM = "/saveItem";
+    String SAVE_BARCODE = "/saveBarcode";
+    String GET_DB_VERSION_PATH = "/getDataVersion";
+    String GET_ALL_ITEMS = "/getAllItems";
+    String GET_ALL_BARCODES = "/getAllBarcodes";
 
-    @Override
-    public String getFirstBarcodeByItemId(Integer itemId) {
-        return null;
-    }
+    /**
+     * Download all items from cloud database.
+     */
+    void getAllItems();
 
-    @Override
-    public Integer getItemIdByTitle(String title) {
-        return null;
-    }
+    /**
+     * Download all barcodes from cloud database.
+     */
+    void getAllBarcodes();
 
-    @Override
-    public Item getSingleItem(String title) {
-        return null;
-    }
+    /**
+     * Save single Item to remote database (new one or updated).
+     * @param item object with values to transfer
+     */
+    void saveItem(Item item);
 
-    @Override
-    public void addNewItem(Item item) {
+    /**
+     * Save single Item barcode to remote database.
+     * @param barcode object with values to transfer
+     */
+    void saveBarcode(BarcodeDTO barcode);
 
-    }
+    /**
+     * Put new database version to remote database.
+     */
+    void putDatabaseVersion();
 
-    @Override
-    public void updateItem(Item item) {
+    /**
+     * Get verion of database from cloud and handle it.
+     */
+    void getDatabaseVersion();
 
-    }
+    /**
+     * Set synchronizer object reference
+     * @param databaseSynchronizer reference to {@link DatabaseSynchronizerRemoteOperations}
+     */
+    void setDatabaseSynchronizer(DatabaseSynchronizerRemoteOperations databaseSynchronizer);
 
-    @Override
-    public Item getSingleItem(Integer itemId) {
-        return null;
-    }
-
-    @Override
-    public ArrayList<Item> getItemsByCategory(String category) {
-        return null;
-    }
-
-    @Override
-    public ArrayList<Item> getAllItems(boolean overZeroQuantity) {
-        return null;
-    }
-
-    @Override
-    public ArrayList<Item> getShoppingList() {
-        return null;
-    }
-
-    @Override
-    public void deleteDatabase() {
-    }
 }
-
-

@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.example.gatar.Spizarka.R;
 import com.gatar.Spizarka.BarcodeScanner.View.BarcodeScannerActivity;
-import com.gatar.Spizarka.Database.Item;
+import com.gatar.Spizarka.Database.Objects.Item;
 import com.gatar.Spizarka.Depot.View.DepotActivity;
 import com.gatar.Spizarka.ItemFiller.ItemFillerMVP;
 import com.gatar.Spizarka.ItemFiller.ItemFillerOptions;

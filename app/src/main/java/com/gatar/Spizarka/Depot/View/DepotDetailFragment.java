@@ -8,8 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.gatar.Spizarka.Database.Item;
+import com.gatar.Spizarka.Database.Objects.Item;
 import com.example.gatar.Spizarka.R;
 import com.gatar.Spizarka.ItemFiller.View.ItemFillerActivity;
 import com.gatar.Spizarka.Depot.Presenter.DepotDetailPresenter;
@@ -56,8 +57,6 @@ public class DepotDetailFragment extends Fragment implements DepotMVP.RequiredVi
         mPresenter.fillViewWithData();
     }
 
-
-
     /**
      * Set item data in fragment view. Data are extracted from database by item title.
      */
@@ -84,5 +83,10 @@ public class DepotDetailFragment extends Fragment implements DepotMVP.RequiredVi
     public void toUpdateItemDataActivity() {
         Intent intent = new Intent(getActivity(),ItemFillerActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void showToast(String message) {
+        Toast.makeText(view.getContext(),message,Toast.LENGTH_SHORT).show();
     }
 }

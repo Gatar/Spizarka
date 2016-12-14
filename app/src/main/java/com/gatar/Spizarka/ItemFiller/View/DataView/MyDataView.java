@@ -1,5 +1,6 @@
 package com.gatar.Spizarka.ItemFiller.View.DataView;
 
+import android.text.method.TextKeyListener;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -8,7 +9,7 @@ import android.widget.Toast;
 
 import com.example.gatar.Spizarka.R;
 import com.gatar.Spizarka.Database.Categories;
-import com.gatar.Spizarka.Database.Item;
+import com.gatar.Spizarka.Database.Objects.Item;
 
 /**
  * Extendable class for all data view set objects. Contains references for text views, edit texts and spinner in {@link com.gatar.Spizarka.ItemFiller.View.DataViewFragment}
@@ -45,12 +46,15 @@ abstract public class MyDataView {
 
         quantityDescription = (TextView)view.findViewById(R.id.textChangeQuantityDescription);
         quantityText = (EditText) view.findViewById(R.id.textChangeQuantity);
+        eraseTextOnClick(quantityText);
 
         quantityModificationDescription = (TextView)view.findViewById(R.id.textChangeQuantityModificationDescription);
         quantityModificationText = (EditText) view.findViewById(R.id.textChangeQuantityModification);
+        eraseTextOnClick(quantityModificationText);
 
         quantityMinimumDescription = (TextView)view.findViewById(R.id.textChangeQuantityMinimumDescription);
         quantityMinimumText = (EditText) view.findViewById(R.id.textChangeQuantityMinimum);
+        eraseTextOnClick(quantityMinimumText);
 
         descriptionDescription = (TextView)view.findViewById(R.id.textChangeDescriptionDescription);
         descriptionText = (EditText) view.findViewById(R.id.textChangeDescription);
@@ -103,6 +107,20 @@ abstract public class MyDataView {
             return true;
         } else return false;
     }
+
+    private void eraseTextOnClick(final EditText editText){
+        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    TextKeyListener.clear((editText).getText());
+
+                }
+            }
+        });
+    }
+
 
     private void showToast(int stringResource){
         String message = view.getResources().getString(stringResource);
