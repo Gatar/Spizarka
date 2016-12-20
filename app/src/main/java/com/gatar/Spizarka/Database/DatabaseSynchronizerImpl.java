@@ -72,7 +72,7 @@ public class DatabaseSynchronizerImpl implements DatabaseSynchronizer, DatabaseS
         LinkedList<Item> itemsForSave = new LinkedList<>();
         for(ItemDTO item : items){
             itemsForSave.add(item.toItem());
-            System.out.println(item.toItem().getId() + "  DTO " + item.getCategory().toString() + "  obj " + item.toItem().getCategory().toString());
+            System.out.println(item.getTitle() + "----------------------");
         }
         return itemsForSave;
     }
@@ -81,7 +81,7 @@ public class DatabaseSynchronizerImpl implements DatabaseSynchronizer, DatabaseS
         LinkedList<Barcode> barcodesForSave = new LinkedList<>();
         for(BarcodeDTO barcode : barcodes){
             barcodesForSave.add(barcode.toBarcode());
-            System.out.println(barcode.toBarcode().getItemId() + "   " + barcode.toBarcode().getBarcode());
+            System.out.println(barcode.getBarcodeValue() + "----------------------");
         }
         return barcodesForSave;
     }
