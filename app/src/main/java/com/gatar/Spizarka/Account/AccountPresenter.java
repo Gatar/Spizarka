@@ -87,7 +87,7 @@ public class AccountPresenter implements AccountMVP.RequiredPresenterOperations,
             case CREATED:
                 mModel.addAccountToPreferences(accountValidated);
                 mModel.putDatabaseVersionToPreferences(1L);
-                mModel.putDatabaseVersionToWebAPI();
+                //mModel.putDatabaseVersionToWebAPI();
                 mView.showToast("Utworzono nowe konto!");
                 break;
 

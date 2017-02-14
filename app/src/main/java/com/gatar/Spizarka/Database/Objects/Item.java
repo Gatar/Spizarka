@@ -137,4 +137,15 @@ public class Item implements Serializable {
         itemDTO.setIdItemAndroid(id);
         return itemDTO;
     }
+
+    public EntityDTO toEntityDTO(){
+        EntityDTO entityDTO = new EntityDTO();
+        entityDTO.setCategory(category.name());
+        entityDTO.setDescription(description);
+        entityDTO.setIdItemAndroid(id);
+        entityDTO.setMinimumQuantity(minimumQuantity);
+        entityDTO.setQuantity(quantity);
+        entityDTO.setTitle(title);
+        return entityDTO;
+    }
 }

@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.gatar.Spizarka.Database.Objects.Barcode;
 import com.gatar.Spizarka.Database.Objects.BarcodeDTO;
+import com.gatar.Spizarka.Database.Objects.EntityDTO;
 import com.gatar.Spizarka.Database.Objects.Item;
 
 import java.util.ArrayList;
@@ -62,34 +63,33 @@ public class ManagerDAOImpl implements ManagerDAO {
     }
 
     @Override
-    public void addNewBarcode(Barcode barcode) {
+    public void saveEntity(Item item) {
+        EntityDTO entityDTO = item.toEntityDTO();
+        entityDTO.setBarcodes(androidDatabaseDAO.getAllBarcodesAsStrings(item.getId()));
+        entityDTO.setDatabaseVersion(getDatabaseVersionFromPreferences());
+        remoteDatabaseDAO.saveEntity(entityDTO);
+    }
 
+    @Override
+    public void addNewBarcode(Barcode barcode) {
         androidDatabaseDAO.addNewBarcode(barcode);
         increaseDatabaseVersion();
-        remoteDatabaseDAO.putDatabaseVersion();
-
-
-        BarcodeDTO barcodeDTO = new BarcodeDTO();
-        barcodeDTO.setBarcodeValue(barcode.getBarcode());
-        barcodeDTO.setIdItemAndroid(barcode.getItemId());
-        remoteDatabaseDAO.saveBarcode(barcodeDTO);
+        Item item = androidDatabaseDAO.getSingleItem(barcode.getItemId());
+        saveEntity(item);
     }
 
     @Override
     public void addNewItem(Item item) {
-
         androidDatabaseDAO.addNewItem(item);
         increaseDatabaseVersion();
-        remoteDatabaseDAO.putDatabaseVersion();
-        remoteDatabaseDAO.saveItem(item);
+        saveEntity(item);
     }
 
     @Override
     public void updateItem(Item item) {
         androidDatabaseDAO.updateItem(item);
         increaseDatabaseVersion();
-        remoteDatabaseDAO.putDatabaseVersion();
-        remoteDatabaseDAO.saveItem(item);
+        saveEntity(item);
     }
 
     @Override
@@ -137,6 +137,10 @@ public class ManagerDAOImpl implements ManagerDAO {
         preferencesEditor.putLong(DATABASE_VERSION_PREFERENCES,0L);
         preferencesEditor.commit();
         Log.d("**DB version *** ","0");
+    }
+
+    private Long getDatabaseVersionFromPreferences(){
+        return preferences.getLong(DATABASE_VERSION_PREFERENCES,-1);
     }
 
 }

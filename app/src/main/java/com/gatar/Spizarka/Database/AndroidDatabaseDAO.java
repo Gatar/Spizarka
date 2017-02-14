@@ -74,6 +74,13 @@ public interface AndroidDatabaseDAO {
      */
     String getFirstBarcodeByItemId(Long itemId);
 
+    /**
+     * Get all barcodes for item as list.
+     * @param itemId id of item
+     * @return list of barcodes
+     */
+    ArrayList<String> getAllBarcodesAsStrings(Long itemId);
+
 
     //METHODS OF ITEMS TABLE
 

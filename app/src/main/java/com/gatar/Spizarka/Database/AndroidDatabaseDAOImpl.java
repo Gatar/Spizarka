@@ -101,6 +101,39 @@ class AndroidDatabaseDAOImpl extends SQLiteOpenHelper implements AndroidDatabase
     }
 
     @Override
+    public ArrayList<String> getAllBarcodesAsStrings(Long itemId) {
+        db = this.getReadableDatabase();
+
+        String[] projection = new String[]{COLUMN_NAME_BARCODE_KEY};
+        String selection = COLUMN_NAME_ITEM_ID + " = ?";
+        String[] selectionArgs = new String[]{itemId.toString()};
+
+        Cursor cursor = db.query(
+                TABLE_NAME_BARCODES,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        ArrayList<String> list = new ArrayList<>();
+        cursor.moveToFirst();
+
+        //filling list by barcodes, if their exist
+        while(!cursor.isAfterLast()){
+            String barcodeTemp = cursor.getString(cursor.getColumnIndex(COLUMN_NAME_BARCODE_KEY));
+            cursor.moveToNext();
+            list.add(barcodeTemp);
+            System.out.println(itemId + "  barcode: " + barcodeTemp);
+        }
+
+
+        return list;
+    }
+
+    @Override
     public Long getItemIdByTitle(String title) {
         db = this.getReadableDatabase();
 

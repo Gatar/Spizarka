@@ -63,7 +63,7 @@ public class AccountModel implements AccountMVP.ModelOperations{
     private final String PASSWORD_PREFERENCES = "com.gatar.Spizarka.P_A_SS_WOR_D";
     private final String EMAIL_PREFERENCES = "com.gatar.Spizarka.EMAIL";
 
-    private final String DOMAIN_PATH = "http://spizarkaservlet.eu-west-1.elasticbeanstalk.com/";
+    private final String DOMAIN_PATH = "http://spizarkaservlet-env.eu-west-1.elasticbeanstalk.com/";
     private final String ADD_ACCOUNT_PATH = "addNewAccount";
     private final String GET_DB_VERSION_PATH = "/getDataVersion";
     private final String PUT_DB_VERSION_PATH = "/putDataVersion";
@@ -179,7 +179,7 @@ public class AccountModel implements AccountMVP.ModelOperations{
         final Long dbVersion = getDatabaseVersionFromPreferences();
         final String URI = DOMAIN_PATH + accountDTO.getUsername() + PUT_DB_VERSION_PATH;
 
-        final String postData = String.format("\"%d\"",dbVersion);
+        final String postData = String.format("%d",dbVersion);
         final Map<String,String> headers = buildAuthHeaders(accountDTO).toSingleValueMap();
 
         Response.Listener<String> responseListener = new Response.Listener<String>() {

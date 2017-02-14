@@ -16,6 +16,7 @@ import com.gatar.Spizarka.Account.Request.RequestListGET;
 import com.gatar.Spizarka.Account.Request.RequestGET;
 import com.gatar.Spizarka.Account.Request.RequestStringPOST;
 import com.gatar.Spizarka.Database.Objects.BarcodeDTO;
+import com.gatar.Spizarka.Database.Objects.EntityDTO;
 import com.gatar.Spizarka.Database.Objects.Item;
 import com.gatar.Spizarka.Database.Objects.ItemDTO;
 import com.google.gson.Gson;
@@ -121,6 +122,43 @@ public class RemoteDatabaseDAOImpl implements RemoteDatabaseDAO{
             Log.d("SaveItemJSON","Error: " + e.getMessage());
         }catch(Exception e){
             Log.d("SaveItemException","Error: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void saveEntity(EntityDTO entity) {
+        final AccountDTO credentials = getCredentialsFromPreferences();
+        final String URI = DOMAIN_PATH + credentials.getUsername() + SAVE_ENTITY;
+        final JSONObject itemJSON;
+        final EntityDTO entityDTO = entity;
+
+        Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+            }
+        };
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("SaveEntityErrResp","  :"+error.getMessage());
+            }
+        };
+
+        try{
+            itemJSON  = new JSONObject(gson.toJson(entityDTO, EntityDTO.class));
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URI, itemJSON,responseListener,errorListener){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    return buildAuthHeaders(credentials).toSingleValueMap();
+                }
+
+            };
+            mRequestQueue.add(jsonObjectRequest);
+        }catch(JSONException e){
+            Log.d("SaveEntityJSON","Error: " + e.getMessage());
+        }catch(Exception e){
+            Log.d("SaveEntityException","Error: " + e.getMessage());
         }
     }
 

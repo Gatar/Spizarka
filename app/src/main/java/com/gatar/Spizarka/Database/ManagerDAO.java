@@ -45,6 +45,12 @@ public interface ManagerDAO {
     //METHODS OF ITEMS TABLE
 
     /**
+     * Save new / update item with their barcodes.
+     * @param item Item to save
+     */
+    void saveEntity (Item item);
+
+    /**
      * Get item id connceted with barcode
      * @param title String with barcode
      * @return Long with id number.
